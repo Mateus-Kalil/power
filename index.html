@@ -5,22 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>WolfGuard</title>
 
-    
     <link rel="icon" href="favicon2.png" type="image/x-icon" />
     <link rel="shortcut icon" href="favicon2.png" type="image/x-icon" />
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-    
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet" />
-    
     
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet" />
     
-    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
 
@@ -44,7 +39,6 @@
         }
 
         body {
-            
             background: linear-gradient(270deg, #040316, #1a1a3d, #040316);
             background-size: 600% 600%;
             animation: gradientBG 20s ease infinite;
@@ -59,7 +53,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        
         body::before {
             content: "";
             position: fixed;
@@ -98,7 +91,6 @@
             100% { transform: translateY(-500px) translateX(500px) rotate(360deg); }
         }
 
-        
         header {
             width: 100%;
             position: fixed;
@@ -195,7 +187,6 @@
             color: var(--secondary);
         }
 
-        
         .hero {
             height: 100vh;
             display: flex;
@@ -328,7 +319,6 @@
             50% { box-shadow: 0 0 25px rgba(37, 117, 252, 0.8); }
         }
 
-        
         section {
             padding: 7rem 1.5rem;
             max-width: 1200px;
@@ -473,7 +463,6 @@
             vertical-align: middle;
         }
 
-        
         .modal {
             display: none;
             position: fixed;
@@ -621,7 +610,6 @@
             transform: scaleX(1);
         }
 
-        
         .steps {
             display: grid;
             grid-template-columns: 1fr;
@@ -706,7 +694,6 @@
             text-shadow: 0 0 5px rgba(37, 117, 252, 0.5);
         }
 
-        
         .tech-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -830,7 +817,6 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.4);
         }
 
-        
         .team-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -1047,7 +1033,6 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
-        
         .screenshot-wrapper {
             text-align: center;
             margin-top: 2rem;
@@ -1107,7 +1092,6 @@
             box-shadow: 0 25px 50px rgba(0,0,0,0.7);
         }
 
-        
         footer {
             background: #00020c;
             padding: 4rem 1.5rem 2rem;
@@ -2350,8 +2334,6 @@
                 font-size: 1.1rem;
             }
             
-            
-            
             .hero h1 {
                 font-size: clamp(2rem, 4vw + 1rem, 3.5rem);
             }
@@ -2388,6 +2370,22 @@
             .demo-logo small {
                 display: none;
             }
+            
+            .wolfguard-demo {
+                display: none;
+            }
+            
+            .simulate-btn {
+                display: none;
+            }
+            
+            .feature-card .view-more {
+                display: none;
+            }
+            
+            .feature-card {
+                cursor: default;
+            }
         }
 
         @media(max-width: 480px) {
@@ -2417,7 +2415,6 @@
 </head>
 
 <body>
-    
     <div class="preloader">
         <div class="preloader-content">
             <img src="favicon.png" alt="WolfGuard" class="preloader-logo">
@@ -2427,13 +2424,9 @@
             <div class="preloader-text">Carregando Proteção Avançada...</div>
         </div>
     </div>
-    
 
-    
-   
     <div class="sphere-container" id="sphere-container"></div>
     
-    <!-- Botão de voltar ao topo -->
     <div class="back-to-top" id="backToTop">
         <i class="fa-solid fa-arrow-up"></i>
     </div>
@@ -2446,7 +2439,6 @@
             </div>
             <div class="menu-toggle"><i class="fa-solid fa-bars"></i></div>
             <nav>
-                
                 <a href="#features">Recursos</a>
                 <a href="#tech">Tecnologia</a>
                 <a href="#instructions">Como Usar</a>
@@ -2458,7 +2450,6 @@
         </div>
     </header>
 
-    
     <section class="hero" id="home" data-aos="fade-zoom-in">
         <div class="hero-content">
             <h1 data-text="Proteção que vai além do Antivírus Tradicional.">Proteção que vai além<br/>do Antivírus Tradicional.</h1>
@@ -2470,7 +2461,6 @@
         </div>
     </section>
 
-    
     <section id="features" data-aos="fade-up">
         <h2 data-text="Recursos Principais">Recursos Principais</h2>
         <p style="margin-bottom: 3rem; max-width: 800px; text-align: center; margin-left: auto; margin-right: auto;">Nossa tecnologia proprietária oferece proteção avançada contra as ameaças digitais mais sofisticadas. Clique em cada recurso para saber mais detalhes.</p>
@@ -2520,7 +2510,6 @@
         </div>
     </section>
 
-    
     <section id="tech" data-aos="fade-up">
         <h2 data-text="Como Funciona o WolfGuard">Como Funciona o WolfGuard</h2>
         <p style="margin-bottom: 3rem; max-width: 800px; text-align: center; margin-left: auto; margin-right: auto;">Nosso antivírus combina tecnologias de ponta e uma arquitetura inovadora para oferecer proteção máxima com impacto mínimo no desempenho do sistema.</p>
@@ -2557,24 +2546,19 @@
             <div style="background: rgba(0,0,0,0.3); border-radius: var(--radius); padding: 2rem; position: relative; overflow: hidden;">
                 <div class="diagram-glow" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at center, rgba(106, 17, 203, 0.2) 0%, transparent 70%); pointer-events: none;"></div>
                 <svg width="100%" height="400" viewBox="0 0 800 400">
-                    
                     <rect x="10" y="10" width="780" height="380" rx="10" fill="rgba(10, 10, 40, 0.5)" />
-                    
                     
                     <rect x="50" y="300" width="700" height="60" rx="8" fill="rgba(106, 17, 203, 0.3)" stroke="#6a11cb" stroke-width="2">
                         <animate attributeName="opacity" values="0.3;0.5;0.3" dur="3s" repeatCount="indefinite" />
                     </rect>
                     <text x="400" y="335" text-anchor="middle" fill="white" font-weight="bold">Nível do Kernel (C, Drivers)</text>
                     
-                    
                     <rect x="50" y="220" width="700" height="60" rx="8" fill="rgba(37, 117, 252, 0.3)" stroke="#2575fc" stroke-width="2">
                         <animate attributeName="opacity" values="0.3;0.5;0.3" dur="3s" repeatCount="indefinite" begin="1s" />
                     </rect>
                     <text x="400" y="255" text-anchor="middle" fill="white" font-weight="bold">Nível de Aplicação (Python)</text>
                     
-                    
                     <rect x="50" y="50" width="700" height="150" rx="8" fill="rgba(255, 255, 255, 0.05)" stroke="rgba(255, 255, 255, 0.2)" stroke-width="2" />
-                    
                     
                     <rect x="70" y="70" width="150" height="50" rx="8" fill="rgba(255, 255, 255, 0.1)" stroke="rgba(255, 255, 255, 0.3)" stroke-width="1">
                         <animate attributeName="opacity" values="0.1;0.3;0.1" dur="4s" repeatCount="indefinite" />
@@ -2611,7 +2595,6 @@
                     </rect>
                     <text x="570" y="160" text-anchor="middle" fill="white" font-size="12">YARA Rules</text>
                     
-                    
                     <line x1="145" y1="120" x2="145" y2="220" stroke="rgba(255, 255, 255, 0.4)" stroke-width="1.5" stroke-dasharray="5,5">
                         <animate attributeName="stroke-opacity" values="0.4;0.8;0.4" dur="3s" repeatCount="indefinite" />
                     </line>
@@ -2638,7 +2621,6 @@
                         <animate attributeName="stroke-opacity" values="0.6;1;0.6" dur="2s" repeatCount="indefinite" />
                     </line>
                     
-                    
                     <path d="M50,380 L750,380" stroke="rgba(255, 255, 255, 0.3)" stroke-width="2" stroke-dasharray="10,5">
                         <animate attributeName="stroke-dashoffset" values="0;30" dur="3s" repeatCount="indefinite" />
                     </path>
@@ -2648,7 +2630,6 @@
         </div>
     </section>
 
-    
     <section id="instructions" data-aos="fade-up">
         <h2 data-text="Como Usar o WolfGuard">Como Usar o WolfGuard</h2>
         <p style="margin-bottom: 3rem; max-width: 800px; text-align: center; margin-left: auto; margin-right: auto;">Instalar e configurar o WolfGuard é rápido e simples. Siga os passos abaixo para garantir que seu sistema esteja protegido em questão de minutos.</p>
@@ -2676,11 +2657,9 @@
         </div>
     </section>
 
-    
     <section id="screenshot" data-aos="zoom-in">
         <h2 data-text="Demonstração do WolfGuard">Demonstração do WolfGuard</h2>
         <p style="max-width: 700px; margin-bottom: 2rem; text-align: center; margin-left: auto; margin-right: auto;">Conheça a interface intuitiva do WolfGuard Antivirus. Design moderno que facilita a navegação e oferece controle total sobre sua segurança.</p>
-        
         
         <div class="wolfguard-demo" id="wolfguard-demo">
             <div class="demo-container">
@@ -2757,7 +2736,6 @@
         </div>
     </section>
     
-    
     <section id="download" data-aos="fade-up">
         <h2 data-text="Download">Download</h2>
         <p style="max-width: 700px; margin-bottom: 2rem; text-align: center; margin-left: auto; margin-right: auto;">Obtenha a versão mais recente do WolfGuard Antivirus e garanta proteção completa contra vírus, malwares e ransomware para seu sistema.</p>
@@ -2790,7 +2768,6 @@
         </div>
     </section>
 
-    
     <section id="team" data-aos="fade-up">
         <h2 data-text="Nossa Equipe">Nossa Equipe</h2>
         <p style="margin-bottom: 3rem; max-width: 800px; text-align: center; margin-left: auto; margin-right: auto;">Conheça os desenvolvedores por trás do WolfGuard. Uma equipe de especialistas em segurança da informação, ciência de dados e desenvolvimento de software comprometidos em oferecer a melhor proteção para seus dados.</p>
@@ -2912,8 +2889,6 @@
         </div>
     </footer>
 
-    
-    
     <div class="modal" id="modal-realtime">
         <div class="modal-content">
             <div class="modal-close"><i class="fa-solid fa-xmark"></i></div>
@@ -2935,7 +2910,6 @@
             </div>
         </div>
     </div>
-    
     
     <div class="modal" id="modal-ransomware">
         <div class="modal-content">
@@ -2959,7 +2933,6 @@
         </div>
     </div>
     
-    
     <div class="modal" id="modal-scan">
         <div class="modal-content">
             <div class="modal-close"><i class="fa-solid fa-xmark"></i></div>
@@ -2981,7 +2954,6 @@
             </div>
         </div>
     </div>
-    
     
     <div class="modal" id="modal-usb">
         <div class="modal-content">
@@ -3005,7 +2977,6 @@
         </div>
     </div>
     
-    
     <div class="modal" id="modal-cloud">
         <div class="modal-content">
             <div class="modal-close"><i class="fa-solid fa-xmark"></i></div>
@@ -3028,7 +2999,6 @@
         </div>
     </div>
     
-    
     <div class="modal" id="modal-reports">
         <div class="modal-content">
             <div class="modal-close"><i class="fa-solid fa-xmark"></i></div>
@@ -3050,7 +3020,6 @@
             </div>
         </div>
     </div>
-    
     
     <div class="modal" id="modal-manual">
         <div class="modal-content">
@@ -3111,7 +3080,6 @@
         </div>
     </div>
 
-    
     <div class="modal" id="modal-privacidade">
         <div class="modal-content">
             <div class="modal-close"><i class="fa-solid fa-xmark"></i></div>
@@ -3181,7 +3149,6 @@
         </div>
     </div>
 
-    
     <div class="modal" id="modal-termos">
         <div class="modal-content">
             <div class="modal-close"><i class="fa-solid fa-xmark"></i></div>
@@ -3241,7 +3208,6 @@
         </div>
     </div>
 
-    
     <div class="modal" id="modal-licenca">
         <div class="modal-content">
             <div class="modal-close"><i class="fa-solid fa-xmark"></i></div>
@@ -3334,7 +3300,6 @@
         </div>
     </div>
 
-    
     <div class="modal" id="modal-seguranca">
     <div class="modal-content">
         <div class="modal-close"><i class="fa-solid fa-xmark"></i></div>
@@ -3534,7 +3499,6 @@
     </div>
 </div>
 
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
 <script>
     AOS.init({ 
@@ -3595,16 +3559,21 @@
     const modals = document.querySelectorAll('.modal');
     const closeBtns = document.querySelectorAll('.modal-close');
     
-    featureCards.forEach(card => {
-        card.addEventListener('click', () => {
-            const feature = card.getAttribute('data-feature');
-            const modal = document.getElementById(`modal-${feature}`);
-            if (modal) {
-                modal.style.display = 'flex';
-                document.body.style.overflow = 'hidden';
-            }
+    // Verificar se é um dispositivo móvel
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth < 768;
+    
+    if (!isMobile) {
+        featureCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const feature = card.getAttribute('data-feature');
+                const modal = document.getElementById(`modal-${feature}`);
+                if (modal) {
+                    modal.style.display = 'flex';
+                    document.body.style.overflow = 'hidden';
+                }
+            });
         });
-    });
+    }
     
     closeBtns.forEach(btn => {
         btn.addEventListener('click', () => {
@@ -3721,6 +3690,12 @@
         const demoContainer = document.getElementById('wolfguard-demo');
         const demoContent = document.getElementById('demo-content');
         const menuItems = document.querySelectorAll('.demo-menu-item');
+        
+        // Verificar se é um dispositivo móvel
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth < 768;
+        
+        // Pular configuração da demonstração em dispositivos móveis
+        if (isMobile) return;
         
         menuItems.forEach(item => {
             item.addEventListener('click', function() {
@@ -4263,9 +4238,7 @@
                     content = `<div>Tela não implementada</div>`;
             }
             
-            
             demoContent.innerHTML = content;
-            
             
             setTimeout(() => {
                 const elements = demoContent.querySelectorAll('.demo-header, .status-card, .action-buttons, .info-section, .scan-settings, .file-list, .bottom-buttons');
@@ -4281,7 +4254,6 @@
                     }, 100 * index);
                 });
             }, 50);
-            
             
             setupInteractions(screen);
         }
@@ -4328,7 +4300,6 @@
                 });
             }
             
-            
             const startScanBtn = document.getElementById('start-scan-btn');
             if (startScanBtn) {
                 startScanBtn.addEventListener('click', function() {
@@ -4337,13 +4308,10 @@
                     const scanningStatus = document.querySelector('.scanning-status');
                     const currentFile = document.querySelector('.current-file');
                     
-                    
                     demoContent.classList.add('scanning-effect');
-                    
                     
                     this.disabled = true;
                     document.querySelector('.demo-btn-red').disabled = false;
-                    
                     
                     if (scanningStatus) {
                         scanningStatus.textContent = 'Verificando...';
@@ -4357,7 +4325,6 @@
                     if (scanStats.length > 1) {
                         scanStats[1].innerHTML = '<div>Arquivos verificados: 0 | Ameaças encontradas: 0</div><div>Tempo restante: estimando...</div>';
                     }
-                    
                     
                     const fileList = [
                         'C:\\Windows\\System32\\ntdll.dll',
@@ -4376,7 +4343,6 @@
                         'C:\\Windows\\System32\\config\\systemprofile\\AppData\\Local\\Microsoft\\Windows\\INetCache\\IE\\index.dat'
                     ];
                     
-                    
                     let progress = 0;
                     let filesScanned = 0;
                     let fileIndex = 0;
@@ -4389,9 +4355,7 @@
                             progressBar.style.width = progress + '%';
                         }
                         
-                        
                         filesScanned = Math.floor(progress * 65);
-                        
                         
                         if (currentFile && fileIndex < fileList.length) {
                             fileIndex = Math.floor((progress / 100) * fileList.length);
@@ -4423,9 +4387,7 @@
                         if (progress >= 100) {
                             clearInterval(interval);
                             
-                            
                             demoContent.classList.remove('scanning-effect');
-                            
                             
                             if (scanningStatus) {
                                 scanningStatus.textContent = 'Verificação concluída';
@@ -4452,18 +4414,14 @@
                         }
                     }, 100);
                     
-                    
                     document.querySelector('.demo-btn-red').addEventListener('click', function() {
                         clearInterval(interval);
                         
-                        
                         demoContent.classList.remove('scanning-effect');
-                        
                         
                         if (progressBar) {
                             progressBar.style.width = '0%';
                         }
-                        
                         
                         if (scanningStatus) {
                             scanningStatus.textContent = 'Verificação cancelada';
@@ -4495,68 +4453,48 @@
     document.addEventListener('DOMContentLoaded', function() {
         const container = document.getElementById('sphere-container');
         
-        if (container && typeof THREE !== 'undefined') {
-            const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-            
-            const renderer = new THREE.WebGLRenderer({ alpha: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            container.appendChild(renderer.domElement);
-            
-            const geometry = new THREE.SphereGeometry(5, 32, 32);
-            const material = new THREE.MeshBasicMaterial({
-                color: 0x2575fc,
-                wireframe: true,
-                transparent: true,
-                opacity: 0.3
-            });
-            const sphere = new THREE.Mesh(geometry, material);
-            scene.add(sphere);
-            
-            camera.position.z = 15;
-            
-            function animate() {
-                requestAnimationFrame(animate);
-                
-                sphere.rotation.x += 0.003;
-                sphere.rotation.y += 0.005;
-                
-                renderer.render(scene, camera);
-            }
-            
-            window.addEventListener('resize', function() {
-                camera.aspect = window.innerWidth / window.innerHeight;
-                camera.updateProjectionMatrix();
-                renderer.setSize(window.innerWidth, window.innerHeight);
-            });
-            
-            animate();
-        }
-    });
-    
-    function createSnowflakes() {
-        const snowflakeContainer = document.body;
-        const snowflakeCount = 150;
+        // Verificar se é um dispositivo móvel
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth < 768;
         
-        for (let i = 0; i < snowflakeCount; i++) {
-            let snowflake = document.createElement('div');
-            snowflake.classList.add('snowflake');
-            snowflake.style.width = (Math.random() * 5 + 2) + 'px';
-            snowflake.style.height = snowflake.style.width;
-            snowflake.style.borderRadius = '50%';
-            snowflake.style.background = 'rgba(255, 255, 255, 0.7)';
-            snowflake.style.boxShadow = '0 0 3px rgba(255, 255, 255, 0.4)';
-            snowflake.style.opacity = Math.random() * 0.3 + 0.3;
-            snowflake.style.left = Math.random() * 100 + 'vw';
-            snowflake.style.animationDuration = (Math.random() * 8 + 10) + 's';
-            snowflake.style.animationDelay = Math.random() * 5 + 's';
-            snowflake.style.zIndex = '-10';
+        // Não criar animação Three.js em dispositivos móveis
+        if (isMobile || !container || typeof THREE === 'undefined') return;
+        
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        
+        const renderer = new THREE.WebGLRenderer({ alpha: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        container.appendChild(renderer.domElement);
+        
+        const geometry = new THREE.SphereGeometry(5, 32, 32);
+        const material = new THREE.MeshBasicMaterial({
+            color: 0x2575fc,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.3
+        });
+        const sphere = new THREE.Mesh(geometry, material);
+        scene.add(sphere);
+        
+        camera.position.z = 15;
+        
+        function animate() {
+            requestAnimationFrame(animate);
             
-            snowflakeContainer.appendChild(snowflake);
+            sphere.rotation.x += 0.003;
+            sphere.rotation.y += 0.005;
+            
+            renderer.render(scene, camera);
         }
-    }
-
-    document.addEventListener('DOMContentLoaded', createSnowflakes);
+        
+        window.addEventListener('resize', function() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+        
+        animate();
+    });
 </script>
 </body>
 </html>
