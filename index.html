@@ -78,7 +78,6 @@
             to { transform: translateY(40px); }
         }
         
-        /* teteu está de olho */
         body::after {
             content: "";
             position: fixed;
@@ -319,13 +318,11 @@
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* não olhe oq eu fiz */
         @keyframes float {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-10px); }
         }
         
-        /*  */
         @keyframes glowPulse {
             0%, 100% { box-shadow: 0 0 10px rgba(106, 17, 203, 0.5); }
             50% { box-shadow: 0 0 25px rgba(37, 117, 252, 0.8); }
@@ -876,7 +873,6 @@
             transform: scale(1.1);
         }
         
-        /* edu não sabe fazer conta */
         .team-card[data-member="mateus"] .team-img::before {
             content: '';
             position: absolute;
@@ -1070,7 +1066,6 @@
             box-shadow: 0 25px 50px rgba(0,0,0,0.6);
         }
         
-        /* MK é genio */
         .video-wrapper {
             text-align: center;
             margin-top: 2rem;
@@ -1236,7 +1231,6 @@
             border-radius: 3px;
         }
 
-        /* tenho dentiista mais tarde, vejo isso depois */
         .wolfguard-demo {
             position: relative;
             width: 100%;
@@ -2061,7 +2055,6 @@
             margin-top: 1rem;
         }
 
-        /*  */
         @keyframes scanning {
             0% { background-position: 0% 0%; }
             100% { background-position: 0% 100%; }
@@ -2085,7 +2078,6 @@
             z-index: 1;
         }
         
-        /*  */
         .scanning-effect::after {
             content: '';
             position: absolute;
@@ -2128,7 +2120,6 @@
             background: rgba(106, 17, 203, 0.1);
         }
         
-        /*  */
         ::-webkit-scrollbar {
             width: 8px;
             height: 8px;
@@ -2148,7 +2139,6 @@
             background: linear-gradient(var(--secondary), var(--primary));
         }
         
-        /*  */
         .sphere-container {
             position: fixed;
             top: 0;
@@ -2160,7 +2150,6 @@
             pointer-events: none;
         }
         
-        /*  */
         .cursor-effect {
             width: 30px;
             height: 30px;
@@ -2175,7 +2164,6 @@
             transition: width 0.2s, height 0.2s;
         }
         
-        /*  */
         .back-to-top {
             position: fixed;
             bottom: 30px;
@@ -2207,7 +2195,6 @@
             box-shadow: 0 10px 20px rgba(0,0,0,0.4);
         }
         
-        /*  */
         .preloader {
             position: fixed;
             top: 0;
@@ -2272,6 +2259,49 @@
             letter-spacing: 1px;
         }
 
+        .snowflake {
+            color: #fff;
+            font-size: 1em;
+            font-family: Arial, sans-serif;
+            text-shadow: 0 0 5px #000;
+            position: fixed;
+            top: -10%;
+            z-index: 9;
+            user-select: none;
+            cursor: default;
+            animation-name: snowfall;
+            animation-timing-function: linear;
+            animation-iteration-count: infinite;
+        }
+        
+        @keyframes snowfall {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+        
+        .simulate-btn {
+            display: block;
+            margin: 20px auto 40px;
+            padding: 15px 30px;
+            background: var(--gradient);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+        
+        .simulate-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.4);
+        }
         
         @media(max-width: 920px) {
             section {
@@ -2714,6 +2744,7 @@
             </div>
         </div>
         
+        <button class="simulate-btn" onclick="window.location.href='server.html'">Simule no Windows</button>
         
         <div style="margin-top: 3rem;" data-aos="fade-up">
             <h3 style="color: var(--secondary); margin-bottom: 1.5rem; text-align: center;">Veja o WolfGuard em Ação</h3>
@@ -3506,21 +3537,18 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
 <script>
-    // 
     AOS.init({ 
         duration: 800, 
         once: true,
         offset: 100
     });
     
-    // Preloader
     window.addEventListener('load', function() {
         setTimeout(function() {
             document.querySelector('.preloader').classList.add('fade-out');
         }, 2000);
     });
     
-    // 
     const backToTopBtn = document.getElementById('backToTop');
     
     window.addEventListener('scroll', function() {
@@ -3538,25 +3566,6 @@
         });
     });
     
-    // 
-    const cursorEffect = document.querySelector('.cursor-effect');
-    
-    document.addEventListener('mousemove', function(e) {
-        cursorEffect.style.left = e.clientX + 'px';
-        cursorEffect.style.top = e.clientY + 'px';
-    });
-    
-    document.addEventListener('mousedown', function() {
-        cursorEffect.style.width = '20px';
-        cursorEffect.style.height = '20px';
-    });
-    
-    document.addEventListener('mouseup', function() {
-        cursorEffect.style.width = '30px';
-        cursorEffect.style.height = '30px';
-    });
-    
-    // 
     window.addEventListener('scroll', function() {
         const header = document.querySelector('header');
         if (window.scrollY > 50) {
@@ -3566,7 +3575,6 @@
         }
     });
     
-    // Menu mobile
     const menuToggle = document.querySelector('.menu-toggle');
     const nav = document.querySelector('nav');
     
@@ -3575,7 +3583,6 @@
             nav.classList.add('active');
         });
         
-        // 
         const navLinks = document.querySelectorAll('nav a');
         navLinks.forEach(link => {
             link.addEventListener('click', () => {
@@ -3584,12 +3591,10 @@
         });
     }
     
-    // 
     const featureCards = document.querySelectorAll('.feature-card');
     const modals = document.querySelectorAll('.modal');
     const closeBtns = document.querySelectorAll('.modal-close');
     
-    // 
     featureCards.forEach(card => {
         card.addEventListener('click', () => {
             const feature = card.getAttribute('data-feature');
@@ -3601,7 +3606,6 @@
         });
     });
     
-    // 
     closeBtns.forEach(btn => {
         btn.addEventListener('click', () => {
             const modal = btn.closest('.modal');
@@ -3610,7 +3614,6 @@
         });
     });
     
-    // 
     modals.forEach(modal => {
         modal.addEventListener('click', (e) => {
             if (e.target === modal) {
@@ -3620,7 +3623,6 @@
         });
     });
     
-    // 
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             modals.forEach(modal => {
@@ -3630,7 +3632,6 @@
         }
     });
     
-    // 
     const manualBtn = document.getElementById('manual-btn');
     const manualModal = document.getElementById('modal-manual');
     
@@ -3642,7 +3643,6 @@
         });
     }
     
-    // 
     const privacidadeBtn = document.getElementById('privacidade-btn');
     const termosBtn = document.getElementById('termos-btn');
     const licencaBtn = document.getElementById('licenca-btn');
@@ -3684,7 +3684,6 @@
         });
     }
     
-    // Animação de hover nos itens de requisitos
     const requisitoItems = document.querySelectorAll('.requisito-item');
     
     requisitoItems.forEach(item => {
@@ -3718,35 +3717,26 @@
         });
     });
 
-    // 
     document.addEventListener('DOMContentLoaded', function() {
-        // Selecionar elementos
         const demoContainer = document.getElementById('wolfguard-demo');
         const demoContent = document.getElementById('demo-content');
         const menuItems = document.querySelectorAll('.demo-menu-item');
         
-        // 
         menuItems.forEach(item => {
             item.addEventListener('click', function() {
-                // 
                 menuItems.forEach(i => i.classList.remove('active'));
                 
-                // 
                 this.classList.add('active');
                 
-                // 
                 const screenName = this.getAttribute('data-screen');
                 loadScreen(screenName);
             });
         });
         
-        // 
         document.querySelector('[data-screen="painel"]').classList.add('active');
         loadScreen('painel');
         
-        // 
         function loadScreen(screen) {
-            // 
             let content = '';
             
             switch(screen) {
@@ -4269,385 +4259,14 @@
                     `;
                     break;
                     
-                case 'bloqueados':
-                    content = `
-                        <div class="demo-header">
-                            <h2 class="demo-title">Aplicativos Bloqueados</h2>
-                            <div class="demo-subtitle">Gerencie o acesso de aplicativos ao seu sistema</div>
-                        </div>
-                        
-                        <div class="info-box" style="margin-bottom: 1rem;">
-                            <div style="display: flex; align-items: center; gap: 0.5rem;">
-                                <i class="fa-solid fa-shield-halved" style="color: var(--secondary);"></i>
-                                <p style="margin: 0; font-size: 0.9rem;">Os aplicativos abaixo estão bloqueados. Adicione ou remova conforme necessário.</p>
-                            </div>
-                        </div>
-                        
-                        <div style="height: 300px; background: rgba(0,5,40,0.3); border-radius: var(--radius); margin-bottom: 1rem; overflow-y: auto;">
-                            <div style="padding: 0.8rem; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center;">
-                                <input type="checkbox" style="margin-right: 1rem;">
-                                <div style="flex: 1;">
-                                    <div style="font-weight: 500;">criptomoedas.exe</div>
-                                    <div style="font-size: 0.8rem; color: #a3a3c2;">C:\\Users\\Desconhecido\\AppData\\Local\\Temp\\virus.exe</div>
-                                </div>
-                                <div style="font-size: 0.8rem; color: #e74c3c; white-space: nowrap;">Bloqueado: Alto Risco</div>
-                            </div>
-                            <div style="padding: 0.8rem; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center;">
-                                <input type="checkbox" style="margin-right: 1rem;">
-                                <div style="flex: 1;">
-                                    <div style="font-weight: 500;">hack.exe</div>
-                                    <div style="font-size: 0.8rem; color: #a3a3c2;">C:\\Program Files\\cripto\\cripto.exe</div>
-                                </div>
-                                <div style="font-size: 0.8rem; color: #f39c12; white-space: nowrap;">Bloqueado: Médio Risco</div>
-                            </div>
-                        </div>
-                        
-                        <div class="bottom-buttons">
-                            <div>
-                                <button class="demo-btn"><i class="fa-solid fa-plus"></i> Adicionar Aplicativo</button>
-                                <button class="demo-btn" style="background: #7f8c8d;"><i class="fa-solid fa-filter"></i> Filtrar</button>
-                            </div>
-                            <div>
-                                <button class="demo-btn" style="background: #27ae60;"><i class="fa-solid fa-check"></i> Desbloquear</button>
-                                <button class="demo-btn demo-btn-red"><i class="fa-solid fa-trash"></i> Remover da Lista</button>
-                            </div>
-                        </div>
-                        
-                        <div style="margin-top: 1.5rem;">
-                            <div style="background: rgba(255,255,255,0.05); border-radius: var(--radius); padding: 1rem;">
-                                <h4 style="margin-top: 0; margin-bottom: 0.5rem; color: var(--secondary); display: flex; align-items: center; gap: 0.5rem;">
-                                    <i class="fa-solid fa-info-circle"></i> Modo de Bloqueio
-                                </h4>
-                                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
-                                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                                        <input type="radio" name="block-mode" checked>
-                                        <span>Perguntar antes de executar</span>
-                                    </label>
-                                    <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                                        <input type="radio" name="block-mode">
-                                        <span>Bloquear automaticamente</span>
-                                    </label>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                    break;
-                    
-                case 'sites':
-                    content = `
-                        <div class="demo-header">
-                            <h2 class="demo-title">Bloquear Sites</h2>
-                            <div class="demo-subtitle">Bloqueie o acesso a sites específicos por motivos de segurança</div>
-                        </div>
-                        
-                        <div style="margin-bottom: 1rem;">
-                            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                                <i class="fa-solid fa-info-circle" style="color: var(--secondary);"></i>
-                                <p style="margin: 0; font-size: 0.9rem;">Adicione URLs para bloquear o acesso a sites específicos. Sites bloqueados serão redirecionados para 127.0.0.1.</p>
-                            </div>
-                        </div>
-                        
-                        <div style="display: flex; gap: 0.5rem; margin-bottom: 1.5rem;">
-                            <input type="url" class="form-control" placeholder="https://ganhe-5-mil-reais.com" style="margin-bottom: 0;">
-                            <button class="demo-btn"><i class="fa-solid fa-plus"></i> Adicionar Site</button>
-                        </div>
-                        
-                        <div style="height: 300px; background: rgba(0,5,40,0.3); border-radius: var(--radius); margin-bottom: 1.5rem; overflow-y: auto;">
-                            <div style="padding: 0.8rem; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center;">
-                                <div style="display: flex; align-items: center; gap: 0.8rem;">
-                                    <input type="checkbox">
-                                    <div style="word-break: break-all;">www.radoodup.io/website-to-ip-lookup/</div>
-                                </div>
-                                <i class="fa-solid fa-trash" style="color: #e74c3c; cursor: pointer;"></i>
-                            </div>
-                            <div style="padding: 0.8rem; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; align-items: center;">
-                                <div style="display: flex; align-items: center; gap: 0.8rem;">
-                                    <input type="checkbox">
-                                    <div style="word-break: break-all;">ganhe-5-mil-reais.com</div>
-                                </div>
-                                <i class="fa-solid fa-trash" style="color: #e74c3c; cursor: pointer;"></i>
-                            </div>
-                        </div>
-                        
-                        <div class="bottom-buttons">
-                            <div>
-                                <button class="demo-btn" style="background: #34495e;"><i class="fa-solid fa-check-double"></i> Selecionar Todos</button>
-                                <button class="demo-btn" style="background: #3498db;"><i class="fa-solid fa-file-import"></i> Importar Lista</button>
-                            </div>
-                            <div>
-                                <button class="demo-btn demo-btn-red"><i class="fa-solid fa-trash"></i> Remover Selecionados</button>
-                                <button class="demo-btn" style="background: #e67e22;"><i class="fa-solid fa-file-export"></i> Exportar Lista</button>
-                            </div>
-                        </div>
-                    `;
-                    break;
-                    
-                case 'senhas':
-                    content = `
-                        <div class="demo-header">
-                            <h2 class="demo-title">Cofre de Senhas</h2>
-                            <div class="demo-subtitle">Armazene suas senhas com segurança usando criptografia avançada</div>
-                        </div>
-                        
-                        <div style="margin-bottom: 1.5rem;">
-                            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
-                                <i class="fa-solid fa-lock" style="color: var(--secondary);"></i>
-                                <p style="margin: 0; font-size: 0.9rem;">Suas senhas são protegidas com criptografia de ponta a ponta. Somente você pode acessá-las.</p>
-                            </div>
-                        </div>
-                        
-                        <div style="margin-bottom: 2rem; background: rgba(0,5,40,0.3); border-radius: var(--radius); padding: 1.5rem;">
-                            <h3 style="margin-top: 0; margin-bottom: 1rem; color: var(--secondary);">Adicionar Nova Senha</h3>
-                            <div style="display: grid; grid-template-columns: 1fr; gap: 1rem;">
-                                <input type="text" class="form-control" placeholder="Ex: Gmail, Facebook, Banco..." style="margin-bottom: 0;">
-                                <input type="text" class="form-control" placeholder="Seu nome de usuário ou email" style="margin-bottom: 0;">
-                                <div style="position: relative;">
-                                    <input type="password" class="form-control" placeholder="Sua senha" style="margin-bottom: 0;">
-                                    <button style="position: absolute; right: 10px; top: 8px; background: none; border: none; color: #a3a3c2; cursor: pointer;">
-                                        <i class="fa-solid fa-eye"></i>
-                                    </button>
-                                </div>
-                                <textarea class="form-control" placeholder="Informações adicionais (opcional)" style="margin-bottom: 0; min-height: 80px;"></textarea>
-                            </div>
-                            
-                            <div style="display: flex; gap: 0.8rem; margin-top: 1rem;">
-                                <button class="demo-btn" style="flex: 1;"><i class="fa-solid fa-floppy-disk"></i> Salvar Senha</button>
-                                <button class="demo-btn demo-btn-red" style="flex: 1;"><i class="fa-solid fa-eraser"></i> Limpar Campos</button>
-                                <button class="demo-btn" style="flex: 1; background: #3498db;"><i class="fa-solid fa-wand-magic-sparkles"></i> Gerar Senha</button>
-                            </div>
-                        </div>
-                        
-                        <div style="margin-bottom: 1.5rem;">
-                            <h3 style="display: flex; justify-content: space-between; align-items: center; margin-top: 0; margin-bottom: 1rem;">
-                                Senhas Salvas
-                                <span style="font-size: 0.8rem; background: rgba(0,0,0,0.3); padding: 0.3rem 0.5rem; border-radius: 4px;">
-                                    <i class="fa-solid fa-lock"></i> Dados protegidos
-                                </span>
-                            </h3>
-                            
-                            <div style="height: 150px; background: rgba(0,5,40,0.3); border-radius: var(--radius); margin: 1rem 0; overflow: auto; padding: 0.5rem;">
-                                <div style="padding: 0.8rem; border-bottom: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-between; align-items: center;">
-                                    <div style="font-weight: 500; color: var(--secondary);">WolfGuard</div>
-                                    <div>mateus@example.com</div>
-                                    <div>•••••••••••</div>
-                                    <div style="display: flex; gap: 0.5rem;">
-                                        <i class="fa-solid fa-copy" style="color: #3498db; cursor: pointer;"></i>
-                                        <i class="fa-solid fa-eye" style="color: #3498db; cursor: pointer;"></i>
-                                        <i class="fa-solid fa-pen-to-square" style="color: #3498db; cursor: pointer;"></i>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="bottom-buttons">
-                                <button class="demo-btn"><i class="fa-solid fa-rotate"></i> Atualizar Lista</button>
-                                <div>
-                                    <button class="demo-btn demo-btn-red"><i class="fa-solid fa-trash"></i> Excluir Selecionado</button>
-                                    <button class="demo-btn" style="background: #3498db;"><i class="fa-solid fa-file-export"></i> Exportar</button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div>
-                            <h3 style="margin-top: 0; margin-bottom: 1rem; color: var(--secondary);">Pastas Protegidas com ZIP</h3>
-                            <p style="font-size: 0.9rem; color: #a3a3c2; margin-bottom: 1rem;">Proteja seus arquivos em pastas ZIP com a senha do antivírus.</p>
-                            
-                            <div class="bottom-buttons">
-                                <button class="demo-btn"><i class="fa-solid fa-folder-plus"></i> Criar ZIP Protegido</button>
-                                <button class="demo-btn"><i class="fa-solid fa-folder-open"></i> Extrair ZIP Protegido</button>
-                                <button class="demo-btn"><i class="fa-solid fa-folder"></i> Abrir Pasta de ZIPs</button>
-                            </div>
-                        </div>
-                    `;
-                    break;
-                    
-                case 'descriptografia':
-                    content = `
-                        <div class="demo-header">
-                            <h2 class="demo-title">Descriptografia de Ransomware</h2>
-                            <div class="demo-subtitle">Tente recuperar arquivos criptografados por ransomware</div>
-                        </div>
-                        
-                        <div style="margin-bottom: 1.5rem;">
-                            <div style="display: flex; align-items: flex-start; gap: 0.8rem; padding: 1rem; background: rgba(255,255,255,0.05); border-radius: var(--radius);">
-                                <i class="fa-solid fa-triangle-exclamation" style="color: #f39c12; font-size: 1.2rem; margin-top: 0.2rem;"></i>
-                                <div>
-                                    <p style="margin: 0; margin-bottom: 0.5rem;">O WolfGuard tentará descriptografar arquivos afetados por ransomware. Este processo não é garantido para todos os tipos de ransomware.</p>
-                                    <p style="margin: 0; font-size: 0.9rem; color: #a3a3c2;">Para melhores resultados, não modifique os arquivos criptografados e tente este recurso assim que possível após o ataque.</p>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div style="height: 200px; background: rgba(0,5,40,0.3); border-radius: var(--radius); margin: 1.5rem 0; display: flex; align-items: center; justify-content: center; border: 2px dashed rgba(255,255,255,0.1);">
-                            <div style="text-align: center; color: #a3a3c2;">
-                                <i class="fa-solid fa-file-shield" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
-                                <p style="margin-bottom: 0.5rem;">Arraste arquivos criptografados para esta área</p>
-                                <p style="font-size: 0.8rem; margin: 0;">ou selecione-os manualmente</p>
-                            </div>
-                        </div>
-                        
-                        <button class="demo-btn" style="width: 100%;"><i class="fa-solid fa-folder-open"></i> Selecionar Arquivos Criptografados</button>
-                        
-                        <div style="margin: 1.5rem 0;">
-                            <h4 style="margin-top: 0; margin-bottom: 0.5rem; color: var(--secondary); display: flex; justify-content: space-between; align-items: center;">
-                                <span>Progresso da Recuperação</span>
-                                <span style="font-size: 0.9rem; font-weight: normal; color: #a3a3c2;">Aguardando arquivos...</span>
-                            </h4>
-                            <div class="progress-container">
-                                <div class="progress-bar" style="width: 0%;"></div>
-                            </div>
-                        </div>
-                        
-                        <div style="height: 150px; background: rgba(0,5,40,0.3); border-radius: var(--radius); margin-bottom: 1.5rem; overflow-y: auto;">
-                            <div style="padding: 1rem; text-align: center; color: #a3a3c2;">
-                                <i class="fa-solid fa-list" style="font-size: 2rem; margin-bottom: 0.5rem; opacity: 0.5;"></i>
-                                <p>Os arquivos em análise serão exibidos aqui</p>
-                            </div>
-                        </div>
-                        
-                        <div class="bottom-buttons">
-                            <div>
-                                <button class="demo-btn" disabled><i class="fa-solid fa-play"></i> Iniciar Descriptografia</button>
-                                <button class="demo-btn" style="background: #3498db;" disabled><i class="fa-solid fa-virus-slash"></i> Identificar Ransomware</button>
-                            </div>
-                            <button class="demo-btn demo-btn-red" disabled><i class="fa-solid fa-stop"></i> Cancelar</button>
-                        </div>
-                        
-                        <div style="margin-top: 1.5rem; text-align: center;">
-                            <a href="#" style="color: var(--secondary); text-decoration: none; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 0.5rem;">
-                                <i class="fa-solid fa-circle-question"></i> Como funciona a recuperação de arquivos?
-                            </a>
-                        </div>
-                    `;
-                    break;
-                    
-                case 'config':
-                    content = `
-                        <div class="demo-header">
-                            <h2 class="demo-title">Configurações</h2>
-                            <div class="demo-subtitle">Personalize o comportamento do WolfGuard Antivirus</div>
-                        </div>
-                        
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
-                            <div class="info-section">
-                                <h3><i class="fa-solid fa-book-open"></i> Instruções e Tutoriais</h3>
-                                <div class="status-card" style="margin-bottom: 0.5rem;">
-                                    <div class="status-text">
-                                        <strong>Mostrar instruções de uso</strong>
-                                        <p style="margin: 5px 0 0; font-size: 0.9rem; color: #a3a3c2;">Exibe um tutorial com instruções de uso ao iniciar o aplicativo</p>
-                                    </div>
-                                    <label class="status-toggle">
-                                        <input type="checkbox" checked>
-                                        <span class="status-toggle-slider"></span>
-                                    </label>
-                                </div>
-                                <button class="demo-btn" style="width: 100%; margin-top: 1rem;"><i class="fa-solid fa-circle-question"></i> Mostrar Instruções Agora</button>
-                            </div>
-                            
-                            <div class="info-section">
-                                <h3><i class="fa-solid fa-key"></i> Configuração de Senha</h3>
-                                <div class="status-card" style="margin-bottom: 0.5rem;">
-                                    <div class="status-text">
-                                        <strong>Proteção por senha</strong>
-                                        <p style="margin: 5px 0 0; font-size: 0.9rem; color: #a3a3c2;">Solicitar senha ao iniciar o antivírus</p>
-                                    </div>
-                                    <label class="status-toggle">
-                                        <input type="checkbox">
-                                        <span class="status-toggle-slider"></span>
-                                    </label>
-                                </div>
-                                <div style="display: flex; margin-top: 1rem;">
-                                    <input type="password" class="form-control" placeholder="Digite a senha do antivírus" style="margin-bottom: 0; border-radius: var(--radius) 0 0 var(--radius);">
-                                    <button class="demo-btn" style="border-radius: 0 var(--radius) var(--radius) 0;"><i class="fa-solid fa-floppy-disk"></i></button>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="info-section">
-                            <h3><i class="fa-solid fa-bell"></i> Notificações</h3>
-                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem;">
-                                <label class="scan-option-label">
-                                    <input type="checkbox" checked class="scan-option-checkbox"> Notificações de ameaças
-                                </label>
-                                <label class="scan-option-label">
-                                    <input type="checkbox" checked class="scan-option-checkbox"> Notificações de atualizações
-                                </label>
-                                <label class="scan-option-label">
-                                    <input type="checkbox" checked class="scan-option-checkbox"> Notificações de verificação
-                                </label>
-                                <label class="scan-option-label">
-                                    <input type="checkbox" checked class="scan-option-checkbox"> Alertas de segurança
-                                </label>
-                            </div>
-                        </div>
-                        
-                        <div class="info-section">
-                            <h3><i class="fa-solid fa-sliders"></i> Configurações Gerais</h3>
-                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem;">
-                                <div>
-                                    <div class="status-card" style="margin-bottom: 0.5rem;">
-                                        <div class="status-text">
-                                            <strong>Iniciar com o Windows</strong>
-                                            <p style="margin: 5px 0 0; font-size: 0.9rem; color: #a3a3c2;">Inicia o WolfGuard automaticamente ao ligar o computador</p>
-                                        </div>
-                                        <label class="status-toggle">
-                                            <input type="checkbox" checked>
-                                            <span class="status-toggle-slider"></span>
-                                        </label>
-                                    </div>
-                                    
-                                    <div class="status-card" style="margin-top: 1rem;">
-                                        <div class="status-text">
-                                            <strong>Modo silencioso</strong>
-                                            <p style="margin: 5px 0 0; font-size: 0.9rem; color: #a3a3c2;">Reduz notificações durante uso de tela cheia</p>
-                                        </div>
-                                        <label class="status-toggle">
-                                            <input type="checkbox" checked>
-                                            <span class="status-toggle-slider"></span>
-                                        </label>
-                                    </div>
-                                </div>
-                                
-                                <div>
-                                    <div class="status-card" style="margin-bottom: 0.5rem;">
-                                        <div class="status-text">
-                                            <strong>Verificação periódica</strong>
-                                            <p style="margin: 5px 0 0; font-size: 0.9rem; color: #a3a3c2;">Agenda verificações automáticas do sistema</p>
-                                        </div>
-                                        <label class="status-toggle">
-                                            <input type="checkbox" checked>
-                                            <span class="status-toggle-slider"></span>
-                                        </label>
-                                    </div>
-                                    
-                                    <div style="margin-top: 1rem;">
-                                        <label style="display: block; margin-bottom: 0.5rem; color: #a3a3c2;">Frequência de verificação:</label>
-                                        <select class="form-control">
-                                            <option>Diariamente</option>
-                                            <option selected>Semanalmente</option>
-                                            <option>Quinzenalmente</option>
-                                            <option>Mensalmente</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="bottom-buttons" style="margin-top: 2rem;">
-                            <button class="demo-btn" style="width: 100%; background: #27ae60;"><i class="fa-solid fa-floppy-disk"></i> Aplicar Configurações</button>
-                            <button class="demo-btn" style="width: 100%; margin-top: 0.5rem; background: #e74c3c;"><i class="fa-solid fa-rotate-left"></i> Restaurar Padrões</button>
-                            <button class="demo-btn" style="width: 100%; margin-top: 0.5rem; background: #f39c12;"><i class="fa-solid fa-file-lines"></i> Ver Log de Erros</button>
-                        </div>
-                    `;
-                    break;
-                    
                 default:
                     content = `<div>Tela não implementada</div>`;
             }
             
-            // Inserir conteúdo na área de demonstração
+            
             demoContent.innerHTML = content;
             
-            // Animar a entrada do conteúdo
+            
             setTimeout(() => {
                 const elements = demoContent.querySelectorAll('.demo-header, .status-card, .action-buttons, .info-section, .scan-settings, .file-list, .bottom-buttons');
                 
@@ -4663,37 +4282,30 @@
                 });
             }, 50);
             
-            // Configurar interatividade após carregar o conteúdo
+            
             setupInteractions(screen);
         }
         
-        // Configurar interações específicas para cada tela
         function setupInteractions(screen) {
-            // Alternar proteção em tempo real
             const realtimeToggle = document.querySelector('.realtime-toggle');
             if (realtimeToggle) {
                 realtimeToggle.addEventListener('change', function() {
-                    // Atualizar todos os toggles de proteção em tempo real para manter sincronização
                     document.querySelectorAll('.realtime-toggle').forEach(toggle => {
                         toggle.checked = this.checked;
                     });
                 });
             }
             
-            // Alternar proteção USB
             const usbToggle = document.querySelector('.usb-toggle');
             if (usbToggle) {
                 usbToggle.addEventListener('change', function() {
-                    // Lógica para toggle de proteção USB
                 });
             }
             
-            // Botão de verificação rápida no painel
             const scanBtn = document.getElementById('scan-btn');
             if (scanBtn) {
                 scanBtn.addEventListener('click', function() {
                     document.querySelector('[data-screen="verificacao"]').click();
-                    // Ativar automaticamente a verificação após trocar de tela
                     setTimeout(() => {
                         const startScanBtn = document.getElementById('start-scan-btn');
                         if (startScanBtn) startScanBtn.click();
@@ -4701,7 +4313,6 @@
                 });
             }
             
-            // Mostrar detalhes da verificação
             const showDetailsBtn = document.querySelector('.demo-btn[style*="background: #34495e"]');
             const scanDetails = document.getElementById('scan-details');
             
@@ -4717,7 +4328,7 @@
                 });
             }
             
-            // Iniciar verificação na tela de verificação
+            
             const startScanBtn = document.getElementById('start-scan-btn');
             if (startScanBtn) {
                 startScanBtn.addEventListener('click', function() {
@@ -4726,14 +4337,14 @@
                     const scanningStatus = document.querySelector('.scanning-status');
                     const currentFile = document.querySelector('.current-file');
                     
-                    // Adicionar efeito de escaneamento
+                    
                     demoContent.classList.add('scanning-effect');
                     
-                    // Desabilitar botão iniciar e habilitar botão cancelar
+                    
                     this.disabled = true;
                     document.querySelector('.demo-btn-red').disabled = false;
                     
-                    // Atualizar estatísticas
+                    
                     if (scanningStatus) {
                         scanningStatus.textContent = 'Verificando...';
                         scanningStatus.style.color = '#2575fc';
@@ -4747,7 +4358,7 @@
                         scanStats[1].innerHTML = '<div>Arquivos verificados: 0 | Ameaças encontradas: 0</div><div>Tempo restante: estimando...</div>';
                     }
                     
-                    // Lista de arquivos fictícios para mostrar durante a verificação
+                    
                     const fileList = [
                         'C:\\Windows\\System32\\ntdll.dll',
                         'C:\\Windows\\System32\\kernel32.dll',
@@ -4765,7 +4376,7 @@
                         'C:\\Windows\\System32\\config\\systemprofile\\AppData\\Local\\Microsoft\\Windows\\INetCache\\IE\\index.dat'
                     ];
                     
-                    // Simulação de progresso
+                    
                     let progress = 0;
                     let filesScanned = 0;
                     let fileIndex = 0;
@@ -4778,17 +4389,17 @@
                             progressBar.style.width = progress + '%';
                         }
                         
-                        // Atualizar números
+                        
                         filesScanned = Math.floor(progress * 65);
                         
-                        // Atualizar arquivo atual sendo verificado
+                        
                         if (currentFile && fileIndex < fileList.length) {
                             fileIndex = Math.floor((progress / 100) * fileList.length);
                             if (fileIndex >= fileList.length) fileIndex = fileList.length - 1;
                             currentFile.textContent = fileList[fileIndex];
-                            // Adicionar efeito de animação ao texto
+                            
                             currentFile.style.animation = 'none';
-                            void currentFile.offsetWidth; // Reflow
+                            void currentFile.offsetWidth; 
                             currentFile.style.animation = 'fadeInUp 0.3s forwards';
                         }
                         
@@ -4812,10 +4423,10 @@
                         if (progress >= 100) {
                             clearInterval(interval);
                             
-                            // Remover efeito de escaneamento
+                            
                             demoContent.classList.remove('scanning-effect');
                             
-                            // Atualizar mensagem final
+                            
                             if (scanningStatus) {
                                 scanningStatus.textContent = 'Verificação concluída';
                                 scanningStatus.style.color = '#2ed573';
@@ -4841,19 +4452,19 @@
                         }
                     }, 100);
                     
-                    // Cancelar verificação ao clicar no botão cancelar
+                    
                     document.querySelector('.demo-btn-red').addEventListener('click', function() {
                         clearInterval(interval);
                         
-                        // Remover efeito de escaneamento
+                        
                         demoContent.classList.remove('scanning-effect');
                         
-                        // Resetar progresso
+                        
                         if (progressBar) {
                             progressBar.style.width = '0%';
                         }
                         
-                        // Atualizar mensagens
+                        
                         if (scanningStatus) {
                             scanningStatus.textContent = 'Verificação cancelada';
                             scanningStatus.style.color = '#e74c3c';
@@ -4881,9 +4492,7 @@
         }
     });
     
-    // Efeito 3D de esfera no background usando Three.js
     document.addEventListener('DOMContentLoaded', function() {
-        // Configurar esfera 3D
         const container = document.getElementById('sphere-container');
         
         if (container && typeof THREE !== 'undefined') {
@@ -4894,7 +4503,6 @@
             renderer.setSize(window.innerWidth, window.innerHeight);
             container.appendChild(renderer.domElement);
             
-            // Criar esfera
             const geometry = new THREE.SphereGeometry(5, 32, 32);
             const material = new THREE.MeshBasicMaterial({
                 color: 0x2575fc,
@@ -4907,7 +4515,6 @@
             
             camera.position.z = 15;
             
-            // Animação
             function animate() {
                 requestAnimationFrame(animate);
                 
@@ -4917,7 +4524,6 @@
                 renderer.render(scene, camera);
             }
             
-            // Ajustar tamanho ao redimensionar a janela
             window.addEventListener('resize', function() {
                 camera.aspect = window.innerWidth / window.innerHeight;
                 camera.updateProjectionMatrix();
@@ -4927,6 +4533,30 @@
             animate();
         }
     });
+    
+    function createSnowflakes() {
+        const snowflakeContainer = document.body;
+        const snowflakeCount = 150;
+        
+        for (let i = 0; i < snowflakeCount; i++) {
+            let snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+            snowflake.style.width = (Math.random() * 5 + 2) + 'px';
+            snowflake.style.height = snowflake.style.width;
+            snowflake.style.borderRadius = '50%';
+            snowflake.style.background = 'rgba(255, 255, 255, 0.7)';
+            snowflake.style.boxShadow = '0 0 3px rgba(255, 255, 255, 0.4)';
+            snowflake.style.opacity = Math.random() * 0.3 + 0.3;
+            snowflake.style.left = Math.random() * 100 + 'vw';
+            snowflake.style.animationDuration = (Math.random() * 8 + 10) + 's';
+            snowflake.style.animationDelay = Math.random() * 5 + 's';
+            snowflake.style.zIndex = '-10';
+            
+            snowflakeContainer.appendChild(snowflake);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', createSnowflakes);
 </script>
 </body>
 </html>
