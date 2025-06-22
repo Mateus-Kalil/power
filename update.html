@@ -70,7 +70,6 @@
             to { transform: translateY(40px); }
         }
         
-        /* Animação de neve */
         .snowflakes-container {
             position: fixed;
             top: 0;
@@ -1464,9 +1463,9 @@
         <div class="hero-content">
             <h1 data-text="Centro de Atualizações WolfGuard">Atualizações WolfGuard</h1>
             <p>Mantenha seu sistema protegido com as atualizações mais recentes e blacklists atualizadas. A segurança contínua é essencial para proteger seus dados contra ameaças emergentes.</p>
-            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
-                <a href="#updates" class="btn pulse-animation"><i class="fa-solid fa-download"></i> Baixar Atualizações</a>
-                <a href="#blacklist" class="btn btn-outline"><i class="fa-solid fa-shield-virus"></i> Acessar Blacklist</a>
+            <div style="display: flex; flex-direction: column; align-items: center; margin: 0 auto; width: 100%;">
+                <a href="#blacklist" class="btn btn-outline" style="width: 240px; margin-bottom: 1.5rem; justify-content: center;"><i class="fa-solid fa-shield-virus"></i> Acessar Blacklist</a>
+                <a href="#" id="check-for-updates" class="btn btn-outline" style="width: 240px; justify-content: center;"><i class="fa-solid fa-sync"></i> Verificar Atualizações</a>
             </div>
         </div>
     </section>
@@ -1601,53 +1600,6 @@
             </div>
             
             <div class="blacklist-content" id="blacklist-content">
-                <span class="ransomware">CryptoLocker.exe</span>
-                <span class="ransomware">CryptoWall.exe</span>
-                <span class="ransomware">lg3.png</span>
-                <span class="ransomware">C:/Users/mateu/Downloads/nota1.png</span>
-                <span class="trojan">C:/MKOSINT/FIASINT.exe</span>
-                <span class="trojan">trojan_banker.exe</span>
-                <span class="trojan">WinSys32.dll</span>
-                <span class="trojan">setup_legit_program.exe</span>
-                <span class="spyware">keylogger_master.exe</span>
-                <span class="spyware">C:/Windows/System32/svchost243.exe</span>
-                <span class="spyware">browser_extension_malicious.xpi</span>
-                <span class="spyware">C:/Users/admin/AppData/Roaming/System/sysproc.exe</span>
-                <span class="adware">free_screensaver.exe</span>
-                <span class="adware">adservice.dll</span>
-                <span class="adware">C:/Program Files (x86)/FreeDownloader/downloader.exe</span>
-                <span class="adware">browser_speedup_tool.exe</span>
-                <span class="rootkit">ntoskrnl_mod.sys</span>
-                <span class="rootkit">C:/Windows/System32/drivers/rootkit_stealth.sys</span>
-                <span class="rootkit">bootkit_installer.exe</span>
-                <span class="rootkit">registry_persistence.dll</span>
-                <span class="ransomware">WannaCry.exe</span>
-                <span class="ransomware">Petya.exe</span>
-                <span class="ransomware">Locky.exe</span>
-                <span class="ransomware">C:/Users/Desktop/important_document.pdf.exe</span>
-                <span class="trojan">backdoor_access.exe</span>
-                <span class="trojan">fake_invoice2025.xls</span>
-                <span class="trojan">C:/Users/Downloads/movie_free_download.mp4.exe</span>
-                <span class="spyware">tracking_cookie_installer.js</span>
-                <span class="spyware">C:/Program Files/WebToolbar/service.exe</span>
-                <span class="ransomware">Ryuk.exe</span>
-                <span class="ransomware">GandCrab.exe</span>
-                <span class="ransomware">C:/Users/Documents/Important/tax_return_2025.xlsx.encrypted</span>
-                <span class="ransomware">Maze.exe</span>
-                <span class="trojan">C:/Windows/svchost.exe.bak</span>
-                <span class="trojan">remote_admin_tool.exe</span>
-                <span class="trojan">fake_update.exe</span>
-                <span class="spyware">system_monitor.dll</span>
-                <span class="spyware">C:/ProgramData/Packages/credential_stealer.exe</span>
-                <span class="adware">shopping_assistant.exe</span>
-                <span class="adware">coupon_finder.exe</span>
-                <span class="adware">C:/Users/AppData/Local/Temp/adrotator.dll</span>
-                <span class="rootkit">C:/Windows/System32/drivers/hidden_access.sys</span>
-                <span class="rootkit">kernel_modifier.exe</span>
-                <span class="rootkit">bootloader_infector.exe</span>
-                <span class="ransomware">DarkSide.exe</span>
-                <span class="ransomware">REvil.exe</span>
-                <span class="ransomware">C:/Users/Pictures/family_photos.zip.encrypted</span>
             </div>
             
             <div class="download-actions">
@@ -2043,41 +1995,170 @@
             });
             
             const filterBtns = document.querySelectorAll('.filter-btn');
-            const blacklistItems = document.querySelectorAll('.blacklist-content span');
+            let blacklistItems;
             
-            filterBtns.forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const filter = this.getAttribute('data-filter');
+            async function loadBlacklist() {
+                try {
+                    const response = await fetch('blacklist.txt');
+                    if (!response.ok) {
+                        throw new Error('Erro ao carregar a blacklist');
+                    }
                     
-                    filterBtns.forEach(b => b.classList.remove('active'));
-                    this.classList.add('active');
+                    const text = await response.text();
+                    const lines = text.split('\n').filter(line => line.trim() !== '');
                     
-                    blacklistItems.forEach(item => {
-                        if (filter === 'all' || item.classList.contains(filter)) {
-                            item.style.display = 'block';
-                        } else {
-                            item.style.display = 'none';
-                        }
+                    const blacklistContent = document.getElementById('blacklist-content');
+                    blacklistContent.innerHTML = '';
+                    
+                    const threatTypes = ['ransomware', 'trojan', 'spyware', 'adware', 'rootkit'];
+                    
+                    lines.forEach(line => {
+                        const span = document.createElement('span');
+                        span.textContent = line;
+                        
+                        const randomType = threatTypes[Math.floor(Math.random() * threatTypes.length)];
+                        span.classList.add(randomType);
+                        
+                        blacklistContent.appendChild(span);
                     });
-                });
-            });
-            
-            const blacklistSearch = document.getElementById('blacklist-search');
-            
-            if (blacklistSearch) {
-                blacklistSearch.addEventListener('input', function() {
-                    const searchTerm = this.value.toLowerCase();
                     
-                    blacklistItems.forEach(item => {
-                        const text = item.textContent.toLowerCase();
-                        if (text.includes(searchTerm)) {
-                            item.style.display = 'block';
-                        } else {
-                            item.style.display = 'none';
-                        }
+                    blacklistItems = document.querySelectorAll('.blacklist-content span');
+                    
+                    filterBtns.forEach(btn => {
+                        btn.addEventListener('click', function() {
+                            const filter = this.getAttribute('data-filter');
+                            
+                            filterBtns.forEach(b => b.classList.remove('active'));
+                            this.classList.add('active');
+                            
+                            blacklistItems.forEach(item => {
+                                if (filter === 'all' || item.classList.contains(filter)) {
+                                    item.style.display = 'block';
+                                } else {
+                                    item.style.display = 'none';
+                                }
+                            });
+                        });
                     });
-                });
+                    
+                    const blacklistSearch = document.getElementById('blacklist-search');
+                    
+                    if (blacklistSearch) {
+                        blacklistSearch.addEventListener('input', function() {
+                            const searchTerm = this.value.toLowerCase();
+                            
+                            blacklistItems.forEach(item => {
+                                const text = item.textContent.toLowerCase();
+                                if (text.includes(searchTerm)) {
+                                    item.style.display = 'block';
+                                } else {
+                                    item.style.display = 'none';
+                                }
+                            });
+                        });
+                    }
+                } catch (error) {
+                    console.error('Erro:', error);
+                    const blacklistContent = document.getElementById('blacklist-content');
+                    
+                    const defaultItems = [
+                        { text: 'CryptoLocker.exe', type: 'ransomware' },
+                        { text: 'CryptoWall.exe', type: 'ransomware' },
+                        { text: 'lg3.png', type: 'ransomware' },
+                        { text: 'C:/Users/mateu/Downloads/nota1.png', type: 'ransomware' },
+                        { text: 'C:/MKOSINT/FIASINT.exe', type: 'trojan' },
+                        { text: 'trojan_banker.exe', type: 'trojan' },
+                        { text: 'WinSys32.dll', type: 'trojan' },
+                        { text: 'setup_legit_program.exe', type: 'trojan' },
+                        { text: 'keylogger_master.exe', type: 'spyware' },
+                        { text: 'C:/Windows/System32/svchost243.exe', type: 'spyware' },
+                        { text: 'browser_extension_malicious.xpi', type: 'spyware' },
+                        { text: 'C:/Users/admin/AppData/Roaming/System/sysproc.exe', type: 'spyware' },
+                        { text: 'free_screensaver.exe', type: 'adware' },
+                        { text: 'adservice.dll', type: 'adware' },
+                        { text: 'C:/Program Files (x86)/FreeDownloader/downloader.exe', type: 'adware' },
+                        { text: 'browser_speedup_tool.exe', type: 'adware' },
+                        { text: 'ntoskrnl_mod.sys', type: 'rootkit' },
+                        { text: 'C:/Windows/System32/drivers/rootkit_stealth.sys', type: 'rootkit' },
+                        { text: 'bootkit_installer.exe', type: 'rootkit' },
+                        { text: 'registry_persistence.dll', type: 'rootkit' },
+                        { text: 'WannaCry.exe', type: 'ransomware' },
+                        { text: 'Petya.exe', type: 'ransomware' },
+                        { text: 'Locky.exe', type: 'ransomware' },
+                        { text: 'C:/Users/Desktop/important_document.pdf.exe', type: 'ransomware' },
+                        { text: 'backdoor_access.exe', type: 'trojan' },
+                        { text: 'fake_invoice2025.xls', type: 'trojan' },
+                        { text: 'C:/Users/Downloads/movie_free_download.mp4.exe', type: 'trojan' },
+                        { text: 'tracking_cookie_installer.js', type: 'spyware' },
+                        { text: 'C:/Program Files/WebToolbar/service.exe', type: 'spyware' },
+                        { text: 'Ryuk.exe', type: 'ransomware' },
+                        { text: 'GandCrab.exe', type: 'ransomware' },
+                        { text: 'C:/Users/Documents/Important/tax_return_2025.xlsx.encrypted', type: 'ransomware' },
+                        { text: 'Maze.exe', type: 'ransomware' },
+                        { text: 'C:/Windows/svchost.exe.bak', type: 'trojan' },
+                        { text: 'remote_admin_tool.exe', type: 'trojan' },
+                        { text: 'fake_update.exe', type: 'trojan' },
+                        { text: 'system_monitor.dll', type: 'spyware' },
+                        { text: 'C:/ProgramData/Packages/credential_stealer.exe', type: 'spyware' },
+                        { text: 'shopping_assistant.exe', type: 'adware' },
+                        { text: 'coupon_finder.exe', type: 'adware' },
+                        { text: 'C:/Users/AppData/Local/Temp/adrotator.dll', type: 'adware' },
+                        { text: 'C:/Windows/System32/drivers/hidden_access.sys', type: 'rootkit' },
+                        { text: 'kernel_modifier.exe', type: 'rootkit' },
+                        { text: 'bootloader_infector.exe', type: 'rootkit' },
+                        { text: 'DarkSide.exe', type: 'ransomware' },
+                        { text: 'REvil.exe', type: 'ransomware' },
+                        { text: 'C:/Users/Pictures/family_photos.zip.encrypted', type: 'ransomware' }
+                    ];
+                    
+                    blacklistContent.innerHTML = '';
+                    
+                    defaultItems.forEach(item => {
+                        const span = document.createElement('span');
+                        span.textContent = item.text;
+                        span.classList.add(item.type);
+                        blacklistContent.appendChild(span);
+                    });
+                    
+                    blacklistItems = document.querySelectorAll('.blacklist-content span');
+                    
+                    filterBtns.forEach(btn => {
+                        btn.addEventListener('click', function() {
+                            const filter = this.getAttribute('data-filter');
+                            
+                            filterBtns.forEach(b => b.classList.remove('active'));
+                            this.classList.add('active');
+                            
+                            blacklistItems.forEach(item => {
+                                if (filter === 'all' || item.classList.contains(filter)) {
+                                    item.style.display = 'block';
+                                } else {
+                                    item.style.display = 'none';
+                                }
+                            });
+                        });
+                    });
+                    
+                    const blacklistSearch = document.getElementById('blacklist-search');
+                    
+                    if (blacklistSearch) {
+                        blacklistSearch.addEventListener('input', function() {
+                            const searchTerm = this.value.toLowerCase();
+                            
+                            blacklistItems.forEach(item => {
+                                const text = item.textContent.toLowerCase();
+                                if (text.includes(searchTerm)) {
+                                    item.style.display = 'block';
+                                } else {
+                                    item.style.display = 'none';
+                                }
+                            });
+                        });
+                    }
+                }
             }
+            
+            loadBlacklist();
             
             const downloadMainBtn = document.getElementById('download-main-update');
             const updateProgress = document.getElementById('update-progress');
@@ -2174,67 +2255,89 @@
             }
             
             const checkUpdatesBtn = document.getElementById('check-updates-btn');
+            const checkForUpdatesBtn = document.getElementById('check-for-updates');
             
-            if (checkUpdatesBtn) {
-                checkUpdatesBtn.addEventListener('click', function() {
-                    this.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verificando...';
-                    this.disabled = true;
+            function checkForUpdates(button) {
+                button.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Verificando...';
+                button.disabled = true;
+                
+                setTimeout(() => {
+                    button.innerHTML = button === checkUpdatesBtn ? 
+                        '<i class="fa-solid fa-rotate"></i> Verificar Atualizações' : 
+                        '<i class="fa-solid fa-sync"></i> Verificar Atualizações';
+                    button.disabled = false;
+                    
+                    const notification = document.createElement('div');
+                    notification.style.position = 'fixed';
+                    notification.style.bottom = '20px';
+                    notification.style.left = '20px';
+                    notification.style.background = 'rgba(10, 10, 35, 0.9)';
+                    notification.style.borderRadius = 'var(--radius)';
+                    notification.style.padding = '1.5rem';
+                    notification.style.boxShadow = '0 5px 20px rgba(0,0,0,0.5)';
+                    notification.style.borderLeft = '4px solid #2ed573';
+                    notification.style.maxWidth = '400px';
+                    notification.style.zIndex = '1000';
+                    notification.style.transform = 'translateY(100px)';
+                    notification.style.opacity = '0';
+                    notification.style.transition = 'all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
+                    
+                    notification.innerHTML = `
+                        <div style="display: flex; align-items: flex-start; gap: 1rem;">
+                            <i class="fa-solid fa-check-circle" style="color: #2ed573; font-size: 1.5rem;"></i>
+                            <div>
+                                <h4 style="margin: 0 0 0.5rem; color: var(--light);">Antivírus já atualizado</h4>
+                                <p style="margin: 0 0 0.8rem; font-size: 0.9rem; color: #d8d8e8;">Seu WolfGuard já está na versão mais recente (1.0.0). Você está protegido!</p>
+                                <button class="btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Entendido</button>
+                            </div>
+                        </div>
+                        <button style="position: absolute; top: 0.5rem; right: 0.5rem; background: none; border: none; color: #a3a3c2; cursor: pointer; font-size: 1rem;">
+                            <i class="fa-solid fa-xmark"></i>
+                        </button>
+                    `;
+                    
+                    document.body.appendChild(notification);
                     
                     setTimeout(() => {
-                        this.innerHTML = '<i class="fa-solid fa-rotate"></i> Verificar Atualizações';
-                        this.disabled = false;
-                        
-                        const notification = document.createElement('div');
-                        notification.style.position = 'fixed';
-                        notification.style.bottom = '20px';
-                        notification.style.left = '20px';
-                        notification.style.background = 'rgba(10, 10, 35, 0.9)';
-                        notification.style.borderRadius = 'var(--radius)';
-                        notification.style.padding = '1.5rem';
-                        notification.style.boxShadow = '0 5px 20px rgba(0,0,0,0.5)';
-                        notification.style.borderLeft = '4px solid #2ed573';
-                        notification.style.maxWidth = '400px';
-                        notification.style.zIndex = '1000';
+                        notification.style.transform = 'translateY(0)';
+                        notification.style.opacity = '1';
+                    }, 100);
+                    
+                    const closeBtn = notification.querySelector('.fa-xmark').parentElement;
+                    closeBtn.addEventListener('click', () => {
                         notification.style.transform = 'translateY(100px)';
                         notification.style.opacity = '0';
-                        notification.style.transition = 'all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)';
-                        
-                        notification.innerHTML = `
-                            <div style="display: flex; align-items: flex-start; gap: 1rem;">
-                                <i class="fa-solid fa-check-circle" style="color: #2ed573; font-size: 1.5rem;"></i>
-                                <div>
-                                    <h4 style="margin: 0 0 0.5rem; color: var(--light);">Antivírus já atualizado</h4>
-                                    <p style="margin: 0 0 0.8rem; font-size: 0.9rem; color: #d8d8e8;">Seu WolfGuard já está na versão mais recente (1.0.0). Você está protegido!</p>
-                                    <button class="btn" style="padding: 0.5rem 1rem; font-size: 0.9rem;">Entendido</button>
-                                </div>
-                            </div>
-                            <button style="position: absolute; top: 0.5rem; right: 0.5rem; background: none; border: none; color: #a3a3c2; cursor: pointer; font-size: 1rem;">
-                                <i class="fa-solid fa-xmark"></i>
-                            </button>
-                        `;
-                        
-                        document.body.appendChild(notification);
                         
                         setTimeout(() => {
-                            notification.style.transform = 'translateY(0)';
-                            notification.style.opacity = '1';
-                        }, 100);
-                        
-                        const closeBtn = notification.querySelector('.fa-xmark').parentElement;
-                        closeBtn.addEventListener('click', () => {
-                            notification.style.transform = 'translateY(100px)';
-                            notification.style.opacity = '0';
-                            
-                            setTimeout(() => {
-                                document.body.removeChild(notification);
-                            }, 500);
-                        });
-                        
-                        const laterBtn = notification.querySelector('button[style*="background: none"]');
+                            document.body.removeChild(notification);
+                        }, 500);
+                    });
+                    
+                    const laterBtn = notification.querySelector('button[style*="background: none"]');
+                    if (laterBtn) {
                         laterBtn.addEventListener('click', () => {
                             closeBtn.click();
                         });
-                    }, 2000);
+                    }
+                    
+                    const okBtn = notification.querySelector('.btn');
+                    if (okBtn) {
+                        okBtn.addEventListener('click', () => {
+                            closeBtn.click();
+                        });
+                    }
+                }, 2000);
+            }
+            
+            if (checkUpdatesBtn) {
+                checkUpdatesBtn.addEventListener('click', function() {
+                    checkForUpdates(checkUpdatesBtn);
+                });
+            }
+            
+            if (checkForUpdatesBtn) {
+                checkForUpdatesBtn.addEventListener('click', function() {
+                    checkForUpdates(checkForUpdatesBtn);
                 });
             }
             
@@ -2259,10 +2362,15 @@
                             'banking_trojan_2025.dll'
                         ];
                         
+                        const threatTypes = ['ransomware', 'trojan', 'spyware', 'adware', 'rootkit'];
+                        
                         newItems.forEach(item => {
                             const newSpan = document.createElement('span');
                             newSpan.textContent = item;
-                            newSpan.classList.add('ransomware');
+                            
+                            const randomType = threatTypes[Math.floor(Math.random() * threatTypes.length)];
+                            newSpan.classList.add(randomType);
+                            
                             newSpan.style.animation = 'fadeIn 0.5s forwards';
                             newSpan.style.backgroundColor = 'rgba(255, 71, 87, 0.1)';
                             
@@ -2272,6 +2380,8 @@
                                 newSpan.style.backgroundColor = 'transparent';
                             }, 5000);
                         });
+                        
+                        blacklistItems = document.querySelectorAll('.blacklist-content span');
                         
                         const notification = document.createElement('div');
                         notification.style.position = 'fixed';
@@ -2293,7 +2403,7 @@
                                 <i class="fa-solid fa-check-circle" style="color: #2ed573; font-size: 1.5rem;"></i>
                                 <div>
                                     <h4 style="margin: 0 0 0.5rem; color: var(--light);">Blacklist atualizada</h4>
-                                    <p style="margin: 0; font-size: 0.9rem; color: #d8d8e8;">5 novas ameaças foram adicionadas à blacklist.</p>
+                                    <p style="margin: 0; font-size: 0.9rem; color: #d8d8e8;">${newItems.length} novas ameaças foram adicionadas à blacklist.</p>
                                 </div>
                             </div>
                             <button style="position: absolute; top: 0.5rem; right: 0.5rem; background: none; border: none; color: #a3a3c2; cursor: pointer; font-size: 1rem;">
@@ -2556,6 +2666,32 @@
                     }, 200);
                 });
             }
+            
+            const createSnowflakes = () => {
+                const snowflakesContainer = document.getElementById('snowflakes-container');
+                const snowflakeCount = 50;
+                
+                for (let i = 0; i < snowflakeCount; i++) {
+                    const snowflake = document.createElement('div');
+                    snowflake.classList.add('snowflake');
+                    
+                    const size = Math.random() * 5 + 2;
+                    snowflake.style.width = `${size}px`;
+                    snowflake.style.height = `${size}px`;
+                    
+                    snowflake.style.left = `${Math.random() * 100}%`;
+                    
+                    const duration = Math.random() * 10 + 5;
+                    snowflake.style.animationDuration = `${duration}s`;
+                    
+                    const delay = Math.random() * 5;
+                    snowflake.style.animationDelay = `${delay}s`;
+                    
+                    snowflakesContainer.appendChild(snowflake);
+                }
+            };
+            
+            createSnowflakes();
             
             const sphere = document.getElementById('sphere-container');
             
