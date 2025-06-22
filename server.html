@@ -26,7 +26,7 @@
             left: 0;
             width: 100%;
             height: calc(100vh - 40px);
-            background-image: url('d.jpg');
+            background-image: url('d.png');
             background-size: cover;
             background-position: center;
             overflow: hidden;
@@ -2806,13 +2806,13 @@
             
             switch (wallpaperNumber) {
                 case 1:
-                    wallpaperUrl = 'd.jpg';
+                    wallpaperUrl = 'd.png';
                     break;
                 case 2:
-                    wallpaperUrl = 'd.jpg';
+                    wallpaperUrl = 'd.png';
                     break;
                 case 3:
-                    wallpaperUrl = 'd.jpg';
+                    wallpaperUrl = 'd.png';
                     break;
                 default:
                     wallpaperUrl = 'https://source.unsplash.com/random/1920x1080/?server,datacenter';
@@ -6665,7 +6665,7 @@
             // Ativar tab selecionada
             document.getElementById(`${tabId}-tab`).classList.add('active');
             
-            // Ativar botão da tab
+            
             const selectedTab = document.querySelector(`.tab[onclick="switchGPOTab('${tabId}')"]`);
             if (selectedTab) {
                 selectedTab.classList.add('active');
@@ -6673,27 +6673,27 @@
         }
         
         function switchStorageTab(tabId) {
-            // Esconder todos os conteúdos de tab
+            
             document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
             
-            // Desativar todas as tabs
+            
             document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
             
-            // Ativar tab selecionada
+            
             document.getElementById(`${tabId}-tab`).classList.add('active');
             
-            // Ativar botão da tab
+            
             const selectedTab = document.querySelector(`.tab[onclick="switchStorageTab('${tabId}')"]`);
             if (selectedTab) {
                 selectedTab.classList.add('active');
             }
         }
         
-        // Funções para configuração de rede
+        
         function toggleDHCP(enabled) {
             state.ipConfig.dhcpEnabled = enabled;
             
-            // Atualizar elementos da interface
+            
             const staticConfig = document.getElementById('static-ip-config');
             const manualDNS = document.getElementById('manual-dns-config');
             
@@ -6701,31 +6701,31 @@
                 staticConfig.style.opacity = '0.5';
                 manualDNS.style.opacity = '0.5';
                 
-                // Desabilitar campos
+                
                 document.getElementById('ip-address').disabled = true;
                 document.getElementById('subnet-mask').disabled = true;
                 document.getElementById('default-gateway').disabled = true;
                 document.getElementById('preferred-dns').disabled = true;
                 document.getElementById('alternate-dns').disabled = true;
                 
-                // Selecionar opção de DNS automático
+                
                 document.getElementById('dns-auto').checked = true;
             } else {
                 staticConfig.style.opacity = '1';
                 manualDNS.style.opacity = '1';
                 
-                // Habilitar campos
+                
                 document.getElementById('ip-address').disabled = false;
                 document.getElementById('subnet-mask').disabled = false;
                 document.getElementById('default-gateway').disabled = false;
                 document.getElementById('preferred-dns').disabled = false;
                 document.getElementById('alternate-dns').disabled = false;
                 
-                // Selecionar opção de DNS manual
+                
                 document.getElementById('dns-manual').checked = true;
             }
             
-            // Salvar estado
+            
             saveStateToLocalStorage();
         }
         
@@ -6742,7 +6742,7 @@
         }
         
         function saveNetworkConfig() {
-            // Salvar configurações
+            
             if (!state.ipConfig.dhcpEnabled) {
                 state.ipConfig.ipAddress = document.getElementById('ip-address').value;
                 state.ipConfig.subnetMask = document.getElementById('subnet-mask').value;
@@ -6751,22 +6751,22 @@
                 state.ipConfig.dns2 = document.getElementById('alternate-dns').value;
             }
             
-            // Salvar estado
+            
             saveStateToLocalStorage();
             
-            // Mostrar notificação
+            
             showNotification('Configurações de rede salvas com sucesso');
         }
         
         function cancelNetworkConfig() {
-            // Restaurar valores originais
+            
             document.getElementById('ip-address').value = state.ipConfig.ipAddress;
             document.getElementById('subnet-mask').value = state.ipConfig.subnetMask;
             document.getElementById('default-gateway').value = state.ipConfig.gateway;
             document.getElementById('preferred-dns').value = state.ipConfig.dns1;
             document.getElementById('alternate-dns').value = state.ipConfig.dns2;
             
-            // Restaurar modo DHCP
+            
             if (state.ipConfig.dhcpEnabled) {
                 document.getElementById('dhcp-radio').checked = true;
             } else {
@@ -6776,43 +6776,43 @@
             toggleDHCP(state.ipConfig.dhcpEnabled);
         }
         
-        // Inicializar simulador
+        
         document.addEventListener('DOMContentLoaded', function() {
-            // Atualizar relógio
+            
             updateClock();
             
-            // Verificar se a imagem de fundo existe
+            
             const desktop = document.getElementById('desktop');
             const img = new Image();
             img.onload = function() {
-                // A imagem existe, não precisa fazer nada
+                
             };
             img.onerror = function() {
                 // A imagem não existe, usar fundo padrão
                 desktop.style.backgroundImage = 'none';
                 desktop.style.backgroundColor = '#0078d7';
             };
-            img.src = 'd.jpg';
+            img.src = 'd.png';
             
-            // Carregar estado do localStorage
+            
             loadStateFromLocalStorage();
             
-            // Inicializar calendário
+            
             updateCalendar();
         });
         
-        // Documento clicado para limpar menus de contexto
+        
         document.addEventListener('mousedown', function(e) {
-            // Verificar se o clique foi no desktop
+            
             if (e.target.id === 'desktop') {
-                // Limpar seleção dos ícones
+                
                 document.querySelectorAll('.desktop-icon.selected').forEach(icon => {
                     icon.classList.remove('selected');
                 });
                 state.selectedItem = null;
             }
             
-            // Fechar flyouts ao clicar fora deles
+            
             if (!e.target.closest('#network-flyout') && !e.target.closest('#network-icon')) {
                 document.getElementById('network-flyout').style.display = 'none';
             }
