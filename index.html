@@ -2741,9 +2741,16 @@
         <p style="max-width: 700px; margin-bottom: 2rem; text-align: center; margin-left: auto; margin-right: auto;">Obtenha a versão mais recente do WolfGuard Antivirus e garanta proteção completa contra vírus, malwares e ransomware para seu sistema.</p>
         
         <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; justify-content: center;">
-            <a href="WolfGuard.exe" class="btn" download><i class="fa-solid fa-download"></i> Baixar WolfGuard</a>
-            <a href="#" class="btn btn-outline" id="manual-btn"><i class="fa-solid fa-file-pdf"></i> Manual do Usuário</a>
-        </div>
+    <a href="https://github.com/Mateus-Kalil/power/raw/refs/heads/main/WolfGuard.exe?download=" 
+       class="btn" download>
+       <i class="fa-solid fa-download"></i> Baixar WolfGuard
+    </a>
+
+    <a href="#" class="btn btn-outline" id="manual-btn">
+       <i class="fa-solid fa-file-pdf"></i> Manual do Usuário
+    </a>
+</div>
+
         
         <div style="margin-top: 3rem; background: rgba(255,255,255,0.05); border-radius: var(--radius); padding: 1.5rem; text-align: center;" data-aos="fade-up">
             <h3 style="margin-bottom: 1rem; color: var(--secondary);">Requisitos do Sistema</h3>
@@ -4456,7 +4463,7 @@
         // Verificar se é um dispositivo móvel
         const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent) || window.innerWidth < 768;
         
-        // Não criar animação Three.js em dispositivos móveis
+        
         if (isMobile || !container || typeof THREE === 'undefined') return;
         
         const scene = new THREE.Scene();
