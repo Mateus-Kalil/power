@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WolfGuard</title>
+
+    <link rel="icon" href="favicon2.png" type="image/x-icon" />
+    <link rel="shortcut icon" href="favicon2.png" type="image/x-icon" />
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <style>
+        :root {
+            --primary: #6a11cb;
+            --secondary: #2575fc;
+            --dark: #040316;
+            --light: #ffffff;
+            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            --radius: 14px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(270deg, #040316, #1a1a3d, #040316);
+            background-size: 600% 600%;
+            animation: gradientBG 20s ease infinite;
+            color: var(--light);
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* MK */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(to bottom, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.15) 2%, transparent 2%, transparent 100%);
+            background-size: 2px 40px;
+            animation: rain 0.5s linear infinite;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.5;
+        }
+
+        @keyframes rain {
+            to { transform: translateY(40px); }
+        }
+
+        .container {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            max-width: 600px;
+            width: 90%;
+            position: relative;
+            z-index: 10;
+        }
+
+        .icon-box {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p {
+            color: #d8d8e8;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.9rem 2.2rem;
+            border-radius: var(--radius);
+            font-weight: 600;
+            text-decoration: none;
+            color: var(--light);
+            background: var(--gradient);
+            transition: 0.3s ease;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+        }
+
+        /* MK */
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--secondary);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particleFloat 10s linear infinite;
+        }
+
+        @keyframes particleFloat {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            50% { opacity: 1; }
+            100% { transform: translateY(-100px) scale(1); opacity: 0; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <!-- Partículas de fundo para ambiente -->
+    <div style="position: absolute; width: 100%; height: 100%; overflow: hidden; z-index: 0;">
+        <div class="particle" style="left: 10%; animation-duration: 8s; animation-delay: 0s;"></div>
+        <div class="particle" style="left: 30%; animation-duration: 12s; animation-delay: 2s;"></div>
+        <div class="particle" style="left: 70%; animation-duration: 7s; animation-delay: 1s;"></div>
+        <div class="particle" style="left: 90%; animation-duration: 10s; animation-delay: 3s;"></div>
+        <div class="particle" style="left: 50%; animation-duration: 15s; animation-delay: 0.5s;"></div>
+    </div>
+
+    <div class="container">
+        <div class="icon-box">
+            <i class="fa-solid fa-layer-group"></i>
+        </div>
+        <h1>Em breve</h1>
+        <p>Novos aplicativos</p>
+        
+        <a href="index.html" class="btn" onclick="history.back(); return false;">
+            <i class="fa-solid fa-arrow-left"></i> Voltar
+        </a>
+    </div>
+
+</body>
+</html>
