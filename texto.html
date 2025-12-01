@@ -198,7 +198,7 @@
         }
 
         .welcome-content h1 {
-            color: #e91e63;
+            color: #0066cc;
             margin-bottom: 20px;
             font-size: 36px;
         }
@@ -207,7 +207,7 @@
             width: 100%;
             padding: 15px;
             margin: 10px 0;
-            border: 2px solid #e91e63;
+            border: 2px solid #0066cc;
             border-radius: 10px;
             font-size: 16px;
         }
@@ -231,12 +231,12 @@
         }
 
         .theme-option.selected {
-            border-color: #e91e63;
-            box-shadow: 0 5px 20px rgba(233, 30, 99, 0.5);
+            border-color: #0066cc;
+            box-shadow: 0 5px 20px rgba(0, 102, 204, 0.5);
         }
 
         .btn-start {
-            background: linear-gradient(135deg, #e91e63, #9c27b0);
+            background: linear-gradient(135deg, #0066cc, #000000);
             color: white;
             border: none;
             padding: 15px 40px;
@@ -249,7 +249,7 @@
 
         .btn-start:hover {
             transform: scale(1.05);
-            box-shadow: 0 5px 20px rgba(233, 30, 99, 0.5);
+            box-shadow: 0 5px 20px rgba(0, 102, 204, 0.5);
         }
 
         .app-container {
@@ -286,7 +286,7 @@
             padding: 8px 12px;
             border: none;
             border-radius: 5px;
-            background: #e91e63;
+            background: linear-gradient(135deg, #0066cc, #000000);
             color: white;
             cursor: pointer;
             font-size: 14px;
@@ -295,13 +295,13 @@
         }
 
         .toolbar-btn:hover {
-            background: #c2185b;
+            background: linear-gradient(135deg, #0052a3, #1a1a1a);
             transform: translateY(-2px);
         }
 
         .toolbar-btn.active {
-            background: #9c27b0;
-            box-shadow: 0 0 10px rgba(156, 39, 176, 0.5);
+            background: linear-gradient(135deg, #004d99, #333333);
+            box-shadow: 0 0 10px rgba(0, 102, 204, 0.5);
         }
 
         .toolbar-select {
@@ -475,14 +475,14 @@
         .modal-header {
             font-size: 24px;
             margin-bottom: 20px;
-            color: #e91e63;
+            color: #0066cc;
         }
 
         .modal-close {
             float: right;
             font-size: 28px;
             cursor: pointer;
-            color: #e91e63;
+            color: #0066cc;
         }
 
         .settings-group {
@@ -524,7 +524,7 @@
         .logo {
             font-size: 24px;
             font-weight: bold;
-            background: linear-gradient(135deg, #e91e63, #9c27b0);
+            background: linear-gradient(135deg, #0066cc, #000000);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -579,7 +579,7 @@
 
         .table-cell-preview:hover,
         .table-cell-preview.active {
-            background: #e91e63;
+            background: #0066cc;
         }
 
         .image-upload-zone {
@@ -592,8 +592,8 @@
         }
 
         .image-upload-zone:hover {
-            border-color: #e91e63;
-            background: rgba(233, 30, 99, 0.1);
+            border-color: #0066cc;
+            background: rgba(0, 102, 204, 0.1);
         }
 
         @keyframes pulse {
@@ -637,7 +637,7 @@
         }
 
         .dropdown-content div:hover {
-            background: #e91e63;
+            background: #0066cc;
             color: white;
         }
 
@@ -703,13 +703,13 @@
             <div class="logo">WolfWrite</div>
             <div class="toolbar-separator"></div>
             
-            <button class="toolbar-btn" onclick="newDocument()" title="Novo (Ctrl+N)">📄 Novo</button>
-            <button class="toolbar-btn" onclick="saveDocument()" title="Salvar (Ctrl+S)">💾 Salvar</button>
-            <button class="toolbar-btn" onclick="openDocuments()" title="Abrir">📂 Abrir</button>
-            <button class="toolbar-btn" onclick="printDocument()" title="Imprimir (Ctrl+P)">🖨️ Imprimir</button>
+            <button class="toolbar-btn" onclick="newDocument()" title="Novo (Ctrl+N)">Novo</button>
+            <button class="toolbar-btn" onclick="saveDocument()" title="Salvar (Ctrl+S)">Salvar</button>
+            <button class="toolbar-btn" onclick="openDocuments()" title="Abrir">Abrir</button>
+            <button class="toolbar-btn" onclick="printDocument()" title="Imprimir (Ctrl+P)">Imprimir</button>
             
             <div class="dropdown">
-                <button class="toolbar-btn" onclick="toggleDropdown('exportDropdown')">📤 Exportar</button>
+                <button class="toolbar-btn" onclick="toggleDropdown('exportDropdown')">Exportar</button>
                 <div class="dropdown-content" id="exportDropdown">
                     <div onclick="exportHTML()">Exportar como HTML</div>
                     <div onclick="exportPDF()">Exportar como PDF</div>
@@ -719,8 +719,8 @@
             
             <div class="toolbar-separator"></div>
             
-            <button class="toolbar-btn" onclick="undo()" title="Desfazer (Ctrl+Z)">↶</button>
-            <button class="toolbar-btn" onclick="redo()" title="Refazer (Ctrl+Y)">↷</button>
+            <button class="toolbar-btn" onclick="undo()" title="Desfazer (Ctrl+Z)">Desfazer</button>
+            <button class="toolbar-btn" onclick="redo()" title="Refazer (Ctrl+Y)">Refazer</button>
             
             <div class="toolbar-separator"></div>
             
@@ -765,21 +765,21 @@
             
             <div class="toolbar-separator"></div>
             
-            <button class="toolbar-btn" onclick="alignLeft()" title="Alinhar à esquerda">⬅️</button>
-            <button class="toolbar-btn" onclick="alignCenter()" title="Centralizar">↔️</button>
-            <button class="toolbar-btn" onclick="alignRight()" title="Alinhar à direita">➡️</button>
-            <button class="toolbar-btn" onclick="alignJustify()" title="Justificar">⬌</button>
+            <button class="toolbar-btn" onclick="alignLeft()" title="Alinhar à esquerda">Esquerda</button>
+            <button class="toolbar-btn" onclick="alignCenter()" title="Centralizar">Centro</button>
+            <button class="toolbar-btn" onclick="alignRight()" title="Alinhar à direita">Direita</button>
+            <button class="toolbar-btn" onclick="alignJustify()" title="Justificar">Justificar</button>
             
             <div class="toolbar-separator"></div>
             
-            <button class="toolbar-btn" onclick="insertUnorderedList()" title="Lista não ordenada">• Lista</button>
-            <button class="toolbar-btn" onclick="insertOrderedList()" title="Lista ordenada">1. Lista</button>
+            <button class="toolbar-btn" onclick="insertUnorderedList()" title="Lista não ordenada">Lista</button>
+            <button class="toolbar-btn" onclick="insertOrderedList()" title="Lista ordenada">Lista Numerada</button>
             
             <div class="toolbar-separator"></div>
             
-            <button class="toolbar-btn" onclick="insertLink()" title="Inserir link (Ctrl+K)">🔗 Link</button>
-            <button class="toolbar-btn" onclick="insertImage()" title="Inserir imagem">🖼️ Imagem</button>
-            <button class="toolbar-btn" onclick="insertTable()" title="Inserir tabela">📊 Tabela</button>
+            <button class="toolbar-btn" onclick="insertLink()" title="Inserir link (Ctrl+K)">Link</button>
+            <button class="toolbar-btn" onclick="insertImage()" title="Inserir imagem">Imagem</button>
+            <button class="toolbar-btn" onclick="insertTable()" title="Inserir tabela">Tabela</button>
             
             <div class="toolbar-separator"></div>
             
@@ -795,8 +795,8 @@
             
             <div class="toolbar-separator"></div>
             
-            <button class="toolbar-btn" onclick="openFindReplace()" title="Localizar (Ctrl+F)">🔍 Localizar</button>
-            <button class="toolbar-btn" onclick="openSettings()" title="Configurações">⚙️ Config</button>
+            <button class="toolbar-btn" onclick="openFindReplace()" title="Localizar (Ctrl+F)">Localizar</button>
+            <button class="toolbar-btn" onclick="openSettings()" title="Configurações">Config</button>
             
             <div class="user-greeting" id="userGreeting"></div>
         </div>
@@ -905,7 +905,7 @@
             <div class="modal-header">Inserir Imagem</div>
             
             <div class="image-upload-zone" onclick="document.getElementById('imageInput').click()">
-                <p>📷 Clique para selecionar uma imagem</p>
+                <p>Clique para selecionar uma imagem</p>
                 <p style="font-size: 12px; color: #999;">ou cole (Ctrl+V) diretamente no documento</p>
             </div>
             
