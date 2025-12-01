@@ -129,9 +129,12 @@
 
         .rose {
             position: absolute;
-            font-size: 35px;
+            width: 35px;
+            height: 35px;
+            background: currentColor;
+            border-radius: 50%;
             animation: rose-fall linear infinite;
-            filter: drop-shadow(0 0 10px currentColor);
+            box-shadow: 0 0 10px currentColor;
         }
 
         @keyframes rose-fall {
@@ -140,20 +143,73 @@
 
         .heart {
             position: absolute;
-            font-size: 30px;
+            width: 30px;
+            height: 30px;
+            background: currentColor;
             animation: heart-fall linear infinite;
-            filter: drop-shadow(0 0 10px currentColor);
+            box-shadow: 0 0 10px currentColor;
+            transform: rotate(45deg);
+        }
+
+        .heart::before,
+        .heart::after {
+            content: "";
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: currentColor;
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            top: -15px;
+            left: 0;
+        }
+
+        .heart::after {
+            left: 15px;
+            top: 0;
         }
 
         @keyframes heart-fall {
-            to { transform: translateY(100vh) rotate(180deg); }
+            to { transform: translateY(100vh) rotate(225deg); }
         }
 
         .star {
             position: absolute;
-            font-size: 25px;
+            width: 0;
+            height: 0;
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-bottom: 20px solid currentColor;
             animation: star-fall linear infinite;
             filter: drop-shadow(0 0 15px currentColor);
+        }
+
+        .star::before {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-bottom: 20px solid currentColor;
+            top: 8px;
+            left: -12px;
+            transform: rotate(60deg);
+        }
+
+        .star::after {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 12px solid transparent;
+            border-right: 12px solid transparent;
+            border-bottom: 20px solid currentColor;
+            top: 8px;
+            left: -12px;
+            transform: rotate(-60deg);
         }
 
         @keyframes star-fall {
@@ -162,7 +218,10 @@
 
         .butterfly {
             position: absolute;
-            font-size: 28px;
+            width: 28px;
+            height: 28px;
+            background: currentColor;
+            border-radius: 50%;
             animation: butterfly-fall ease-in-out infinite;
             filter: drop-shadow(0 0 10px currentColor);
         }
@@ -198,7 +257,10 @@
         }
 
         .welcome-content h1 {
-            color: #e91e63;
+            background: linear-gradient(135deg, #0066ff, #000000);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
             margin-bottom: 20px;
             font-size: 36px;
         }
@@ -207,7 +269,7 @@
             width: 100%;
             padding: 15px;
             margin: 10px 0;
-            border: 2px solid #e91e63;
+            border: 2px solid #0066ff;
             border-radius: 10px;
             font-size: 16px;
         }
@@ -231,8 +293,8 @@
         }
 
         .theme-option.selected {
-            border-color: #e91e63;
-            box-shadow: 0 5px 20px rgba(233, 30, 99, 0.5);
+            border-color: #0066ff;
+            box-shadow: 0 5px 20px rgba(0, 102, 255, 0.5);
         }
 
         .theme-option img {
@@ -243,7 +305,7 @@
         }
 
         .btn-start {
-            background: linear-gradient(135deg, #e91e63, #9c27b0);
+            background: linear-gradient(135deg, #0066ff, #000000);
             color: white;
             border: none;
             padding: 15px 40px;
@@ -256,7 +318,7 @@
 
         .btn-start:hover {
             transform: scale(1.05);
-            box-shadow: 0 5px 20px rgba(233, 30, 99, 0.5);
+            box-shadow: 0 5px 20px rgba(0, 102, 255, 0.5);
         }
 
         .app-container {
@@ -292,7 +354,7 @@
             padding: 8px 15px;
             border: none;
             border-radius: 5px;
-            background: #e91e63;
+            background: linear-gradient(135deg, #0066ff, #000000);
             color: white;
             cursor: pointer;
             font-size: 14px;
@@ -300,7 +362,7 @@
         }
 
         .toolbar-btn:hover {
-            background: #c2185b;
+            background: linear-gradient(135deg, #0052cc, #000000);
             transform: translateY(-2px);
         }
 
@@ -417,12 +479,12 @@
         }
 
         .cell:hover {
-            background: rgba(233, 30, 99, 0.1);
+            background: rgba(0, 102, 255, 0.1);
         }
 
         .cell.selected {
-            outline: 2px solid #e91e63;
-            background: rgba(233, 30, 99, 0.2);
+            outline: 2px solid #0066ff;
+            background: rgba(0, 102, 255, 0.2);
         }
 
         .cell.editing {
@@ -486,11 +548,11 @@
         }
 
         .sheet-tab:hover {
-            background: rgba(233, 30, 99, 0.3);
+            background: rgba(0, 102, 255, 0.3);
         }
 
         .sheet-tab.active {
-            background: #e91e63;
+            background: linear-gradient(135deg, #0066ff, #000000);
             color: white;
         }
 
@@ -537,7 +599,7 @@
         }
 
         .context-menu-item:hover {
-            background: #e91e63;
+            background: linear-gradient(135deg, #0066ff, #000000);
             color: white;
         }
 
@@ -577,14 +639,17 @@
         .modal-header {
             font-size: 24px;
             margin-bottom: 20px;
-            color: #e91e63;
+            background: linear-gradient(135deg, #0066ff, #000000);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .modal-close {
             float: right;
             font-size: 28px;
             cursor: pointer;
-            color: #e91e63;
+            color: #0066ff;
         }
 
         .settings-group {
@@ -634,7 +699,7 @@
         .logo {
             font-size: 24px;
             font-weight: bold;
-            background: linear-gradient(135deg, #e91e63, #9c27b0);
+            background: linear-gradient(135deg, #0066ff, #000000);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -690,26 +755,26 @@
             <div class="toolbar-separator"></div>
             
             <button class="toolbar-btn" onclick="newSpreadsheet()" title="Novo">
-                <span>➕ Novo</span>
+                <span>Novo</span>
             </button>
             <button class="toolbar-btn" onclick="saveSpreadsheet()" title="Salvar (Ctrl+S)">
-                <span>💾 Salvar</span>
+                <span>Salvar</span>
             </button>
             <button class="toolbar-btn" onclick="exportSpreadsheet()" title="Exportar">
-                <span>📤 Exportar</span>
+                <span>Exportar</span>
             </button>
             <button class="toolbar-btn" onclick="importSpreadsheet()" title="Importar">
-                <span>📥 Importar</span>
+                <span>Importar</span>
             </button>
             <input type="file" id="fileInput" style="display: none;" accept=".json" onchange="handleFileImport(event)">
             
             <div class="toolbar-separator"></div>
             
             <button class="toolbar-btn" onclick="undo()" title="Desfazer (Ctrl+Z)">
-                <span>↶ Desfazer</span>
+                <span>Desfazer</span>
             </button>
             <button class="toolbar-btn" onclick="redo()" title="Refazer (Ctrl+Y)">
-                <span>↷ Refazer</span>
+                <span>Refazer</span>
             </button>
             
             <div class="toolbar-separator"></div>
@@ -743,19 +808,19 @@
             <div class="toolbar-separator"></div>
             
             <button class="toolbar-btn" onclick="alignLeft()" title="Alinhar à esquerda">
-                <span>⬅</span>
+                <span>Esquerda</span>
             </button>
             <button class="toolbar-btn" onclick="alignCenter()" title="Centralizar">
-                <span>↔</span>
+                <span>Centro</span>
             </button>
             <button class="toolbar-btn" onclick="alignRight()" title="Alinhar à direita">
-                <span>➡</span>
+                <span>Direita</span>
             </button>
             
             <div class="toolbar-separator"></div>
             
             <button class="toolbar-btn" onclick="openSettings()" title="Configurações">
-                <span>⚙ Config</span>
+                <span>Config</span>
             </button>
             
             <div class="user-greeting" id="userGreeting"></div>
@@ -769,7 +834,7 @@
         <div class="spreadsheet-container" id="spreadsheetContainer"></div>
 
         <div class="sheet-tabs" id="sheetTabs">
-            <button class="add-sheet-btn" onclick="addNewSheet()">+ Nova Planilha</button>
+            <button class="add-sheet-btn" onclick="addNewSheet()">Nova Planilha</button>
         </div>
     </div>
 
@@ -987,7 +1052,6 @@
                 for (let i = 0; i < 25; i++) {
                     const rose = document.createElement('div');
                     rose.className = 'rose particle';
-                    rose.textContent = '🌹';
                     rose.style.left = `${Math.random() * 100}%`;
                     rose.style.color = color;
                     rose.style.animationDuration = `${Math.random() * 5 + 8}s`;
@@ -1000,7 +1064,6 @@
                 for (let i = 0; i < 30; i++) {
                     const heart = document.createElement('div');
                     heart.className = 'heart particle';
-                    heart.textContent = '💖';
                     heart.style.left = `${Math.random() * 100}%`;
                     heart.style.color = color;
                     heart.style.animationDuration = `${Math.random() * 5 + 10}s`;
@@ -1013,7 +1076,6 @@
                 for (let i = 0; i < 40; i++) {
                     const star = document.createElement('div');
                     star.className = 'star particle';
-                    star.textContent = '⭐';
                     star.style.left = `${Math.random() * 100}%`;
                     star.style.color = color;
                     star.style.animationDuration = `${Math.random() * 4 + 7}s`;
@@ -1026,7 +1088,6 @@
                 for (let i = 0; i < 20; i++) {
                     const butterfly = document.createElement('div');
                     butterfly.className = 'butterfly particle';
-                    butterfly.textContent = '🦋';
                     butterfly.style.left = `${Math.random() * 100}%`;
                     butterfly.style.color = color;
                     butterfly.style.animationDuration = `${Math.random() * 8 + 12}s`;
@@ -1068,7 +1129,7 @@
                 html += `<div class="sheet-tab ${activeClass}" onclick="switchSheet(${index})">${sheet.name}</div>`;
             });
             
-            html += '<button class="add-sheet-btn" onclick="addNewSheet()">+ Nova Planilha</button>';
+            html += '<button class="add-sheet-btn" onclick="addNewSheet()">Nova Planilha</button>';
             tabsContainer.innerHTML = html;
         }
 
