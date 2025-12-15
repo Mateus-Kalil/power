@@ -1,0 +1,1254 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WolfCripto - Análise Inteligente de Criptomoedas</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #00d4ff;
+            --secondary-blue: #0099ff;
+            --dark-blue: #001a33;
+            --space-black: #000000;
+            --neon-cyan: #00ffff;
+            --warning-red: #ff0055;
+            --success-green: #00ff88;
+        }
+
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background: linear-gradient(135deg, #000000 0%, #001a33 50%, #000033 100%);
+            color: #ffffff;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        .galaxy-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite ease-in-out;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .nebula {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(50px, -50px) scale(1.1); }
+        }
+
+        header {
+            background: rgba(0, 26, 51, 0.4);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 212, 255, 0.3);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            animation: slideDown 0.6s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary-blue), var(--neon-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+            letter-spacing: 3px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo::before {
+            content: "";
+            width: 50px;
+            height: 50px;
+            background: url('favicon.png') center/contain no-repeat;
+            filter: drop-shadow(0 0 10px var(--primary-blue));
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--neon-cyan);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ffffff, var(--primary-blue), var(--neon-cyan));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 50px rgba(0, 212, 255, 0.5);
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+        }
+
+        .search-section {
+            background: rgba(0, 26, 51, 0.5);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-bottom: 3rem;
+            box-shadow: 0 10px 50px rgba(0, 212, 255, 0.2);
+            animation: slideUp 0.8s ease-out 0.2s backwards;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .search-box {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .crypto-input {
+            flex: 1;
+            padding: 1.2rem 1.5rem;
+            font-size: 1.1rem;
+            background: rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 12px;
+            color: white;
+            font-family: 'Exo 2', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .crypto-input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+        }
+
+        .analyze-btn {
+            padding: 1.2rem 3rem;
+            font-size: 1.1rem;
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+            background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+            border: none;
+            border-radius: 12px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(0, 212, 255, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .analyze-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .analyze-btn:hover::before {
+            left: 100%;
+        }
+
+        .analyze-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0, 212, 255, 0.6);
+        }
+
+        .analyze-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .quick-options {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .quick-btn {
+            padding: 0.7rem 1.5rem;
+            background: rgba(0, 153, 255, 0.2);
+            border: 1px solid rgba(0, 212, 255, 0.4);
+            border-radius: 8px;
+            color: var(--primary-blue);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+        }
+
+        .quick-btn:hover {
+            background: rgba(0, 153, 255, 0.4);
+            transform: scale(1.05);
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .loading.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        .spinner {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            border: 4px solid rgba(0, 212, 255, 0.1);
+            border-top: 4px solid var(--primary-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .results {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .results.active {
+            display: block;
+        }
+
+        .result-card {
+            background: rgba(0, 26, 51, 0.5);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 50px rgba(0, 212, 255, 0.2);
+            animation: slideUp 0.6s ease-out;
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .crypto-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--primary-blue);
+        }
+
+        .price-display {
+            text-align: right;
+        }
+
+        .current-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-cyan);
+        }
+
+        .price-change {
+            font-size: 1.2rem;
+            margin-top: 0.5rem;
+        }
+
+        .price-change.positive {
+            color: var(--success-green);
+        }
+
+        .price-change.negative {
+            color: var(--warning-red);
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .metric-box {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .metric-box:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary-blue);
+            box-shadow: 0 5px 20px rgba(0, 212, 255, 0.3);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .metric-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--primary-blue);
+        }
+
+        .recommendation {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-left: 5px solid var(--primary-blue);
+        }
+
+        .recommendation-badge {
+            display: inline-block;
+            padding: 0.7rem 2rem;
+            border-radius: 30px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+
+        .recommendation-badge.buy {
+            background: linear-gradient(135deg, #00ff88, #00cc66);
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+        }
+
+        .recommendation-badge.sell {
+            background: linear-gradient(135deg, #ff0055, #cc0044);
+            color: #fff;
+            box-shadow: 0 0 20px rgba(255, 0, 85, 0.5);
+        }
+
+        .recommendation-badge.hold {
+            background: linear-gradient(135deg, #ffaa00, #ff8800);
+            color: #000;
+            box-shadow: 0 0 20px rgba(255, 170, 0, 0.5);
+        }
+
+        .confidence-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-blue), var(--neon-cyan));
+            transition: width 1s ease-out;
+        }
+
+        .analysis-section {
+            margin-bottom: 2rem;
+        }
+
+        .analysis-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .analysis-content {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .targets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .target-box {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .target-label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 0.5rem;
+        }
+
+        .target-value {
+            font-size: 1.3rem;
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-cyan);
+        }
+
+        footer {
+            background: rgba(0, 26, 51, 0.4);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(0, 212, 255, 0.3);
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 5rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .search-box {
+                flex-direction: column;
+            }
+
+            .metrics-grid,
+            .targets-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+        }
+
+        .glow {
+            animation: glow 2s infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { text-shadow: 0 0 10px var(--primary-blue); }
+            50% { text-shadow: 0 0 20px var(--primary-blue), 0 0 30px var(--neon-cyan); }
+        }
+
+
+
+        .indicator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .indicator-item {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .indicator-name {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 0.5rem;
+        }
+
+        .indicator-value {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+
+        .signal {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 5px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            margin-left: 0.5rem;
+        }
+
+        .signal.bullish {
+            background: rgba(0, 255, 136, 0.3);
+            color: var(--success-green);
+        }
+
+        .signal.bearish {
+            background: rgba(255, 0, 85, 0.3);
+            color: var(--warning-red);
+        }
+
+        .signal.neutral {
+            background: rgba(255, 170, 0, 0.3);
+            color: #ffaa00;
+        }
+    </style>
+</head>
+<body>
+    <div class="galaxy-background" id="galaxy"></div>
+
+    <header>
+        <div class="header-content">
+            <div class="logo">WOLFCRIPTO</div>
+            <nav class="nav-links">
+                <a href="#home">Início</a>
+                <a href="#analise">Análise</a>
+                <a href="#sobre">Sobre</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="hero">
+            <h1 class="glow">ANÁLISE INTELIGENTE<br>DE CRIPTOMOEDAS</h1>
+            <p>Sistema avançado que analisa o mercado em tempo real, identifica padrões e fornece recomendações precisas para suas operações</p>
+        </div>
+
+        <div class="search-section">
+            <div class="search-box">
+                <input 
+                    type="text" 
+                    class="crypto-input" 
+                    id="cryptoInput"
+                    placeholder="Digite o ID da criptomoeda (ex: bitcoin, ethereum, solana, cardano...)"
+                >
+                <button class="analyze-btn" id="analyzeBtn">
+                    ANALISAR AGORA
+                </button>
+            </div>
+            <div class="quick-options">
+                <button class="quick-btn" onclick="quickAnalyze('bitcoin')">Bitcoin (BTC)</button>
+                <button class="quick-btn" onclick="quickAnalyze('ethereum')">Ethereum (ETH)</button>
+                <button class="quick-btn" onclick="quickAnalyze('solana')">Solana (SOL)</button>
+                <button class="quick-btn" onclick="quickAnalyze('cardano')">Cardano (ADA)</button>
+                <button class="quick-btn" onclick="quickAnalyze('ripple')">XRP</button>
+                <button class="quick-btn" onclick="quickAnalyze('binancecoin')">BNB</button>
+                <button class="quick-btn" onclick="quickAnalyze('dogecoin')">DOGE</button>
+                <button class="quick-btn" onclick="quickAnalyze('polkadot')">DOT</button>
+            </div>
+        </div>
+
+        <div class="loading" id="loading">
+            <div class="spinner"></div>
+            <h2>Analisando mercado...</h2>
+            <p>Buscando dados em tempo real e processando análises técnicas e fundamentais</p>
+        </div>
+
+        <div class="results" id="results"></div>
+    </div>
+
+    <footer>
+        <p>2025 WolfCripto - Análise Inteligente de Criptomoedas</p>
+    </footer>
+
+    <script>
+        function createGalaxy() {
+            const galaxy = document.getElementById('galaxy');
+            
+            for (let i = 0; i < 200; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.width = Math.random() * 3 + 'px';
+                star.style.height = star.style.width;
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                galaxy.appendChild(star);
+            }
+
+            const colors = ['rgba(0, 212, 255, 0.3)', 'rgba(0, 153, 255, 0.3)', 'rgba(138, 43, 226, 0.3)'];
+            for (let i = 0; i < 5; i++) {
+                const nebula = document.createElement('div');
+                nebula.className = 'nebula';
+                nebula.style.width = Math.random() * 300 + 200 + 'px';
+                nebula.style.height = nebula.style.width;
+                nebula.style.left = Math.random() * 100 + '%';
+                nebula.style.top = Math.random() * 100 + '%';
+                nebula.style.background = colors[Math.floor(Math.random() * colors.length)];
+                nebula.style.animationDelay = Math.random() * 20 + 's';
+                galaxy.appendChild(nebula);
+            }
+        }
+
+        createGalaxy();
+
+        function quickAnalyze(crypto) {
+            document.getElementById('cryptoInput').value = crypto;
+            analyzeCrypto();
+        }
+
+        async function analyzeCrypto() {
+            const cryptoId = document.getElementById('cryptoInput').value.trim().toLowerCase();
+            
+            if (!cryptoId) {
+                alert('Por favor, digite o ID de uma criptomoeda');
+                return;
+            }
+
+            document.getElementById('loading').classList.add('active');
+            document.getElementById('results').classList.remove('active');
+            document.getElementById('analyzeBtn').disabled = true;
+
+            try {
+                const cryptoData = await fetchCryptoData(cryptoId);
+                const analysis = await performAdvancedAnalysis(cryptoData);
+                displayResults(analysis);
+            } catch (error) {
+                console.error('Erro:', error);
+                document.getElementById('results').innerHTML = `
+                    <div class="result-card">
+                        <h2 style="color: var(--warning-red);">Erro na Análise</h2>
+                        <p>${error.message || 'Não foi possível encontrar dados para esta criptomoeda.'}</p>
+                        <p style="font-size: 0.9rem; opacity: 0.7; margin-top: 1rem;">
+                            Sugestão: Use IDs como bitcoin, ethereum, solana, cardano, ripple, binancecoin, dogecoin, polkadot
+                        </p>
+                        <p style="font-size: 0.85rem; opacity: 0.6; margin-top: 0.5rem;">
+                            Dica: Para encontrar o ID correto de uma cripto, busque em <a href="https://www.coingecko.com/" target="_blank" style="color: var(--primary-blue);">CoinGecko.com</a>
+                        </p>
+                    </div>
+                `;
+                document.getElementById('results').classList.add('active');
+            } finally {
+                document.getElementById('loading').classList.remove('active');
+                document.getElementById('analyzeBtn').disabled = false;
+            }
+        }
+
+        async function fetchCryptoData(cryptoId) {
+            try {
+                // Buscar dados completos da criptomoeda do CoinGecko (API pública, sem key necessária)
+                const response = await fetch(
+                    `https://api.coingecko.com/api/v3/coins/${cryptoId}?localization=false&tickers=false&community_data=true&developer_data=false&sparkline=true`
+                );
+                
+                if (!response.ok) {
+                    if (response.status === 404) {
+                        throw new Error('Criptomoeda não encontrada. Verifique o ID e tente novamente.');
+                    }
+                    throw new Error('Erro ao buscar dados. Tente novamente em alguns segundos.');
+                }
+                
+                const data = await response.json();
+                return data;
+                
+            } catch (error) {
+                if (error.message.includes('Failed to fetch')) {
+                    throw new Error('Erro de conexão. Verifique sua internet e tente novamente.');
+                }
+                throw error;
+            }
+        }
+
+        function calculateRSI(prices, period = 14) {
+            if (prices.length < period) return 50;
+            
+            let gains = 0;
+            let losses = 0;
+            
+            for (let i = prices.length - period; i < prices.length; i++) {
+                const change = prices[i] - prices[i - 1];
+                if (change > 0) gains += change;
+                else losses += Math.abs(change);
+            }
+            
+            const avgGain = gains / period;
+            const avgLoss = losses / period;
+            
+            if (avgLoss === 0) return 100;
+            const rs = avgGain / avgLoss;
+            const rsi = 100 - (100 / (1 + rs));
+            
+            return rsi;
+        }
+
+        function calculateMACD(prices) {
+            const ema12 = calculateEMA(prices, 12);
+            const ema26 = calculateEMA(prices, 26);
+            const macd = ema12 - ema26;
+            const signal = calculateEMA([macd], 9);
+            
+            return {
+                value: macd,
+                signal: signal,
+                histogram: macd - signal,
+                trend: macd > signal ? 'bullish' : 'bearish'
+            };
+        }
+
+        function calculateEMA(prices, period) {
+            if (prices.length === 0) return 0;
+            const k = 2 / (period + 1);
+            let ema = prices[0];
+            
+            for (let i = 1; i < prices.length; i++) {
+                ema = (prices[i] * k) + (ema * (1 - k));
+            }
+            
+            return ema;
+        }
+
+        function calculateSMA(prices, period) {
+            if (prices.length < period) return prices[prices.length - 1];
+            const slice = prices.slice(-period);
+            return slice.reduce((a, b) => a + b, 0) / period;
+        }
+
+        function identifyTrend(prices) {
+            const sma20 = calculateSMA(prices, 20);
+            const sma50 = calculateSMA(prices, 50);
+            const currentPrice = prices[prices.length - 1];
+            
+            if (currentPrice > sma20 && sma20 > sma50) return 'alta';
+            if (currentPrice < sma20 && sma20 < sma50) return 'baixa';
+            return 'lateral';
+        }
+
+        function calculateVolatility(prices) {
+            const returns = [];
+            for (let i = 1; i < prices.length; i++) {
+                returns.push((prices[i] - prices[i-1]) / prices[i-1]);
+            }
+            
+            const mean = returns.reduce((a, b) => a + b, 0) / returns.length;
+            const variance = returns.reduce((sum, ret) => sum + Math.pow(ret - mean, 2), 0) / returns.length;
+            return Math.sqrt(variance) * 100;
+        }
+
+        async function performAdvancedAnalysis(data) {
+            const prices = data.market_data.sparkline_7d.price;
+            const currentPrice = data.market_data.current_price.usd;
+            const priceChange24h = data.market_data.price_change_percentage_24h;
+            
+            const rsi = calculateRSI(prices);
+            const macd = calculateMACD(prices);
+            const sma20 = calculateSMA(prices, 20);
+            const sma50 = calculateSMA(prices, 50);
+            const ema9 = calculateEMA(prices, 9);
+            const ema21 = calculateEMA(prices, 21);
+            
+            const trendShort = identifyTrend(prices.slice(-20));
+            const trendMedium = identifyTrend(prices.slice(-50));
+            const trendLong = identifyTrend(prices);
+            
+            const volatility = calculateVolatility(prices);
+            
+            const support1 = Math.min(...prices.slice(-30)) * 0.98;
+            const support2 = Math.min(...prices.slice(-60)) * 0.97;
+            const support3 = data.market_data.low_24h.usd * 0.95;
+            
+            const resistance1 = Math.max(...prices.slice(-30)) * 1.02;
+            const resistance2 = Math.max(...prices.slice(-60)) * 1.03;
+            const resistance3 = data.market_data.high_24h.usd * 1.05;
+            
+            let signalScore = 0;
+            let signals = [];
+            
+            if (rsi < 30) {
+                signalScore += 20;
+                signals.push('RSI indica sobrevenda - oportunidade de compra');
+            } else if (rsi > 70) {
+                signalScore -= 20;
+                signals.push('RSI indica sobrecompra - possível correção');
+            } else if (rsi >= 40 && rsi <= 60) {
+                signalScore += 5;
+                signals.push('RSI em zona neutra - mercado equilibrado');
+            }
+            
+            if (macd.trend === 'bullish') {
+                signalScore += 15;
+                signals.push('MACD mostra momentum de alta');
+            } else {
+                signalScore -= 15;
+                signals.push('MACD mostra momentum de baixa');
+            }
+            
+            if (currentPrice > sma20 && currentPrice > sma50) {
+                signalScore += 15;
+                signals.push('Preço acima das médias móveis - tendência de alta');
+            } else if (currentPrice < sma20 && currentPrice < sma50) {
+                signalScore -= 15;
+                signals.push('Preço abaixo das médias móveis - tendência de baixa');
+            }
+            
+            if (ema9 > ema21) {
+                signalScore += 10;
+                signals.push('EMAs mostram cruzamento altista');
+            } else {
+                signalScore -= 10;
+                signals.push('EMAs mostram cruzamento baixista');
+            }
+            
+            if (priceChange24h > 5) {
+                signalScore += 10;
+                signals.push('Forte valorização nas últimas 24h');
+            } else if (priceChange24h < -5) {
+                signalScore -= 10;
+                signals.push('Forte desvalorização nas últimas 24h');
+            }
+            
+            const volumeScore = data.market_data.total_volume.usd / data.market_data.market_cap.usd;
+            if (volumeScore > 0.1) {
+                signalScore += 10;
+                signals.push('Volume de negociação elevado');
+            }
+            
+            let recommendation = 'AGUARDAR';
+            let recommendationClass = 'hold';
+            let confidence = 50;
+            let timeframe = 'médio prazo';
+            
+            if (signalScore >= 40) {
+                recommendation = 'COMPRA FORTE';
+                recommendationClass = 'buy';
+                confidence = Math.min(85 + (signalScore - 40) / 2, 95);
+                timeframe = 'curto a médio prazo';
+            } else if (signalScore >= 20) {
+                recommendation = 'COMPRA';
+                recommendationClass = 'buy';
+                confidence = 70 + (signalScore - 20) / 2;
+                timeframe = 'médio prazo';
+            } else if (signalScore <= -40) {
+                recommendation = 'VENDA FORTE';
+                recommendationClass = 'sell';
+                confidence = Math.min(85 + Math.abs(signalScore + 40) / 2, 95);
+                timeframe = 'curto prazo';
+            } else if (signalScore <= -20) {
+                recommendation = 'VENDA';
+                recommendationClass = 'sell';
+                confidence = 70 + Math.abs(signalScore + 20) / 2;
+                timeframe = 'médio prazo';
+            } else {
+                confidence = 60 - Math.abs(signalScore);
+            }
+            
+            const targetMultiplier = signalScore > 0 ? 1 : -1;
+            const shortTermTarget = {
+                min: currentPrice * (1 + (0.03 * targetMultiplier)),
+                max: currentPrice * (1 + (0.08 * targetMultiplier)),
+                days: '1-7 dias'
+            };
+            
+            const mediumTermTarget = {
+                min: currentPrice * (1 + (0.08 * targetMultiplier)),
+                max: currentPrice * (1 + (0.20 * targetMultiplier)),
+                days: '7-30 dias'
+            };
+            
+            const longTermTarget = {
+                min: currentPrice * (1 + (0.20 * targetMultiplier)),
+                max: currentPrice * (1 + (0.50 * targetMultiplier)),
+                days: '1-6 meses'
+            };
+            
+            const stopLoss = signalScore > 0 ? currentPrice * 0.92 : currentPrice * 1.08;
+            const tp1 = signalScore > 0 ? currentPrice * 1.05 : currentPrice * 0.95;
+            const tp2 = signalScore > 0 ? currentPrice * 1.12 : currentPrice * 0.88;
+            const tp3 = signalScore > 0 ? currentPrice * 1.20 : currentPrice * 0.80;
+            
+            const riskReward = Math.abs((tp1 - currentPrice) / (stopLoss - currentPrice)).toFixed(2);
+            
+            const sentimentScore = (data.sentiment_votes_up_percentage || 50);
+            const communityScore = Math.min((data.community_score || 0) / 1000, 100);
+            
+            let detailedAnalysis = `ANÁLISE TÉCNICA COMPLETA\n\n`;
+            detailedAnalysis += `Tendência Identificada: O ativo apresenta tendência de ${trendShort} no curto prazo, ${trendMedium} no médio prazo e ${trendLong} no longo prazo. `;
+            detailedAnalysis += `O RSI atual de ${rsi.toFixed(2)} ${rsi < 30 ? 'indica forte sobrevenda, sugerindo possível reversão de alta' : rsi > 70 ? 'indica sobrecompra, alertando para possível correção' : 'está em zona neutra, indicando equilíbrio entre compradores e vendedores'}. `;
+            
+            detailedAnalysis += `\n\nINDICADORES TÉCNICOS\n\n`;
+            detailedAnalysis += `O MACD está ${macd.trend === 'bullish' ? 'em cruzamento altista, sugerindo momentum de compra' : 'em cruzamento baixista, indicando pressão vendedora'}. `;
+            detailedAnalysis += `A média móvel de 20 períodos está em $${sma20.toFixed(2)} e a de 50 períodos em $${sma50.toFixed(2)}. `;
+            detailedAnalysis += `O preço atual ${currentPrice > sma20 ? 'está acima' : 'está abaixo'} da SMA20, ${currentPrice > sma50 ? 'e acima' : 'mas abaixo'} da SMA50. `;
+            
+            detailedAnalysis += `\n\nVOLATILIDADE E RISCO\n\n`;
+            detailedAnalysis += `A volatilidade calculada é de ${volatility.toFixed(2)}%, ${volatility > 5 ? 'indicando alta volatilidade e maior risco' : 'indicando volatilidade moderada'}. `;
+            detailedAnalysis += `Os níveis de suporte identificados estão em $${support1.toFixed(2)}, $${support2.toFixed(2)} e $${support3.toFixed(2)}. `;
+            detailedAnalysis += `As resistências principais estão em $${resistance1.toFixed(2)}, $${resistance2.toFixed(2)} e $${resistance3.toFixed(2)}. `;
+            
+            detailedAnalysis += `\n\nANÁLISE FUNDAMENTAL\n\n`;
+            detailedAnalysis += `O sentimento da comunidade está ${sentimentScore > 60 ? 'muito positivo' : sentimentScore > 40 ? 'neutro' : 'negativo'} com ${sentimentScore.toFixed(1)}% de votos positivos. `;
+            detailedAnalysis += `A capitalização de mercado atual é de $${formatLargeNumber(data.market_data.market_cap.usd)} com volume de 24h de $${formatLargeNumber(data.market_data.total_volume.usd)}. `;
+            detailedAnalysis += `O ativo está ranqueado em #${data.market_cap_rank} no mercado global de criptomoedas. `;
+            
+            detailedAnalysis += `\n\nCONCLUSÃO E RECOMENDAÇÃO\n\n`;
+            detailedAnalysis += signals.join('. ') + '. ';
+            detailedAnalysis += `Baseado em todos os indicadores analisados, a recomendação é ${recommendation} com ${confidence.toFixed(0)}% de confiança para ${timeframe}. `;
+            detailedAnalysis += `${signalScore > 0 ? 'Os indicadores técnicos e fundamentais convergem para um cenário positivo' : signalScore < 0 ? 'Os indicadores alertam para cautela e possível movimento descendente' : 'O mercado apresenta sinais mistos, sugerindo aguardar por melhor ponto de entrada'}. `;
+
+            return {
+                crypto_name: data.name,
+                symbol: data.symbol.toUpperCase(),
+                current_price: currentPrice,
+                price_change_24h: priceChange24h,
+                volume_24h: data.market_data.total_volume.usd,
+                market_cap: data.market_data.market_cap.usd,
+                market_dominance: data.market_data.market_cap_percentage?.usd || 0,
+                ranking: data.market_cap_rank,
+                ath: data.market_data.ath.usd,
+                ath_change: data.market_data.ath_change_percentage.usd,
+                atl: data.market_data.atl.usd,
+                atl_change: data.market_data.atl_change_percentage.usd,
+                
+                technical_analysis: {
+                    trend_short: trendShort,
+                    trend_medium: trendMedium,
+                    trend_long: trendLong,
+                    rsi: rsi.toFixed(2),
+                    rsi_signal: rsi < 30 ? 'bullish' : rsi > 70 ? 'bearish' : 'neutral',
+                    macd: macd.trend,
+                    sma20: sma20,
+                    sma50: sma50,
+                    ema9: ema9,
+                    ema21: ema21,
+                    volatility: volatility.toFixed(2),
+                    support_levels: [support1, support2, support3],
+                    resistance_levels: [resistance1, resistance2, resistance3],
+                    key_patterns: signals.slice(0, 3)
+                },
+                
+                fundamental_analysis: {
+                    sentiment: sentimentScore > 60 ? 'positivo' : sentimentScore > 40 ? 'neutro' : 'negativo',
+                    sentiment_score: sentimentScore,
+                    community_score: communityScore,
+                    recent_news: [
+                        `Sentimento da comunidade: ${sentimentScore.toFixed(1)}% positivo`,
+                        `Volume 24h representa ${(volumeScore * 100).toFixed(2)}% do market cap`,
+                        `Preço ${priceChange24h > 0 ? 'subiu' : 'caiu'} ${Math.abs(priceChange24h).toFixed(2)}% nas últimas 24h`
+                    ]
+                },
+                
+                recommendation: {
+                    action: recommendation,
+                    class: recommendationClass,
+                    confidence: confidence.toFixed(0),
+                    timeframe: timeframe,
+                    reasoning: signals.join('. ') + '.'
+                },
+                
+                targets: {
+                    short_term: shortTermTarget,
+                    medium_term: mediumTermTarget,
+                    long_term: longTermTarget
+                },
+                
+                risk_management: {
+                    stop_loss: stopLoss,
+                    take_profit_1: tp1,
+                    take_profit_2: tp2,
+                    take_profit_3: tp3,
+                    risk_reward_ratio: `1:${riskReward}`,
+                    position_size: confidence > 75 ? '3-5% do capital' : confidence > 60 ? '2-3% do capital' : '1-2% do capital'
+                },
+                
+                detailed_analysis: detailedAnalysis
+            };
+        }
+
+        function displayResults(data) {
+            const resultsDiv = document.getElementById('results');
+            
+            const priceChange = data.price_change_24h || 0;
+            const changeClass = priceChange >= 0 ? 'positive' : 'negative';
+            const changeSymbol = priceChange >= 0 ? '▲' : '▼';
+
+            resultsDiv.innerHTML = `
+                <div class="result-card">
+                    <div class="result-header">
+                        <div>
+                            <h2 class="crypto-title">${data.crypto_name}</h2>
+                            <p style="opacity: 0.7;">${data.symbol}</p>
+                        </div>
+                        <div class="price-display">
+                            <div class="current-price">$${formatNumber(data.current_price)}</div>
+                            <div class="price-change ${changeClass}">
+                                ${changeSymbol} ${Math.abs(priceChange).toFixed(2)}% (24h)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="metrics-grid">
+                        <div class="metric-box">
+                            <div class="metric-label">Volume 24h</div>
+                            <div class="metric-value">$${formatLargeNumber(data.volume_24h)}</div>
+                        </div>
+                        <div class="metric-box">
+                            <div class="metric-label">Market Cap</div>
+                            <div class="metric-value">$${formatLargeNumber(data.market_cap)}</div>
+                        </div>
+                        <div class="metric-box">
+                            <div class="metric-label">Ranking</div>
+                            <div class="metric-value">#${data.ranking}</div>
+                        </div>
+                        <div class="metric-box">
+                            <div class="metric-label">ATH</div>
+                            <div class="metric-value">$${formatNumber(data.ath)}</div>
+                        </div>
+                    </div>
+
+                    <div class="recommendation">
+                        <div class="recommendation-badge ${data.recommendation.class}">
+                            ${data.recommendation.action}
+                        </div>
+                        <p style="font-size: 1.1rem; margin-bottom: 1rem;">
+                            <strong>Timeframe:</strong> ${data.recommendation.timeframe} | 
+                            <strong>Confiança:</strong> ${data.recommendation.confidence}%
+                        </p>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" style="width: ${data.recommendation.confidence}%"></div>
+                        </div>
+                        <p style="margin-top: 1.5rem; line-height: 1.8;">
+                            ${data.recommendation.reasoning}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <h2 class="analysis-title">ANÁLISE TÉCNICA</h2>
+                    <div class="analysis-content">
+                        <p><strong>Tendência:</strong></p>
+                        <p>Curto Prazo: ${data.technical_analysis.trend_short.toUpperCase()}</p>
+                        <p>Médio Prazo: ${data.technical_analysis.trend_medium.toUpperCase()}</p>
+                        <p>Longo Prazo: ${data.technical_analysis.trend_long.toUpperCase()}</p>
+                        
+                        <div class="indicator-grid">
+                            <div class="indicator-item">
+                                <div class="indicator-name">RSI (14)</div>
+                                <div class="indicator-value">${data.technical_analysis.rsi}</div>
+                                <span class="signal ${data.technical_analysis.rsi_signal}">${data.technical_analysis.rsi_signal}</span>
+                            </div>
+                            <div class="indicator-item">
+                                <div class="indicator-name">MACD</div>
+                                <div class="indicator-value">${data.technical_analysis.macd}</div>
+                                <span class="signal ${data.technical_analysis.macd}">${data.technical_analysis.macd}</span>
+                            </div>
+                            <div class="indicator-item">
+                                <div class="indicator-name">SMA 20</div>
+                                <div class="indicator-value">$${formatNumber(data.technical_analysis.sma20)}</div>
+                            </div>
+                            <div class="indicator-item">
+                                <div class="indicator-name">SMA 50</div>
+                                <div class="indicator-value">$${formatNumber(data.technical_analysis.sma50)}</div>
+                            </div>
+                            <div class="indicator-item">
+                                <div class="indicator-name">EMA 9</div>
+                                <div class="indicator-value">$${formatNumber(data.technical_analysis.ema9)}</div>
+                            </div>
+                            <div class="indicator-item">
+                                <div class="indicator-name">Volatilidade</div>
+                                <div class="indicator-value">${data.technical_analysis.volatility}%</div>
+                            </div>
+                        </div>
+                        
+                        <p style="margin-top: 1.5rem;"><strong>Suportes:</strong> 
+                        $${formatNumber(data.technical_analysis.support_levels[0])} | 
+                        $${formatNumber(data.technical_analysis.support_levels[1])} | 
+                        $${formatNumber(data.technical_analysis.support_levels[2])}</p>
+                        
+                        <p><strong>Resistências:</strong> 
+                        $${formatNumber(data.technical_analysis.resistance_levels[0])} | 
+                        $${formatNumber(data.technical_analysis.resistance_levels[1])} | 
+                        $${formatNumber(data.technical_analysis.resistance_levels[2])}</p>
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <h2 class="analysis-title">ANÁLISE FUNDAMENTAL</h2>
+                    <div class="analysis-content">
+                        <p><strong>Sentimento:</strong> ${data.fundamental_analysis.sentiment.toUpperCase()} (${data.fundamental_analysis.sentiment_score.toFixed(1)}% positivo)</p>
+                        <p><strong>Score da Comunidade:</strong> ${data.fundamental_analysis.community_score.toFixed(0)}/100</p>
+                        
+                        <div style="margin-top: 1.5rem;">
+                            <strong>Dados Recentes:</strong>
+                            <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                                ${data.fundamental_analysis.recent_news.map(news => `<li>${news}</li>`).join('')}
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <h2 class="analysis-title">ALVOS E GESTÃO DE RISCO</h2>
+                    
+                    <div class="targets-grid" style="margin-bottom: 2rem;">
+                        <div class="target-box">
+                            <div class="target-label">Curto Prazo (${data.targets.short_term.days})</div>
+                            <div class="target-value">$${formatNumber(data.targets.short_term.min)} - $${formatNumber(data.targets.short_term.max)}</div>
+                        </div>
+                        <div class="target-box">
+                            <div class="target-label">Médio Prazo (${data.targets.medium_term.days})</div>
+                            <div class="target-value">$${formatNumber(data.targets.medium_term.min)} - $${formatNumber(data.targets.medium_term.max)}</div>
+                        </div>
+                        <div class="target-box">
+                            <div class="target-label">Longo Prazo (${data.targets.long_term.days})</div>
+                            <div class="target-value">$${formatNumber(data.targets.long_term.min)} - $${formatNumber(data.targets.long_term.max)}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="analysis-content">
+                        <p><strong>Stop Loss:</strong> $${formatNumber(data.risk_management.stop_loss)}</p>
+                        <p><strong>Take Profit 1:</strong> $${formatNumber(data.risk_management.take_profit_1)}</p>
+                        <p><strong>Take Profit 2:</strong> $${formatNumber(data.risk_management.take_profit_2)}</p>
+                        <p><strong>Take Profit 3:</strong> $${formatNumber(data.risk_management.take_profit_3)}</p>
+                        <p><strong>Risk/Reward:</strong> ${data.risk_management.risk_reward_ratio}</p>
+                        <p><strong>Tamanho de Posição Sugerido:</strong> ${data.risk_management.position_size}</p>
+                    </div>
+                </div>
+
+                <div class="result-card">
+                    <h2 class="analysis-title">ANÁLISE COMPLETA DETALHADA</h2>
+                    <div class="analysis-content">
+                        ${data.detailed_analysis.split('\n\n').map(p => p.trim() ? `<p style="margin-bottom: 1rem;">${p}</p>` : '').join('')}
+                    </div>
+                </div>
+            `;
+            
+            resultsDiv.classList.add('active');
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function formatNumber(num) {
+            if (!num) return '0';
+            return parseFloat(num).toLocaleString('en-US', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+
+        function formatLargeNumber(num) {
+            if (!num) return '0';
+            if (num >= 1e12) return (num / 1e12).toFixed(2) + 'T';
+            if (num >= 1e9) return (num / 1e9).toFixed(2) + 'B';
+            if (num >= 1e6) return (num / 1e6).toFixed(2) + 'M';
+            if (num >= 1e3) return (num / 1e3).toFixed(2) + 'K';
+            return num.toFixed(2);
+        }
+
+        document.getElementById('analyzeBtn').addEventListener('click', analyzeCrypto);
+        document.getElementById('cryptoInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') analyzeCrypto();
+        });
+    </script>
+</body>
+</html>
