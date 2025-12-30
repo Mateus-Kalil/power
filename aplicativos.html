@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WolfGuard</title>
+    <title>WolfGuard - Aplicativos</title>
 
     <link rel="icon" href="favicon2.png" type="image/x-icon" />
     <link rel="shortcut icon" href="favicon2.png" type="image/x-icon" />
@@ -33,12 +33,13 @@
             background-size: 600% 600%;
             animation: gradientBG 20s ease infinite;
             color: var(--light);
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
+            overflow-x: hidden;
             position: relative;
+            padding: 2rem 0;
         }
 
         @keyframes gradientBG {
@@ -47,7 +48,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* MK */
         body::before {
             content: "";
             position: fixed;
@@ -69,21 +69,25 @@
 
         .container {
             text-align: center;
-            padding: 3rem;
+            padding: 3rem 2rem;
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
             border-radius: var(--radius);
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            max-width: 600px;
+            max-width: 1200px;
             width: 90%;
             position: relative;
             z-index: 10;
         }
 
+        .header {
+            margin-bottom: 3rem;
+        }
+
         .icon-box {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
+            font-size: 3rem;
+            margin-bottom: 1rem;
             background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -98,20 +102,108 @@
         h1 {
             font-size: 2.5rem;
             font-weight: 700;
+            margin-bottom: 0.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            color: #d8d8e8;
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+        }
+
+        .apps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .app-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 2rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .app-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .app-card:hover::before {
+            opacity: 0.1;
+        }
+
+        .app-card.active {
+            border-color: var(--secondary);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(37, 117, 252, 0.3);
+        }
+
+        .app-card.disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .app-card.disabled:hover {
+            transform: none;
+        }
+
+        .app-icon {
+            font-size: 3rem;
             margin-bottom: 1rem;
             background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        p {
-            color: #d8d8e8;
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
-            line-height: 1.6;
+        .app-card.disabled .app-icon {
+            opacity: 0.5;
         }
 
-        .btn {
+        .app-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .app-description {
+            color: #b8b8d8;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .app-badge {
+            display: inline-block;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            background: var(--gradient);
+        }
+
+        .app-badge.soon {
+            background: rgba(255, 255, 255, 0.1);
+            color: #d8d8e8;
+        }
+
+        .btn-back {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
@@ -120,19 +212,19 @@
             font-weight: 600;
             text-decoration: none;
             color: var(--light);
-            background: var(--gradient);
+            background: rgba(255, 255, 255, 0.1);
             transition: 0.3s ease;
             box-shadow: 0 8px 20px rgba(0,0,0,0.25);
-            border: none;
+            border: 1px solid rgba(255, 255, 255, 0.2);
             cursor: pointer;
         }
 
-        .btn:hover {
+        .btn-back:hover {
             transform: translateY(-3px) scale(1.03);
             box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+            background: rgba(255, 255, 255, 0.15);
         }
 
-        /* MK */
         .particle {
             position: absolute;
             width: 4px;
@@ -149,11 +241,21 @@
             100% { transform: translateY(-100px) scale(1); opacity: 0; }
         }
 
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .apps-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
     </style>
 </head>
 <body>
 
-    <!-- Partículas de fundo para ambiente -->
     <div style="position: absolute; width: 100%; height: 100%; overflow: hidden; z-index: 0;">
         <div class="particle" style="left: 10%; animation-duration: 8s; animation-delay: 0s;"></div>
         <div class="particle" style="left: 30%; animation-duration: 12s; animation-delay: 2s;"></div>
@@ -163,13 +265,71 @@
     </div>
 
     <div class="container">
-        <div class="icon-box">
-            <i class="fa-solid fa-layer-group"></i>
+        <div class="header">
+            <div class="icon-box">
+                <i class="fa-solid fa-layer-group"></i>
+            </div>
+            <h1>Aplicativos</h1>
+            <p class="subtitle">Explore nossas ferramentas e serviços</p>
         </div>
-        <h1>Em breve</h1>
-        <p>Novos aplicativos</p>
-        
-        <a href="index.html" class="btn" onclick="history.back(); return false;">
+
+        <div class="apps-grid">
+            <a href="https://wolfguard.com.br/loteria" class="app-card active" style="text-decoration: none; color: inherit;">
+                <div class="app-icon">
+                    <i class="fa-solid fa-clover"></i>
+                </div>
+                <h3 class="app-title">Loterias da Caixa</h3>
+                <p class="app-description">Gerador de números aleatórios para suas apostas</p>
+                <span class="app-badge">Disponível</span>
+            </a>
+
+            <div class="app-card disabled">
+                <div class="app-icon">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <h3 class="app-title">Segurança Digital</h3>
+                <p class="app-description">Proteja seus dados e dispositivos</p>
+                <span class="app-badge soon">Em breve</span>
+            </div>
+
+            <div class="app-card disabled">
+                <div class="app-icon">
+                    <i class="fa-solid fa-chart-line"></i>
+                </div>
+                <h3 class="app-title">Análise Financeira</h3>
+                <p class="app-description">Gerencie suas finanças com inteligência</p>
+                <span class="app-badge soon">Em breve</span>
+            </div>
+
+            <div class="app-card disabled">
+                <div class="app-icon">
+                    <i class="fa-solid fa-cloud"></i>
+                </div>
+                <h3 class="app-title">Armazenamento</h3>
+                <p class="app-description">Seus arquivos seguros na nuvem</p>
+                <span class="app-badge soon">Em breve</span>
+            </div>
+
+            <div class="app-card disabled">
+                <div class="app-icon">
+                    <i class="fa-solid fa-calendar-check"></i>
+                </div>
+                <h3 class="app-title">Agenda Inteligente</h3>
+                <p class="app-description">Organize suas tarefas e compromissos</p>
+                <span class="app-badge soon">Em breve</span>
+            </div>
+
+            <div class="app-card disabled">
+                <div class="app-icon">
+                    <i class="fa-solid fa-bolt"></i>
+                </div>
+                <h3 class="app-title">Automação</h3>
+                <p class="app-description">Automatize processos do seu dia a dia</p>
+                <span class="app-badge soon">Em breve</span>
+            </div>
+        </div>
+
+        <a href="index.html" class="btn-back" onclick="history.back(); return false;">
             <i class="fa-solid fa-arrow-left"></i> Voltar
         </a>
     </div>
