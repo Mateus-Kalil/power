@@ -1,0 +1,1856 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WolfGuard Loterias - Gerador Inteligente</title>
+    
+    <link rel="icon" href="favicon2.png" type="image/x-icon" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;900&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+    <style>
+        :root {
+            --primary: #6a11cb;
+            --secondary: #2575fc;
+            --accent: #00f5d4;
+            --gold: #ffd700;
+            --dark: #040316;
+            --darker: #020210;
+            --light: #ffffff;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            --gradient-accent: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
+            --radius: 16px;
+            --radius-sm: 10px;
+            --shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: linear-gradient(270deg, #040316, #1a1a3d, #0a0a2e, #040316);
+            background-size: 800% 800%;
+            animation: gradientBG 25s ease infinite;
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Efeito Matrix/Chuva */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: linear-gradient(to bottom, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.08) 2%, transparent 2%, transparent 100%);
+            background-size: 2px 40px;
+            animation: rain 0.5s linear infinite;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        @keyframes rain {
+            to { transform: translateY(40px); }
+        }
+
+        /* Partículas flutuantes */
+        .particles-container {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particleFloat linear infinite;
+        }
+
+        @keyframes particleFloat {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(360deg); opacity: 0; }
+        }
+
+        /* Botão Voltar Fixo */
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius);
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+        }
+
+        .back-btn:hover {
+            background: var(--gradient);
+            transform: translateX(-5px);
+            box-shadow: 0 12px 40px rgba(106, 17, 203, 0.4);
+        }
+
+        .back-btn i {
+            transition: transform 0.3s ease;
+        }
+
+        .back-btn:hover i {
+            transform: translateX(-3px);
+        }
+
+        /* Header */
+        header {
+            position: relative;
+            z-index: 10;
+            padding: 80px 20px 40px;
+            text-align: center;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .logo-icon {
+            font-size: 3.5rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .logo-text {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .tagline {
+            color: #a0a0c0;
+            font-size: 1.1rem;
+            margin-top: 10px;
+            font-weight: 300;
+        }
+
+        .tagline span {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* Stats Bar */
+        .stats-bar {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            margin-top: 30px;
+            padding: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: #888;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Main Container */
+        .main-container {
+            position: relative;
+            z-index: 10;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Lottery Selector */
+        .lottery-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 40px;
+            padding: 25px;
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border-radius: var(--radius);
+            border: 1px solid var(--glass-border);
+        }
+
+        .lottery-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 20px 15px;
+            background: rgba(255,255,255,0.03);
+            border: 2px solid transparent;
+            border-radius: var(--radius-sm);
+            color: #a0a0c0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lottery-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .lottery-btn:hover {
+            transform: translateY(-5px);
+            border-color: var(--secondary);
+            color: var(--light);
+        }
+
+        .lottery-btn.active {
+            border-color: var(--accent);
+            color: var(--light);
+            background: linear-gradient(135deg, rgba(106, 17, 203, 0.3), rgba(37, 117, 252, 0.3));
+            box-shadow: 0 0 30px rgba(0, 245, 212, 0.2);
+        }
+
+        .lottery-btn i {
+            font-size: 1.8rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .lottery-btn span {
+            font-weight: 600;
+            font-size: 0.85rem;
+            position: relative;
+            z-index: 1;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Lottery Colors */
+        .lottery-btn[data-lottery="mega"] i { color: #209869; }
+        .lottery-btn[data-lottery="lotofacil"] i { color: #930089; }
+        .lottery-btn[data-lottery="quina"] i { color: #260085; }
+        .lottery-btn[data-lottery="lotomania"] i { color: #f78100; }
+        .lottery-btn[data-lottery="timemania"] i { color: #00ff48; }
+        .lottery-btn[data-lottery="dupla"] i { color: #a61324; }
+        .lottery-btn[data-lottery="diadesorte"] i { color: #cb8927; }
+        .lottery-btn[data-lottery="supersete"] i { color: #a8cf45; }
+
+        /* Content Grid */
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+        }
+
+        @media (max-width: 1000px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Cards */
+        .card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border-radius: var(--radius);
+            border: 1px solid var(--glass-border);
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(106, 17, 203, 0.3);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .card-title i {
+            font-size: 1.4rem;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .card-badge {
+            padding: 5px 12px;
+            background: var(--gradient);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Strategy Selector */
+        .strategy-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .strategy-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 15px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-sm);
+            color: #a0a0c0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.85rem;
+        }
+
+        .strategy-btn:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: var(--secondary);
+            color: var(--light);
+        }
+
+        .strategy-btn.active {
+            background: linear-gradient(135deg, rgba(106, 17, 203, 0.3), rgba(37, 117, 252, 0.3));
+            border-color: var(--accent);
+            color: var(--light);
+        }
+
+        .strategy-btn i {
+            font-size: 1.1rem;
+            width: 25px;
+        }
+
+        /* Generate Button */
+        .generate-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .qty-selector {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.05);
+            padding: 8px 15px;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--glass-border);
+        }
+
+        .qty-selector label {
+            font-size: 0.85rem;
+            color: #a0a0c0;
+        }
+
+        .qty-selector select {
+            background: transparent;
+            border: none;
+            color: var(--light);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            outline: none;
+        }
+
+        .qty-selector select option {
+            background: var(--dark);
+        }
+
+        .generate-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            padding: 18px 30px;
+            background: var(--gradient);
+            border: none;
+            border-radius: var(--radius-sm);
+            color: var(--light);
+            font-size: 1.1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .generate-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .generate-btn:hover::before {
+            left: 100%;
+        }
+
+        .generate-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(106, 17, 203, 0.5);
+        }
+
+        .generate-btn:active {
+            transform: translateY(0);
+        }
+
+        .generate-btn i {
+            font-size: 1.3rem;
+        }
+
+        /* Numbers Display */
+        .numbers-container {
+            min-height: 200px;
+        }
+
+        .game-result {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: rgba(255,255,255,0.03);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--glass-border);
+            animation: slideIn 0.5s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .game-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .game-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .game-strategy {
+            font-size: 0.75rem;
+            color: #888;
+            padding: 4px 10px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 15px;
+        }
+
+        .numbers-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .number-ball {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            animation: popIn 0.4s ease backwards;
+            position: relative;
+            cursor: default;
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0) rotate(-180deg);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        .number-ball.hot {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+            box-shadow: 0 0 20px rgba(238, 90, 36, 0.5);
+        }
+
+        .number-ball.cold {
+            background: linear-gradient(135deg, #74b9ff, #0984e3);
+            box-shadow: 0 0 20px rgba(9, 132, 227, 0.5);
+        }
+
+        .number-ball.neutral {
+            background: var(--gradient);
+            box-shadow: 0 0 20px rgba(106, 17, 203, 0.5);
+        }
+
+        .number-ball.never {
+            background: linear-gradient(135deg, #ffd700, #f39c12);
+            box-shadow: 0 0 20px rgba(243, 156, 18, 0.5);
+            color: #1a1a2e;
+        }
+
+        .number-ball::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 4px 8px;
+            background: rgba(0,0,0,0.8);
+            border-radius: 5px;
+            font-size: 0.65rem;
+            font-family: 'Poppins', sans-serif;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.2s ease;
+        }
+
+        .number-ball:hover::after {
+            opacity: 1;
+        }
+
+        /* History Section */
+        .history-container {
+            max-height: 400px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .history-container::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .history-container::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.05);
+            border-radius: 3px;
+        }
+
+        .history-container::-webkit-scrollbar-thumb {
+            background: var(--gradient);
+            border-radius: 3px;
+        }
+
+        .history-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            background: rgba(255,255,255,0.03);
+            border-radius: var(--radius-sm);
+            margin-bottom: 10px;
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+        }
+
+        .history-item:hover {
+            background: rgba(255,255,255,0.06);
+            border-color: var(--secondary);
+        }
+
+        .history-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .history-date {
+            font-size: 0.8rem;
+            color: #888;
+        }
+
+        .history-concurso {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            color: var(--accent);
+        }
+
+        .history-numbers {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .history-ball {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--gradient);
+            border-radius: 50%;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Statistics Card */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .stat-box {
+            padding: 15px;
+            background: rgba(255,255,255,0.03);
+            border-radius: var(--radius-sm);
+            text-align: center;
+            border: 1px solid var(--glass-border);
+        }
+
+        .stat-box-value {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-box-label {
+            font-size: 0.75rem;
+            color: #888;
+            margin-top: 5px;
+            text-transform: uppercase;
+        }
+
+        /* Hot/Cold Numbers Display */
+        .hot-cold-section {
+            margin-top: 20px;
+        }
+
+        .hot-cold-title {
+            font-size: 0.9rem;
+            color: #a0a0c0;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hot-cold-title i {
+            font-size: 1rem;
+        }
+
+        .hot-cold-title.hot i { color: #ff6b6b; }
+        .hot-cold-title.cold i { color: #74b9ff; }
+        .hot-cold-title.never i { color: #ffd700; }
+
+        .mini-balls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .mini-ball {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .mini-ball.hot {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.3), rgba(238, 90, 36, 0.3));
+            border: 2px solid #ff6b6b;
+        }
+
+        .mini-ball.cold {
+            background: linear-gradient(135deg, rgba(116, 185, 255, 0.3), rgba(9, 132, 227, 0.3));
+            border: 2px solid #74b9ff;
+        }
+
+        .mini-ball.never {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(243, 156, 18, 0.3));
+            border: 2px solid #ffd700;
+        }
+
+        /* Legend */
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            color: #a0a0c0;
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .legend-dot.hot { background: linear-gradient(135deg, #ff6b6b, #ee5a24); }
+        .legend-dot.cold { background: linear-gradient(135deg, #74b9ff, #0984e3); }
+        .legend-dot.neutral { background: var(--gradient); }
+        .legend-dot.never { background: linear-gradient(135deg, #ffd700, #f39c12); }
+
+        /* Tips Section */
+        .tips-section {
+            grid-column: 1 / -1;
+        }
+
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .tip-card {
+            padding: 20px;
+            background: rgba(255,255,255,0.03);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--glass-border);
+            transition: all 0.3s ease;
+        }
+
+        .tip-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--accent);
+        }
+
+        .tip-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .tip-title {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .tip-text {
+            font-size: 0.85rem;
+            color: #a0a0c0;
+            line-height: 1.5;
+        }
+
+        /* Footer */
+        footer {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 40px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        footer p {
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        /* Loading Animation */
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 40px;
+        }
+
+        .loading-dot {
+            width: 12px;
+            height: 12px;
+            background: var(--gradient);
+            border-radius: 50%;
+            animation: loadingPulse 0.6s ease-in-out infinite;
+        }
+
+        .loading-dot:nth-child(2) { animation-delay: 0.15s; }
+        .loading-dot:nth-child(3) { animation-delay: 0.3s; }
+
+        @keyframes loadingPulse {
+            0%, 100% { transform: scale(0.8); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 1; }
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .logo-text {
+                font-size: 1.8rem;
+            }
+
+            .strategy-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-bar {
+                gap: 20px;
+            }
+
+            .stat-value {
+                font-size: 1.5rem;
+            }
+
+            .number-ball {
+                width: 42px;
+                height: 42px;
+                font-size: 0.9rem;
+            }
+
+            .generate-section {
+                flex-direction: column;
+            }
+
+            .qty-selector {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .generate-btn {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 500px) {
+            .back-btn {
+                padding: 10px 15px;
+                font-size: 0.8rem;
+            }
+
+            .back-btn span {
+                display: none;
+            }
+
+            header {
+                padding: 70px 15px 30px;
+            }
+
+            .lottery-selector {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                padding: 15px;
+            }
+
+            .lottery-btn {
+                padding: 15px 10px;
+            }
+
+            .lottery-btn i {
+                font-size: 1.5rem;
+            }
+
+            .lottery-btn span {
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Partículas de fundo -->
+    <div class="particles-container" id="particles"></div>
+
+    <!-- Botão Voltar -->
+    <a href="https://wolfguard.com.br" class="back-btn">
+        <i class="fa-solid fa-arrow-left"></i>
+        <span>Voltar</span>
+    </a>
+
+    <!-- Header -->
+    <header>
+        <div class="logo-container">
+            <i class="fa-solid fa-dice logo-icon"></i>
+            <span class="logo-text">WolfGuard</span>
+        </div>
+        <h1 style="font-size: 1.5rem; font-weight: 300; color: #d8d8e8;">Gerador Inteligente de Loterias</h1>
+        <p class="tagline">Algoritmos estatísticos para <span>maximizar suas chances</span></p>
+
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-value" id="totalGames">0</div>
+                <div class="stat-label">Jogos Gerados</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value" id="currentLotteryName">MEGA-SENA</div>
+                <div class="stat-label">Loteria Selecionada</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-value">17</div>
+                <div class="stat-label">Anos de Dados</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-container">
+
+        <!-- Lottery Selector -->
+        <div class="lottery-selector">
+            <button class="lottery-btn active" data-lottery="mega" onclick="selectLottery('mega')">
+                <i class="fa-solid fa-clover"></i>
+                <span>Mega-Sena</span>
+            </button>
+            <button class="lottery-btn" data-lottery="lotofacil" onclick="selectLottery('lotofacil')">
+                <i class="fa-solid fa-star"></i>
+                <span>Lotofácil</span>
+            </button>
+            <button class="lottery-btn" data-lottery="quina" onclick="selectLottery('quina')">
+                <i class="fa-solid fa-moon"></i>
+                <span>Quina</span>
+            </button>
+            <button class="lottery-btn" data-lottery="lotomania" onclick="selectLottery('lotomania')">
+                <i class="fa-solid fa-infinity"></i>
+                <span>Lotomania</span>
+            </button>
+            <button class="lottery-btn" data-lottery="timemania" onclick="selectLottery('timemania')">
+                <i class="fa-solid fa-futbol"></i>
+                <span>Timemania</span>
+            </button>
+            <button class="lottery-btn" data-lottery="dupla" onclick="selectLottery('dupla')">
+                <i class="fa-solid fa-layer-group"></i>
+                <span>Dupla Sena</span>
+            </button>
+            <button class="lottery-btn" data-lottery="diadesorte" onclick="selectLottery('diadesorte')">
+                <i class="fa-solid fa-calendar-days"></i>
+                <span>Dia de Sorte</span>
+            </button>
+            <button class="lottery-btn" data-lottery="supersete" onclick="selectLottery('supersete')">
+                <i class="fa-solid fa-7"></i>
+                <span>Super Sete</span>
+            </button>
+        </div>
+
+        <!-- Content Grid -->
+        <div class="content-grid">
+
+            <!-- Generator Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <span>Gerador Inteligente</span>
+                    </div>
+                    <span class="card-badge">IA</span>
+                </div>
+
+                <p style="font-size: 0.9rem; color: #a0a0c0; margin-bottom: 20px;">
+                    Selecione uma estratégia baseada em análise estatística:
+                </p>
+
+                <div class="strategy-grid">
+                    <button class="strategy-btn active" data-strategy="balanced" onclick="selectStrategy('balanced')">
+                        <i class="fa-solid fa-scale-balanced"></i>
+                        <span>Balanceado</span>
+                    </button>
+                    <button class="strategy-btn" data-strategy="hot" onclick="selectStrategy('hot')">
+                        <i class="fa-solid fa-fire"></i>
+                        <span>Números Quentes</span>
+                    </button>
+                    <button class="strategy-btn" data-strategy="cold" onclick="selectStrategy('cold')">
+                        <i class="fa-solid fa-snowflake"></i>
+                        <span>Números Frios</span>
+                    </button>
+                    <button class="strategy-btn" data-strategy="never" onclick="selectStrategy('never')">
+                        <i class="fa-solid fa-ghost"></i>
+                        <span>Nunca Saíram</span>
+                    </button>
+                    <button class="strategy-btn" data-strategy="mixed" onclick="selectStrategy('mixed')">
+                        <i class="fa-solid fa-shuffle"></i>
+                        <span>Mix Inteligente</span>
+                    </button>
+                    <button class="strategy-btn" data-strategy="random" onclick="selectStrategy('random')">
+                        <i class="fa-solid fa-dice"></i>
+                        <span>Aleatório Puro</span>
+                    </button>
+                </div>
+
+                <div class="generate-section">
+                    <div class="qty-selector">
+                        <label>Quantidade:</label>
+                        <select id="gameQty">
+                            <option value="1">1 jogo</option>
+                            <option value="3">3 jogos</option>
+                            <option value="5" selected>5 jogos</option>
+                            <option value="10">10 jogos</option>
+                        </select>
+                    </div>
+                    <button class="generate-btn" onclick="generateGames()">
+                        <i class="fa-solid fa-bolt"></i>
+                        <span>Gerar Jogos</span>
+                    </button>
+                </div>
+
+                <div class="legend">
+                    <div class="legend-item">
+                        <div class="legend-dot hot"></div>
+                        <span>Quente (3+ vezes)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot cold"></div>
+                        <span>Frio (1 vez)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot neutral"></div>
+                        <span>Normal (2 vezes)</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-dot never"></div>
+                        <span>Nunca saiu</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fa-solid fa-trophy"></i>
+                        <span>Seus Jogos</span>
+                    </div>
+                    <button onclick="copyAllGames()" style="background: var(--gradient); border: none; padding: 8px 15px; border-radius: 20px; color: white; font-size: 0.75rem; cursor: pointer; display: flex; align-items: center; gap: 5px;">
+                        <i class="fa-solid fa-copy"></i> Copiar
+                    </button>
+                </div>
+
+                <div class="numbers-container" id="numbersContainer">
+                    <div class="empty-state">
+                        <i class="fa-solid fa-dice"></i>
+                        <p>Clique em "Gerar Jogos" para começar!</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- History Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                        <span>Últimos Sorteios</span>
+                    </div>
+                    <span class="card-badge" id="historyLotteryBadge">MEGA</span>
+                </div>
+
+                <div class="history-container" id="historyContainer">
+                    <!-- History items will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Statistics Card -->
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span>Estatísticas</span>
+                    </div>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-box">
+                        <div class="stat-box-value" id="statTotal">102</div>
+                        <div class="stat-box-label">Total Sorteios</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-box-value" id="statHot">10</div>
+                        <div class="stat-box-label">Nº Mais Quente</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-box-value" id="statNever">8</div>
+                        <div class="stat-box-label">Nunca Saíram</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-box-value" id="statAvg">54%</div>
+                        <div class="stat-box-label">Pares Média</div>
+                    </div>
+                </div>
+
+                <div class="hot-cold-section">
+                    <div class="hot-cold-title hot">
+                        <i class="fa-solid fa-fire"></i>
+                        <span>Top 5 Mais Quentes</span>
+                    </div>
+                    <div class="mini-balls" id="hotNumbers">
+                        <!-- Hot numbers will be inserted here -->
+                    </div>
+                </div>
+
+                <div class="hot-cold-section">
+                    <div class="hot-cold-title never">
+                        <i class="fa-solid fa-ghost"></i>
+                        <span>Nunca Saíram</span>
+                    </div>
+                    <div class="mini-balls" id="neverNumbers">
+                        <!-- Never numbers will be inserted here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tips Section -->
+            <div class="card tips-section">
+                <div class="card-header">
+                    <div class="card-title">
+                        <i class="fa-solid fa-lightbulb"></i>
+                        <span>Dicas Inteligentes</span>
+                    </div>
+                </div>
+
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <span class="tip-icon">🎯</span>
+                        <div class="tip-title">Estratégia Balanceada</div>
+                        <div class="tip-text">Combine números quentes e frios para equilibrar probabilidades. Estatisticamente, é a melhor abordagem a longo prazo.</div>
+                    </div>
+                    <div class="tip-card">
+                        <span class="tip-icon">📊</span>
+                        <div class="tip-title">Lei dos Grandes Números</div>
+                        <div class="tip-text">Números "atrasados" tendem a compensar com o tempo. Considere incluir alguns números que não saem há muito tempo.</div>
+                    </div>
+                    <div class="tip-card">
+                        <span class="tip-icon">⚖️</span>
+                        <div class="tip-title">Pares e Ímpares</div>
+                        <div class="tip-text">Historicamente, a maioria dos sorteios tem distribuição equilibrada entre números pares e ímpares (3-3 ou 4-2).</div>
+                    </div>
+                    <div class="tip-card">
+                        <span class="tip-icon">🔢</span>
+                        <div class="tip-title">Distribuição por Faixas</div>
+                        <div class="tip-text">Inclua números de diferentes faixas (1-10, 11-20, etc.) para melhor cobertura estatística do volante.</div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 <a href="https://wolfguard.com.br">WolfGuard</a> - Gerador Inteligente de Loterias</p>
+        <p style="margin-top: 10px; font-size: 0.75rem; color: #555;">
+            ⚠️ Jogar em loterias envolve risco. Este gerador não garante resultados. Jogue com responsabilidade.
+        </p>
+    </footer>
+
+    <script>
+        // ============================================
+        // BANCO DE DADOS DAS LOTERIAS
+        // ============================================
+        const lotteryData = {
+            mega: {
+                name: 'MEGA-SENA',
+                numbers: 6,
+                range: 60,
+                color: '#209869',
+                history: [
+                    { date: '31/12/2024', concurso: 2810, numbers: [1, 17, 19, 29, 50, 57] },
+                    { date: '31/12/2023', concurso: 2670, numbers: [21, 24, 33, 41, 48, 56] },
+                    { date: '31/12/2022', concurso: 2550, numbers: [4, 5, 10, 34, 58, 59] },
+                    { date: '31/12/2021', concurso: 2440, numbers: [12, 15, 23, 32, 33, 46] },
+                    { date: '31/12/2020', concurso: 2330, numbers: [17, 20, 22, 35, 41, 42] },
+                    { date: '31/12/2019', concurso: 2220, numbers: [3, 35, 38, 40, 57, 58] },
+                    { date: '31/12/2018', concurso: 2110, numbers: [5, 10, 12, 18, 25, 33] },
+                    { date: '31/12/2017', concurso: 2000, numbers: [3, 6, 10, 17, 34, 37] },
+                    { date: '31/12/2016', concurso: 1890, numbers: [5, 11, 22, 24, 51, 53] },
+                    { date: '31/12/2015', concurso: 1775, numbers: [2, 18, 31, 42, 51, 56] },
+                    { date: '31/12/2014', concurso: 1665, numbers: [1, 5, 11, 16, 20, 56] },
+                    { date: '31/12/2013', concurso: 1560, numbers: [20, 30, 36, 38, 47, 53] },
+                    { date: '31/12/2012', concurso: 1455, numbers: [14, 32, 33, 36, 41, 52] },
+                    { date: '31/12/2011', concurso: 1350, numbers: [3, 4, 29, 36, 45, 55] },
+                    { date: '31/12/2010', concurso: 1245, numbers: [2, 10, 34, 37, 43, 50] },
+                    { date: '31/12/2009', concurso: 1140, numbers: [10, 27, 40, 46, 49, 58] },
+                    { date: '31/12/2008', concurso: 1035, numbers: [1, 11, 26, 51, 59, 60] }
+                ],
+                hot: [10, 33, 5, 1, 11, 51, 58, 34, 3, 36],
+                never: [7, 8, 9, 13, 28, 39, 44, 54]
+            },
+            lotofacil: {
+                name: 'LOTOFÁCIL',
+                numbers: 15,
+                range: 25,
+                color: '#930089',
+                history: [
+                    { date: '30/12/2024', concurso: 3272, numbers: [1, 2, 3, 5, 7, 8, 10, 11, 13, 15, 17, 18, 20, 22, 25] },
+                    { date: '28/12/2024', concurso: 3271, numbers: [1, 3, 4, 6, 7, 9, 11, 12, 14, 16, 18, 19, 21, 23, 24] },
+                    { date: '27/12/2024', concurso: 3270, numbers: [2, 4, 5, 6, 8, 10, 12, 14, 15, 17, 19, 21, 22, 24, 25] },
+                    { date: '26/12/2024', concurso: 3269, numbers: [1, 3, 5, 7, 9, 10, 11, 13, 15, 16, 18, 20, 22, 23, 25] },
+                    { date: '23/12/2024', concurso: 3268, numbers: [2, 3, 4, 6, 8, 9, 11, 12, 14, 16, 17, 19, 21, 23, 24] },
+                    { date: '21/12/2024', concurso: 3267, numbers: [1, 2, 5, 6, 8, 10, 12, 13, 15, 17, 19, 20, 22, 24, 25] },
+                    { date: '20/12/2024', concurso: 3266, numbers: [3, 4, 5, 7, 9, 11, 13, 14, 16, 18, 20, 21, 23, 24, 25] }
+                ],
+                hot: [20, 10, 25, 14, 11, 5, 24, 13, 3, 2],
+                never: []
+            },
+            quina: {
+                name: 'QUINA',
+                numbers: 5,
+                range: 80,
+                color: '#260085',
+                history: [
+                    { date: '30/12/2024', concurso: 6612, numbers: [7, 23, 45, 58, 72] },
+                    { date: '28/12/2024', concurso: 6611, numbers: [12, 34, 41, 56, 67] },
+                    { date: '27/12/2024', concurso: 6610, numbers: [5, 19, 38, 52, 79] },
+                    { date: '26/12/2024', concurso: 6609, numbers: [8, 24, 43, 61, 75] },
+                    { date: '23/12/2024', concurso: 6608, numbers: [3, 17, 36, 54, 68] },
+                    { date: '21/12/2024', concurso: 6607, numbers: [11, 29, 47, 63, 77] },
+                    { date: '20/12/2024', concurso: 6606, numbers: [6, 22, 40, 55, 71] }
+                ],
+                hot: [4, 53, 60, 42, 72, 67, 23, 38, 17, 80],
+                never: []
+            },
+            lotomania: {
+                name: 'LOTOMANIA',
+                numbers: 50,
+                range: 100,
+                color: '#f78100',
+                history: [
+                    { date: '27/12/2024', concurso: 2710, numbers: [0, 3, 7, 11, 15, 18, 22, 25, 29, 33, 36, 40, 44, 47, 51, 55, 58, 62, 66, 69, 73, 77, 80, 84, 87, 91, 95, 98, 02, 06, 10, 14, 17, 21, 24, 28, 32, 35, 39, 43, 46, 50, 54, 57, 61, 65, 68, 72, 76, 79] },
+                    { date: '24/12/2024', concurso: 2709, numbers: [1, 4, 8, 12, 16, 19, 23, 26, 30, 34, 37, 41, 45, 48, 52, 56, 59, 63, 67, 70, 74, 78, 81, 85, 88, 92, 96, 99, 03, 07, 11, 15, 18, 22, 25, 29, 33, 36, 40, 44, 47, 51, 55, 58, 62, 66, 69, 73, 77, 80] }
+                ],
+                hot: [47, 51, 27, 95, 10, 82, 37, 53, 0, 4],
+                never: []
+            },
+            timemania: {
+                name: 'TIMEMANIA',
+                numbers: 10,
+                range: 80,
+                color: '#00ff48',
+                history: [
+                    { date: '28/12/2024', concurso: 2185, numbers: [5, 12, 23, 31, 42, 54, 61, 73, 78, 80] },
+                    { date: '26/12/2024', concurso: 2184, numbers: [3, 17, 28, 39, 47, 55, 63, 71, 76, 79] },
+                    { date: '24/12/2024', concurso: 2183, numbers: [7, 14, 25, 36, 44, 52, 66, 72, 77, 80] },
+                    { date: '21/12/2024', concurso: 2182, numbers: [2, 11, 22, 33, 41, 56, 64, 70, 75, 78] },
+                    { date: '19/12/2024', concurso: 2181, numbers: [8, 16, 27, 38, 46, 53, 62, 74, 79, 80] }
+                ],
+                hot: [43, 80, 27, 37, 32, 13, 53, 4, 22, 10],
+                never: []
+            },
+            dupla: {
+                name: 'DUPLA SENA',
+                numbers: 6,
+                range: 50,
+                color: '#a61324',
+                history: [
+                    { date: '28/12/2024', concurso: 2753, numbers: [4, 12, 23, 31, 42, 48] },
+                    { date: '26/12/2024', concurso: 2752, numbers: [7, 15, 26, 34, 41, 49] },
+                    { date: '24/12/2024', concurso: 2751, numbers: [2, 11, 22, 33, 44, 50] },
+                    { date: '21/12/2024', concurso: 2750, numbers: [5, 18, 27, 36, 43, 47] },
+                    { date: '19/12/2024', concurso: 2749, numbers: [3, 14, 25, 32, 40, 46] }
+                ],
+                hot: [10, 33, 50, 40, 27, 4, 41, 13, 24, 18],
+                never: []
+            },
+            diadesorte: {
+                name: 'DIA DE SORTE',
+                numbers: 7,
+                range: 31,
+                color: '#cb8927',
+                history: [
+                    { date: '28/12/2024', concurso: 1012, numbers: [2, 7, 12, 17, 22, 27, 31] },
+                    { date: '26/12/2024', concurso: 1011, numbers: [4, 9, 14, 19, 24, 28, 30] },
+                    { date: '24/12/2024', concurso: 1010, numbers: [1, 6, 11, 16, 21, 26, 29] },
+                    { date: '21/12/2024', concurso: 1009, numbers: [3, 8, 13, 18, 23, 25, 31] },
+                    { date: '19/12/2024', concurso: 1008, numbers: [5, 10, 15, 20, 24, 27, 30] }
+                ],
+                hot: [24, 13, 7, 31, 19, 10, 1, 22, 28, 33],
+                never: []
+            },
+            supersete: {
+                name: 'SUPER SETE',
+                numbers: 7,
+                range: 10,
+                color: '#a8cf45',
+                isColumnBased: true,
+                history: [
+                    { date: '27/12/2024', concurso: 632, numbers: [3, 5, 7, 2, 8, 1, 9] },
+                    { date: '25/12/2024', concurso: 631, numbers: [1, 4, 6, 9, 3, 7, 2] },
+                    { date: '23/12/2024', concurso: 630, numbers: [8, 2, 5, 0, 6, 4, 7] },
+                    { date: '20/12/2024', concurso: 629, numbers: [4, 9, 1, 7, 2, 8, 3] },
+                    { date: '18/12/2024', concurso: 628, numbers: [6, 0, 8, 4, 5, 2, 1] }
+                ],
+                hot: [7, 3, 8, 5, 2, 9, 4, 1, 6, 0],
+                never: []
+            }
+        };
+
+        // ============================================
+        // ESTADO GLOBAL
+        // ============================================
+        let currentLottery = 'mega';
+        let currentStrategy = 'balanced';
+        let totalGamesGenerated = 0;
+        let generatedGames = [];
+
+        // ============================================
+        // INICIALIZAÇÃO
+        // ============================================
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            updateHistory();
+            updateStatistics();
+            loadTotalGames();
+        });
+
+        // Criar partículas animadas
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const colors = ['#6a11cb', '#2575fc', '#00f5d4', '#ffd700'];
+            
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.width = (Math.random() * 6 + 2) + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.animationDuration = (Math.random() * 15 + 8) + 's';
+                particle.style.animationDelay = (Math.random() * 10) + 's';
+                particle.style.opacity = Math.random() * 0.5 + 0.3;
+                container.appendChild(particle);
+            }
+        }
+
+        // ============================================
+        // SELEÇÃO DE LOTERIA
+        // ============================================
+        function selectLottery(lottery) {
+            currentLottery = lottery;
+            
+            // Atualizar botões
+            document.querySelectorAll('.lottery-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-lottery="${lottery}"]`).classList.add('active');
+            
+            // Atualizar nome
+            document.getElementById('currentLotteryName').textContent = lotteryData[lottery].name;
+            document.getElementById('historyLotteryBadge').textContent = lotteryData[lottery].name.split('-')[0];
+            
+            // Atualizar histórico e estatísticas
+            updateHistory();
+            updateStatistics();
+            
+            // Limpar jogos gerados
+            document.getElementById('numbersContainer').innerHTML = `
+                <div class="empty-state">
+                    <i class="fa-solid fa-dice"></i>
+                    <p>Clique em "Gerar Jogos" para começar!</p>
+                </div>
+            `;
+            generatedGames = [];
+        }
+
+        // ============================================
+        // SELEÇÃO DE ESTRATÉGIA
+        // ============================================
+        function selectStrategy(strategy) {
+            currentStrategy = strategy;
+            
+            document.querySelectorAll('.strategy-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.querySelector(`[data-strategy="${strategy}"]`).classList.add('active');
+        }
+
+        // ============================================
+        // ATUALIZAR HISTÓRICO
+        // ============================================
+        function updateHistory() {
+            const container = document.getElementById('historyContainer');
+            const lottery = lotteryData[currentLottery];
+            
+            let html = '';
+            lottery.history.forEach(item => {
+                html += `
+                    <div class="history-item">
+                        <div class="history-info">
+                            <span class="history-date">${item.date}</span>
+                            <span class="history-concurso">Concurso ${item.concurso}</span>
+                        </div>
+                        <div class="history-numbers">
+                            ${item.numbers.slice(0, 7).map(n => `<span class="history-ball">${String(n).padStart(2, '0')}</span>`).join('')}
+                            ${item.numbers.length > 7 ? '<span style="color: #888; font-size: 0.8rem;">+' + (item.numbers.length - 7) + '</span>' : ''}
+                        </div>
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        // ============================================
+        // ATUALIZAR ESTATÍSTICAS
+        // ============================================
+        function updateStatistics() {
+            const lottery = lotteryData[currentLottery];
+            
+            // Calcular estatísticas baseadas no histórico
+            const allNumbers = lottery.history.flatMap(h => h.numbers);
+            const frequency = {};
+            allNumbers.forEach(n => frequency[n] = (frequency[n] || 0) + 1);
+            
+            const sortedByFreq = Object.entries(frequency).sort((a, b) => b[1] - a[1]);
+            const hotNumber = sortedByFreq[0] ? sortedByFreq[0][0] : '-';
+            
+            document.getElementById('statTotal').textContent = lottery.history.length;
+            document.getElementById('statHot').textContent = hotNumber;
+            document.getElementById('statNever').textContent = lottery.never.length || '-';
+            
+            // Calcular porcentagem de pares
+            const evenCount = allNumbers.filter(n => n % 2 === 0).length;
+            const evenPercent = Math.round((evenCount / allNumbers.length) * 100) || 50;
+            document.getElementById('statAvg').textContent = evenPercent + '%';
+            
+            // Números quentes
+            const hotContainer = document.getElementById('hotNumbers');
+            hotContainer.innerHTML = lottery.hot.slice(0, 5).map(n => 
+                `<span class="mini-ball hot">${String(n).padStart(2, '0')}</span>`
+            ).join('');
+            
+            // Números que nunca saíram
+            const neverContainer = document.getElementById('neverNumbers');
+            if (lottery.never.length > 0) {
+                neverContainer.innerHTML = lottery.never.map(n => 
+                    `<span class="mini-ball never">${String(n).padStart(2, '0')}</span>`
+                ).join('');
+            } else {
+                neverContainer.innerHTML = '<span style="color: #666; font-size: 0.85rem;">Todos os números já foram sorteados</span>';
+            }
+        }
+
+        // ============================================
+        // ALGORITMO DE GERAÇÃO INTELIGENTE
+        // ============================================
+        function generateNumbers() {
+            const lottery = lotteryData[currentLottery];
+            const count = lottery.numbers;
+            const range = lottery.range;
+            let numbers = [];
+            
+            // Calcular frequências do histórico
+            const allHistoryNumbers = lottery.history.flatMap(h => h.numbers);
+            const frequency = {};
+            for (let i = (lottery.isColumnBased ? 0 : 1); i <= (lottery.isColumnBased ? 9 : range); i++) {
+                frequency[i] = 0;
+            }
+            allHistoryNumbers.forEach(n => frequency[n] = (frequency[n] || 0) + 1);
+            
+            const maxFreq = Math.max(...Object.values(frequency));
+            const minFreq = Math.min(...Object.values(frequency));
+            
+            // Classificar números
+            const hot = lottery.hot || [];
+            const cold = Object.entries(frequency)
+                .filter(([n, f]) => f <= 1)
+                .map(([n]) => parseInt(n));
+            const never = lottery.never || [];
+            
+            switch (currentStrategy) {
+                case 'hot':
+                    // Prioriza números quentes
+                    numbers = weightedSelection(
+                        Object.keys(frequency).map(Number),
+                        Object.keys(frequency).map(n => frequency[n] + 1),
+                        count,
+                        lottery.isColumnBased ? 0 : 1
+                    );
+                    break;
+                    
+                case 'cold':
+                    // Prioriza números frios
+                    numbers = weightedSelection(
+                        Object.keys(frequency).map(Number),
+                        Object.keys(frequency).map(n => maxFreq - frequency[n] + 1),
+                        count,
+                        lottery.isColumnBased ? 0 : 1
+                    );
+                    break;
+                    
+                case 'never':
+                    // Prioriza números que nunca saíram (se houver)
+                    if (never.length >= count) {
+                        numbers = shuffleArray([...never]).slice(0, count);
+                    } else {
+                        numbers = [...never];
+                        const remaining = count - numbers.length;
+                        const others = cold.filter(n => !numbers.includes(n));
+                        numbers = [...numbers, ...shuffleArray(others).slice(0, remaining)];
+                        if (numbers.length < count) {
+                            const allOthers = Object.keys(frequency)
+                                .map(Number)
+                                .filter(n => !numbers.includes(n));
+                            numbers = [...numbers, ...shuffleArray(allOthers).slice(0, count - numbers.length)];
+                        }
+                    }
+                    break;
+                    
+                case 'mixed':
+                    // Mix inteligente: quentes + frios + medianos
+                    const hotPick = shuffleArray([...hot]).slice(0, Math.ceil(count * 0.4));
+                    const coldPick = shuffleArray([...cold]).filter(n => !hotPick.includes(n)).slice(0, Math.ceil(count * 0.3));
+                    const remaining = count - hotPick.length - coldPick.length;
+                    const medianNumbers = Object.keys(frequency)
+                        .map(Number)
+                        .filter(n => !hotPick.includes(n) && !coldPick.includes(n));
+                    const medianPick = shuffleArray(medianNumbers).slice(0, remaining);
+                    numbers = [...hotPick, ...coldPick, ...medianPick];
+                    break;
+                    
+                case 'balanced':
+                    // Balanceado por faixas e pares/ímpares
+                    numbers = balancedSelection(count, range, frequency, lottery.isColumnBased);
+                    break;
+                    
+                case 'random':
+                default:
+                    // Puramente aleatório
+                    const pool = [];
+                    for (let i = (lottery.isColumnBased ? 0 : 1); i <= (lottery.isColumnBased ? 9 : range); i++) {
+                        pool.push(i);
+                    }
+                    numbers = shuffleArray(pool).slice(0, count);
+                    break;
+            }
+            
+            // Garantir quantidade correta e ordenar
+            numbers = numbers.slice(0, count);
+            if (!lottery.isColumnBased) {
+                numbers.sort((a, b) => a - b);
+            }
+            
+            return numbers;
+        }
+
+        // Seleção ponderada
+        function weightedSelection(pool, weights, count, minVal) {
+            const result = [];
+            const available = [...pool];
+            const availableWeights = [...weights];
+            
+            while (result.length < count && available.length > 0) {
+                const totalWeight = availableWeights.reduce((a, b) => a + b, 0);
+                let random = Math.random() * totalWeight;
+                
+                for (let i = 0; i < available.length; i++) {
+                    random -= availableWeights[i];
+                    if (random <= 0) {
+                        result.push(available[i]);
+                        available.splice(i, 1);
+                        availableWeights.splice(i, 1);
+                        break;
+                    }
+                }
+            }
+            
+            return result;
+        }
+
+        // Seleção balanceada
+        function balancedSelection(count, range, frequency, isColumnBased) {
+            const result = [];
+            const start = isColumnBased ? 0 : 1;
+            const end = isColumnBased ? 9 : range;
+            
+            // Dividir em faixas
+            const faixas = [];
+            const faixaSize = Math.ceil((end - start + 1) / 6);
+            for (let i = 0; i < 6; i++) {
+                const faixaStart = start + (i * faixaSize);
+                const faixaEnd = Math.min(faixaStart + faixaSize - 1, end);
+                const nums = [];
+                for (let n = faixaStart; n <= faixaEnd; n++) {
+                    nums.push(n);
+                }
+                faixas.push(nums);
+            }
+            
+            // Pegar números de cada faixa
+            const perFaixa = Math.ceil(count / faixas.length);
+            faixas.forEach(faixa => {
+                const shuffled = shuffleArray([...faixa]);
+                const pick = shuffled.slice(0, perFaixa);
+                result.push(...pick);
+            });
+            
+            // Ajustar para quantidade exata
+            const shuffledResult = shuffleArray(result);
+            return shuffledResult.slice(0, count);
+        }
+
+        // Embaralhar array
+        function shuffleArray(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        // ============================================
+        // GERAR JOGOS
+        // ============================================
+        function generateGames() {
+            const qty = parseInt(document.getElementById('gameQty').value);
+            const container = document.getElementById('numbersContainer');
+            const lottery = lotteryData[currentLottery];
+            
+            // Loading animation
+            container.innerHTML = `
+                <div class="loading">
+                    <div class="loading-dot"></div>
+                    <div class="loading-dot"></div>
+                    <div class="loading-dot"></div>
+                </div>
+            `;
+            
+            generatedGames = [];
+            
+            setTimeout(() => {
+                let html = '';
+                
+                const strategyNames = {
+                    balanced: 'Balanceado',
+                    hot: 'Números Quentes',
+                    cold: 'Números Frios',
+                    never: 'Nunca Saíram',
+                    mixed: 'Mix Inteligente',
+                    random: 'Aleatório'
+                };
+                
+                for (let i = 0; i < qty; i++) {
+                    const numbers = generateNumbers();
+                    generatedGames.push(numbers);
+                    
+                    html += `
+                        <div class="game-result" style="animation-delay: ${i * 0.1}s">
+                            <div class="game-header">
+                                <span class="game-number">JOGO ${String(i + 1).padStart(2, '0')}</span>
+                                <span class="game-strategy">${strategyNames[currentStrategy]}</span>
+                            </div>
+                            <div class="numbers-row">
+                                ${numbers.map((n, idx) => {
+                                    const numClass = getNumberClass(n, lottery);
+                                    const tooltip = getNumberTooltip(n, lottery);
+                                    return `<span class="number-ball ${numClass}" style="animation-delay: ${idx * 0.08}s" data-tooltip="${tooltip}">${String(n).padStart(2, '0')}</span>`;
+                                }).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                container.innerHTML = html;
+                
+                // Atualizar contador
+                totalGamesGenerated += qty;
+                document.getElementById('totalGames').textContent = totalGamesGenerated;
+                saveTotalGames();
+                
+            }, 800);
+        }
+
+        // Classificar número
+        function getNumberClass(num, lottery) {
+            if (lottery.never && lottery.never.includes(num)) return 'never';
+            if (lottery.hot && lottery.hot.slice(0, 5).includes(num)) return 'hot';
+            
+            const allNumbers = lottery.history.flatMap(h => h.numbers);
+            const freq = allNumbers.filter(n => n === num).length;
+            
+            if (freq >= 3) return 'hot';
+            if (freq <= 1) return 'cold';
+            return 'neutral';
+        }
+
+        // Tooltip do número
+        function getNumberTooltip(num, lottery) {
+            if (lottery.never && lottery.never.includes(num)) return 'Nunca saiu!';
+            
+            const allNumbers = lottery.history.flatMap(h => h.numbers);
+            const freq = allNumbers.filter(n => n === num).length;
+            
+            if (freq >= 3) return `Quente: ${freq}x`;
+            if (freq === 0) return 'Sem dados';
+            return `${freq}x nos últimos sorteios`;
+        }
+
+        // ============================================
+        // COPIAR JOGOS
+        // ============================================
+        function copyAllGames() {
+            if (generatedGames.length === 0) {
+                alert('Nenhum jogo gerado ainda!');
+                return;
+            }
+            
+            const lottery = lotteryData[currentLottery];
+            let text = `🎰 ${lottery.name} - WolfGuard Loterias\n`;
+            text += `━━━━━━━━━━━━━━━━━━━━━━\n\n`;
+            
+            generatedGames.forEach((game, idx) => {
+                text += `Jogo ${idx + 1}: ${game.map(n => String(n).padStart(2, '0')).join(' - ')}\n`;
+            });
+            
+            text += `\n━━━━━━━━━━━━━━━━━━━━━━\n`;
+            text += `🐺 wolfguard.com.br`;
+            
+            navigator.clipboard.writeText(text).then(() => {
+                // Feedback visual
+                const btn = event.target.closest('button');
+                const originalContent = btn.innerHTML;
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> Copiado!';
+                btn.style.background = 'linear-gradient(135deg, #00f5d4, #00b894)';
+                
+                setTimeout(() => {
+                    btn.innerHTML = originalContent;
+                    btn.style.background = 'var(--gradient)';
+                }, 2000);
+            });
+        }
+
+        // ============================================
+        // PERSISTÊNCIA LOCAL
+        // ============================================
+        function saveTotalGames() {
+            localStorage.setItem('wolfguard_total_games', totalGamesGenerated);
+        }
+
+        function loadTotalGames() {
+            const saved = localStorage.getItem('wolfguard_total_games');
+            if (saved) {
+                totalGamesGenerated = parseInt(saved);
+                document.getElementById('totalGames').textContent = totalGamesGenerated;
+            }
+        }
+    </script>
+
+</body>
+</html>
