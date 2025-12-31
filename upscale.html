@@ -1,0 +1,1072 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WolfGuard - Suite Completa (Robust)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <style>
+        :root {
+            --primary: #6a11cb;
+            --secondary: #2575fc;
+            --accent: #ff0055;
+            --dark: #040316;
+            --light: #ffffff;
+            --gradient: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            --radius: 14px;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body {
+            background: linear-gradient(270deg, #040316, #1a1a3d, #040316);
+            background-size: 600% 600%;
+            animation: gradientBG 20s ease infinite;
+            color: var(--light);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            position: relative;
+            padding: 2rem 0;
+        }
+        @keyframes gradientBG { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        body::before {
+            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: linear-gradient(to bottom, rgba(255,255,255,0.05) 0%, transparent 100%);
+            pointer-events: none; z-index: -1;
+        }
+        .container {
+            text-align: center; padding: 3rem 2rem;
+            background: rgba(20, 20, 40, 0.85);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            max-width: 1600px; width: 95%; position: relative; z-index: 10;
+        }
+        .header { margin-bottom: 3rem; }
+        .icon-box { font-size: 3rem; margin-bottom: 1rem; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        h1 { font-size: 2.5rem; font-weight: 700; margin-bottom: 0.5rem; background: var(--gradient); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .subtitle { color: #d8d8e8; font-size: 1.1rem; margin-bottom: 2rem; }
+        
+        .tabs { display: flex; gap: 1rem; margin-bottom: 2rem; justify-content: center; flex-wrap: wrap; }
+        .tab-btn {
+            padding: 1rem 2rem; border-radius: var(--radius); background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15); color: var(--light); font-weight: 600; cursor: pointer; transition: all 0.3s ease;
+        }
+        .tab-btn:hover { background: rgba(255, 255, 255, 0.12); transform: translateY(-2px); }
+        .tab-btn.active { background: var(--gradient); border-color: var(--secondary); box-shadow: 0 8px 20px rgba(37, 117, 252, 0.3); }
+        
+        .tab-content { display: none; animation: fadeIn 0.4s ease; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .upload-area {
+            background: rgba(255, 255, 255, 0.05); border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: var(--radius); padding: 3rem 2rem; margin-bottom: 2rem; cursor: pointer;
+            transition: all 0.3s ease; position: relative; overflow: hidden;
+        }
+        .upload-area:hover { border-color: var(--secondary); background: rgba(255, 255, 255, 0.08); }
+        .upload-area.has-file { border-color: var(--success); background: rgba(16, 185, 129, 0.1); }
+        .upload-icon { font-size: 4rem; margin-bottom: 1rem; color: #a0a0b0; }
+        
+        .file-info-box { display: none; background: rgba(0, 0, 0, 0.2); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 2rem; text-align: left; border: 1px solid rgba(255,255,255,0.05); }
+        .file-info-box.active { display: block; }
+        .file-info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem; }
+        .info-item { background: rgba(255, 255, 255, 0.03); padding: 1rem; border-radius: 8px; }
+        .info-label { font-size: 0.85rem; color: #b8b8d8; margin-bottom: 0.3rem; }
+        .info-value { font-size: 1.1rem; font-weight: 600; color: var(--light); word-break: break-all; }
+        .preview-thumbnail { width: 100px; height: 100px; border-radius: 8px; object-fit: cover; border: 2px solid rgba(255, 255, 255, 0.2); margin-right: 1.5rem; float: left; }
+        
+        .controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem; }
+        .control-group { background: rgba(255, 255, 255, 0.05); padding: 1.5rem; border-radius: var(--radius); border: 1px solid rgba(255, 255, 255, 0.1); text-align: left; }
+        .control-group label { display: block; margin-bottom: 0.8rem; font-weight: 600; color: #e8e8f8; }
+        .control-group select, .control-group input[type="range"], .control-group input[type="number"] {
+            width: 100%; padding: 0.8rem; background: rgba(0, 0, 0, 0.3); border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px; color: var(--light); font-family: 'Poppins', sans-serif;
+        }
+        .control-group select option { background-color: #1a1a3d; color: #ffffff; padding: 10px; }
+        
+        .comparison-container { display: none; margin-bottom: 2rem; background: rgba(0, 0, 0, 0.2); border-radius: var(--radius); padding: 2rem; }
+        .comparison-container.active { display: block; }
+        .comparison-viewer { position: relative; width: 100%; max-width: 1000px; margin: 0 auto; border-radius: var(--radius); overflow: hidden; background: #000; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .comparison-images { position: relative; width: 100%; height: 500px; }
+        .comparison-images canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: contain; }
+        .after-image { z-index: 2; clip-path: inset(0 50% 0 0); }
+        .comparison-slider { position: absolute; top: 0; left: 50%; width: 2px; height: 100%; background: #fff; z-index: 3; cursor: ew-resize; }
+        .slider-handle {
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 40px; height: 40px; background: var(--secondary); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; box-shadow: 0 0 15px rgba(0,0,0,0.5);
+        }
+        
+        .progress-container { background: rgba(255, 255, 255, 0.05); border-radius: var(--radius); padding: 2rem; margin-bottom: 2rem; display: none; }
+        .progress-container.active { display: block; }
+        .progress-bar { width: 100%; height: 20px; background: rgba(0,0,0,0.3); border-radius: 10px; overflow: hidden; margin-bottom: 1rem; }
+        .progress-fill { height: 100%; background: var(--gradient); width: 0%; transition: width 0.3s ease; }
+        .progress-text { color: #ccc; }
+        
+        .btn-primary, .btn-secondary, .btn-back, .btn-danger {
+            display: inline-flex; align-items: center; gap: 0.5rem; padding: 1rem 2.5rem; border-radius: var(--radius);
+            font-weight: 600; text-decoration: none; color: var(--light); border: none; cursor: pointer; transition: 0.3s ease; margin: 0.5rem;
+        }
+        .btn-primary { background: var(--gradient); box-shadow: 0 8px 20px rgba(37, 117, 252, 0.3); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 25px rgba(37, 117, 252, 0.5); }
+        .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+        .btn-secondary, .btn-back { background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); }
+        .btn-secondary:hover, .btn-back:hover { background: rgba(255, 255, 255, 0.2); }
+        .btn-danger { background: rgba(239, 68, 68, 0.2); border: 1px solid var(--danger); color: var(--danger); }
+        .btn-danger:hover { background: var(--danger); color: white; }
+
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-top: 2rem; }
+        .stat-card { background: rgba(255, 255, 255, 0.05); padding: 1rem; border-radius: 8px; }
+        .stat-value { font-size: 1.2rem; font-weight: 700; color: var(--secondary); }
+        .stat-label { font-size: 0.8rem; color: #aaa; }
+        .improvement-badge { display: inline-block; padding: 0.2rem 0.6rem; border-radius: 12px; font-size: 0.8rem; margin-top: 5px; }
+        .improvement-badge.positive { background: rgba(16, 185, 129, 0.2); color: var(--success); }
+        .improvement-badge.negative { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
+        
+        .canvas-wrapper {
+            position: relative;
+            margin: 0 auto;
+            max-width: 100%;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: inline-block;
+        }
+        #canvas-remove-img { display: block; max-width: 100%; height: auto; }
+        #canvas-mask { position: absolute; top: 0; left: 0; width: 100%; height: 100%; cursor: crosshair; touch-action: none; }
+        .brush-cursor {
+            position: fixed; pointer-events: none; border: 2px solid rgba(255, 255, 255, 0.8);
+            background: rgba(255, 0, 0, 0.3); border-radius: 50%; z-index: 9999; transform: translate(-50%, -50%); display: none;
+        }
+        input[type="file"] { display: none; }
+        @media (max-width: 768px) { .comparison-images { height: 300px; } }
+    </style>
+</head>
+<body>
+    <div id="brush-cursor" class="brush-cursor"></div>
+
+    <div class="container">
+        <div class="header">
+            <div class="icon-box"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
+            <h1>WolfGuard - Suite Completa</h1>
+            <p class="subtitle">Upscale, Compressão e Remoção de Objetos com IA Local</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" onclick="switchTab('upscale-img')"><i class="fa-solid fa-image"></i> Upscale Imagem</button>
+            <button class="tab-btn" onclick="switchTab('compress-img')"><i class="fa-solid fa-compress"></i> Comprimir Imagem</button>
+            <button class="tab-btn" onclick="switchTab('remove-watermark')"><i class="fa-solid fa-eraser"></i> Removedor (Novo)</button>
+            <button class="tab-btn" onclick="switchTab('upscale-video')"><i class="fa-solid fa-video"></i> Upscale Vídeo</button>
+            <button class="tab-btn" onclick="switchTab('compress-video')"><i class="fa-solid fa-file-zipper"></i> Comprimir Vídeo</button>
+        </div>
+
+        <!-- ABA UPSCALE IMAGEM -->
+        <div id="upscale-img" class="tab-content active">
+            <div class="upload-area" id="area-upscale" onclick="document.getElementById('file-upscale').click()">
+                <div class="upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                <h3>Upscale: Clique ou arraste sua imagem</h3>
+                <input type="file" id="file-upscale" accept="image/*">
+            </div>
+
+            <div class="file-info-box" id="info-upscale">
+                <img id="thumb-upscale" class="preview-thumbnail" />
+                <div class="file-info-grid">
+                    <div class="info-item"><div class="info-label">Nome</div><div class="info-value" id="name-upscale">-</div></div>
+                    <div class="info-item"><div class="info-label">Dimensões</div><div class="info-value" id="dim-upscale">-</div></div>
+                    <div class="info-item"><div class="info-label">Tamanho</div><div class="info-value" id="size-upscale">-</div></div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <div class="control-group">
+                    <label>Fator de Escala</label>
+                    <input type="range" id="scale-factor" min="2" max="4" value="2" step="1" oninput="document.getElementById('lbl-scale').innerText = this.value + 'x'">
+                    <span id="lbl-scale" style="float:right; font-weight:bold; color:var(--secondary)">2x</span>
+                </div>
+                <div class="control-group">
+                    <label>Modo de Processamento</label>
+                    <select id="upscale-mode">
+                        <option value="bicubic">Bicúbico (Suave)</option>
+                        <option value="sharpen" selected>Enhanced Sharpening (Nítido)</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Intensidade de Nitidez</label>
+                    <input type="range" id="sharpness" min="0" max="100" value="50" oninput="document.getElementById('lbl-sharp').innerText = this.value + '%'">
+                    <span id="lbl-sharp" style="float:right; font-weight:bold; color:var(--secondary)">50%</span>
+                </div>
+            </div>
+
+            <div class="progress-container" id="prog-upscale">
+                <div class="progress-bar"><div class="progress-fill" id="fill-upscale"></div></div>
+                <p class="progress-text" id="txt-upscale">Aguardando...</p>
+            </div>
+
+            <div class="comparison-container" id="comp-upscale">
+                <h3>Resultado</h3>
+                <div class="comparison-viewer">
+                    <div class="comparison-images" id="container-comp-upscale">
+                        <canvas id="cvs-before-upscale" class="before-image"></canvas>
+                        <canvas id="cvs-after-upscale" class="after-image"></canvas>
+                        <div class="comparison-slider" id="slider-upscale"><div class="slider-handle"><i class="fa-solid fa-arrows-left-right"></i></div></div>
+                    </div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-value" id="res-dim-upscale">-</div><div class="stat-label">Nova Dimensão</div></div>
+                </div>
+            </div>
+
+            <button class="btn-primary" id="btn-run-upscale" onclick="runUpscale()" disabled>Processar Upscale</button>
+            <button class="btn-primary" id="btn-dl-upscale" style="display:none" onclick="dlUpscale()">Baixar</button>
+            <button class="btn-secondary" id="btn-reset-upscale" style="display:none" onclick="resetUpscale()">Novo</button>
+        </div>
+
+        <!-- ABA COMPRESSÃO IMAGEM -->
+        <div id="compress-img" class="tab-content">
+            <div class="upload-area" id="area-compress" onclick="document.getElementById('file-compress').click()">
+                <div class="upload-icon"><i class="fa-solid fa-compress"></i></div>
+                <h3>Compressão: Clique ou arraste</h3>
+                <input type="file" id="file-compress" accept="image/*">
+            </div>
+
+            <div class="file-info-box" id="info-compress">
+                <img id="thumb-compress" class="preview-thumbnail" />
+                <div class="file-info-grid">
+                    <div class="info-item"><div class="info-label">Nome</div><div class="info-value" id="name-compress">-</div></div>
+                    <div class="info-item"><div class="info-label">Tamanho Atual</div><div class="info-value" id="size-compress">-</div></div>
+                </div>
+            </div>
+
+            <div class="controls">
+                <div class="control-group">
+                    <label>Qualidade</label>
+                    <input type="range" id="comp-quality" min="10" max="90" value="70" oninput="document.getElementById('lbl-qual').innerText = this.value + '%'">
+                    <span id="lbl-qual" style="float:right; font-weight:bold; color:var(--secondary)">70%</span>
+                </div>
+                <div class="control-group">
+                    <label>Formato de Saída</label>
+                    <select id="comp-format">
+                        <option value="image/jpeg">JPEG (Padrão)</option>
+                        <option value="image/webp" selected>WebP (Melhor Compressão)</option>
+                        <option value="image/png">PNG (Sem perda)</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label>Redimensionar (Max Largura)</label>
+                    <select id="comp-resize">
+                        <option value="0">Manter Original</option>
+                        <option value="1920">Full HD (1920px)</option>
+                        <option value="1280">HD (1280px)</option>
+                        <option value="800">Web (800px)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="progress-container" id="prog-compress">
+                <div class="progress-bar"><div class="progress-fill" id="fill-compress"></div></div>
+                <p class="progress-text" id="txt-compress">Processando...</p>
+            </div>
+
+            <div class="comparison-container" id="comp-compress">
+                <h3>Comparação</h3>
+                <div class="comparison-viewer">
+                    <div class="comparison-images" id="container-comp-compress">
+                        <canvas id="cvs-before-compress" class="before-image"></canvas>
+                        <canvas id="cvs-after-compress" class="after-image"></canvas>
+                        <div class="comparison-slider" id="slider-compress"><div class="slider-handle"><i class="fa-solid fa-arrows-left-right"></i></div></div>
+                    </div>
+                </div>
+                <div class="stats-grid">
+                    <div class="stat-card"><div class="stat-value" id="res-size-compress">-</div><div class="stat-label">Novo Tamanho</div></div>
+                    <div class="stat-card"><div class="stat-value" id="res-save-compress">-</div><div class="stat-label">Economia</div></div>
+                </div>
+            </div>
+
+            <button class="btn-primary" id="btn-run-compress" onclick="runCompress()" disabled>Comprimir</button>
+            <button class="btn-primary" id="btn-dl-compress" style="display:none" onclick="dlCompress()">Baixar</button>
+            <button class="btn-secondary" id="btn-reset-compress" style="display:none" onclick="resetCompress()">Novo</button>
+        </div>
+
+        <!-- ABA REMOVER MARCA D'ÁGUA (ATUALIZADA) -->
+        <div id="remove-watermark" class="tab-content">
+            <div class="upload-area" id="area-remove" onclick="document.getElementById('file-remove').click()">
+                <div class="upload-icon"><i class="fa-solid fa-eraser"></i></div>
+                <h3>Removedor: Clique para carregar imagem</h3>
+                <p class="subtitle" style="margin-top:0.5rem; font-size:0.9rem">Ideal para remover textos, logos de IA e datas</p>
+                <input type="file" id="file-remove" accept="image/*">
+            </div>
+
+            <div id="editor-remove" style="display:none;">
+                <div class="controls" style="margin-bottom: 1rem;">
+                    <div class="control-group">
+                        <label><i class="fa-solid fa-paint-brush"></i> Tamanho do Pincel</label>
+                        <input type="range" id="brush-size" min="5" max="100" value="30" oninput="updateBrushSize(this.value)">
+                        <span id="lbl-brush" style="float:right; font-weight:bold; color:var(--accent)">30px</span>
+                    </div>
+                    <!-- NOVOS CONTROLES DE FORÇA -->
+                    <div class="control-group">
+                        <label><i class="fa-solid fa-dumbbell"></i> Força de Preenchimento</label>
+                        <input type="range" id="remove-strength" min="1" max="10" value="8" step="1">
+                        <span style="font-size:0.8rem; color:#aaa; display:block; margin-top:5px;">Aumente se sobrar vestígios da marca.</span>
+                    </div>
+                    <div class="control-group">
+                        <label><i class="fa-solid fa-droplet"></i> Suavização Final</label>
+                        <input type="range" id="remove-blur" min="0" max="10" value="3" step="1">
+                        <span style="font-size:0.8rem; color:#aaa; display:block; margin-top:5px;">Mistura as bordas do preenchimento.</span>
+                    </div>
+                    <div class="control-group" style="display:flex; align-items:flex-end; gap:10px; background:none; border:none; padding:0;">
+                        <button class="btn-secondary" onclick="clearMask()"><i class="fa-solid fa-rotate-left"></i> Limpar Seleção</button>
+                    </div>
+                </div>
+
+                <p style="margin-bottom:1rem; color:#f59e0b; font-weight:bold;"><i class="fa-solid fa-circle-info"></i> Pinte de vermelho sobre a marca. Pode repetir o processo várias vezes na mesma imagem.</p>
+
+                <div class="canvas-wrapper" id="canvas-wrapper-remove">
+                    <canvas id="canvas-remove-img"></canvas>
+                    <canvas id="canvas-mask"></canvas>
+                </div>
+
+                <div class="progress-container" id="prog-remove">
+                    <div class="progress-bar"><div class="progress-fill" id="fill-remove"></div></div>
+                    <p class="progress-text" id="txt-remove">Restaurando imagem...</p>
+                </div>
+
+                <div style="margin-top:2rem;">
+                    <button class="btn-primary" id="btn-run-remove" onclick="runRemoval()">
+                        <i class="fa-solid fa-magic"></i> Remover Agora
+                    </button>
+                    <button class="btn-primary" id="btn-dl-remove" style="display:none" onclick="dlRemoval()">
+                        <i class="fa-solid fa-download"></i> Baixar Resultado
+                    </button>
+                    <button class="btn-secondary" id="btn-reset-remove" onclick="resetRemoval()">
+                        Carregar Outra
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ABA UPSCALE VIDEO -->
+        <div id="upscale-video" class="tab-content">
+            <div class="upload-area" onclick="document.getElementById('file-vid-up').click()">
+                <div class="upload-icon"><i class="fa-solid fa-file-video"></i></div>
+                <h3>Vídeo Upscale (Requer PC Potente)</h3>
+                <input type="file" id="file-vid-up" accept="video/*">
+            </div>
+            <div id="vid-up-info" class="file-info-box">
+                <div class="info-value" id="name-vid-up"></div>
+            </div>
+            <div class="controls">
+                <div class="control-group">
+                     <label>Resolução Alvo</label>
+                     <select id="vid-up-res">
+                         <option value="1280:720">720p</option>
+                         <option value="1920:1080" selected>1080p</option>
+                     </select>
+                </div>
+            </div>
+            <div class="progress-container" id="prog-vid-up">
+                <div class="progress-bar"><div class="progress-fill" id="fill-vid-up"></div></div>
+                <p class="progress-text" id="txt-vid-up">Inicializando Engine...</p>
+            </div>
+            <button class="btn-primary" id="btn-run-vid-up" onclick="runVideoUpscale()" disabled>Processar</button>
+            <div id="vid-res-up" style="display:none; margin-top:2rem;">
+                <h3>Resultado:</h3>
+                <video id="out-vid-up" controls width="100%"></video>
+                <br>
+                <a id="lnk-vid-up" class="btn-primary" style="margin-top:1rem;">Baixar Vídeo</a>
+            </div>
+        </div>
+
+        <!-- ABA COMPRESSÃO VIDEO -->
+        <div id="compress-video" class="tab-content">
+             <div class="upload-area" onclick="document.getElementById('file-vid-comp').click()">
+                <div class="upload-icon"><i class="fa-solid fa-file-video"></i></div>
+                <h3>Vídeo Compressão</h3>
+                <input type="file" id="file-vid-comp" accept="video/*">
+            </div>
+            <div id="vid-comp-info" class="file-info-box">
+                <div class="info-value" id="name-vid-comp"></div>
+            </div>
+            <div class="controls">
+                <div class="control-group">
+                    <label>Nível de Compressão (CRF)</label>
+                    <input type="range" id="vid-crf" min="18" max="35" value="28">
+                    <span style="float:right; color:#aaa; font-size:0.8rem">Maior valor = Menor arquivo</span>
+                </div>
+            </div>
+            <div class="progress-container" id="prog-vid-comp">
+                <div class="progress-bar"><div class="progress-fill" id="fill-vid-comp"></div></div>
+                <p class="progress-text" id="txt-vid-comp">Aguardando...</p>
+            </div>
+            <button class="btn-primary" id="btn-run-vid-comp" onclick="runVideoCompress()" disabled>Comprimir Vídeo</button>
+            <div id="vid-res-comp" style="display:none; margin-top:2rem;">
+                <h3>Resultado:</h3>
+                <video id="out-vid-comp" controls width="100%"></video>
+                <br>
+                <a id="lnk-vid-comp" class="btn-primary" style="margin-top:1rem;">Baixar Vídeo</a>
+            </div>
+        </div>
+
+        <a href="https://wolfguard.com.br" class="btn-back"><i class="fa-solid fa-arrow-left"></i> Voltar</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/ffmpeg@0.12.6/dist/umd/ffmpeg.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@ffmpeg/util@0.12.1/dist/umd/index.js"></script>
+
+    <script>
+        let imgUpscale = null;
+        let imgCompress = null;
+        let imgRemove = null; 
+        let vidUpscale = null;
+        let vidCompress = null;
+        let ffmpeg = null;
+
+        let isDrawing = false;
+        let ctxMask = null;
+        let ctxImgRemove = null;
+
+        function switchTab(id) {
+            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function formatBytes(bytes, decimals = 2) {
+            if (!+bytes) return '0 Bytes';
+            const k = 1024;
+            const dm = decimals < 0 ? 0 : decimals;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return `${parseFloat((bytes / Math.pow(k, i)).toFixed(dm))} ${sizes[i]}`;
+        }
+
+        /* --- UPSCALE LOGIC --- */
+        document.getElementById('file-upscale').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if(!file) return;
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                imgUpscale = new Image();
+                imgUpscale.onload = () => {
+                    document.getElementById('thumb-upscale').src = imgUpscale.src;
+                    document.getElementById('name-upscale').innerText = file.name;
+                    document.getElementById('dim-upscale').innerText = `${imgUpscale.width} x ${imgUpscale.height}`;
+                    document.getElementById('size-upscale').innerText = formatBytes(file.size);
+                    document.getElementById('info-upscale').classList.add('active');
+                    document.getElementById('btn-run-upscale').disabled = false;
+                    document.getElementById('area-upscale').classList.add('has-file');
+                }
+                imgUpscale.src = ev.target.result;
+            }
+            reader.readAsDataURL(file);
+        });
+
+        async function runUpscale() {
+            if(!imgUpscale) return;
+            const btn = document.getElementById('btn-run-upscale');
+            btn.disabled = true;
+            document.getElementById('prog-upscale').classList.add('active');
+            const fill = document.getElementById('fill-upscale');
+            const txt = document.getElementById('txt-upscale');
+
+            const scale = parseInt(document.getElementById('scale-factor').value);
+            const mode = document.getElementById('upscale-mode').value;
+            const sharpness = parseInt(document.getElementById('sharpness').value) / 100;
+
+            const w = imgUpscale.width;
+            const h = imgUpscale.height;
+            const targetW = w * scale;
+            const targetH = h * scale;
+
+            txt.innerText = "Redimensionando...";
+            fill.style.width = "30%";
+            await new Promise(r => setTimeout(r, 50)); 
+
+            const cvsBefore = document.getElementById('cvs-before-upscale');
+            cvsBefore.width = targetW;
+            cvsBefore.height = targetH;
+            const ctxBefore = cvsBefore.getContext('2d');
+            ctxBefore.drawImage(imgUpscale, 0, 0, targetW, targetH); 
+
+            const cvsAfter = document.getElementById('cvs-after-upscale');
+            cvsAfter.width = targetW;
+            cvsAfter.height = targetH;
+            const ctxAfter = cvsAfter.getContext('2d');
+            ctxAfter.imageSmoothingEnabled = true;
+            ctxAfter.imageSmoothingQuality = 'high';
+            ctxAfter.drawImage(imgUpscale, 0, 0, targetW, targetH);
+
+            if(mode === 'sharpen') {
+                txt.innerText = "Aplicando AI Sharpening (pode demorar)...";
+                fill.style.width = "60%";
+                await new Promise(r => setTimeout(r, 100));
+
+                const imgData = ctxAfter.getImageData(0, 0, targetW, targetH);
+                const data = imgData.data;
+                const copy = new Uint8ClampedArray(data);
+                const mix = sharpness; 
+                const kernel = [0, -1, 0, -1, 5, -1, 0, -1, 0];
+
+                for(let y=1; y<targetH-1; y++) {
+                    for(let x=1; x<targetW-1; x++) {
+                        const idx = (y * targetW + x) * 4;
+                        let r=0, g=0, b=0;
+                        r += copy[((y-1)*targetW + x)*4] * kernel[1];
+                        r += copy[(y*targetW + (x-1))*4] * kernel[3];
+                        r += copy[idx] * kernel[4];
+                        r += copy[(y*targetW + (x+1))*4] * kernel[5];
+                        r += copy[((y+1)*targetW + x)*4] * kernel[7];
+
+                        g += copy[((y-1)*targetW + x)*4+1] * kernel[1];
+                        g += copy[(y*targetW + (x-1))*4+1] * kernel[3];
+                        g += copy[idx+1] * kernel[4];
+                        g += copy[(y*targetW + (x+1))*4+1] * kernel[5];
+                        g += copy[((y+1)*targetW + x)*4+1] * kernel[7];
+
+                        b += copy[((y-1)*targetW + x)*4+2] * kernel[1];
+                        b += copy[(y*targetW + (x-1))*4+2] * kernel[3];
+                        b += copy[idx+2] * kernel[4];
+                        b += copy[(y*targetW + (x+1))*4+2] * kernel[5];
+                        b += copy[((y+1)*targetW + x)*4+2] * kernel[7];
+
+                        data[idx] = (1-mix)*copy[idx] + mix*r;
+                        data[idx+1] = (1-mix)*copy[idx+1] + mix*g;
+                        data[idx+2] = (1-mix)*copy[idx+2] + mix*b;
+                    }
+                }
+                ctxAfter.putImageData(imgData, 0, 0);
+            }
+
+            fill.style.width = "100%";
+            txt.innerText = "Concluído!";
+            document.getElementById('comp-upscale').classList.add('active');
+            document.getElementById('res-dim-upscale').innerText = `${targetW} x ${targetH}`;
+            document.getElementById('btn-dl-upscale').style.display = 'inline-flex';
+            document.getElementById('btn-reset-upscale').style.display = 'inline-flex';
+            btn.disabled = false;
+        }
+
+        /* --- COMPRESS LOGIC --- */
+        document.getElementById('file-compress').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if(!file) return;
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                imgCompress = new Image();
+                imgCompress.onload = () => {
+                    document.getElementById('thumb-compress').src = imgCompress.src;
+                    document.getElementById('name-compress').innerText = file.name;
+                    document.getElementById('size-compress').innerText = formatBytes(file.size);
+                    document.getElementById('info-compress').classList.add('active');
+                    document.getElementById('btn-run-compress').disabled = false;
+                    document.getElementById('area-compress').classList.add('has-file');
+                    imgCompress.originalSize = file.size; 
+                }
+                imgCompress.src = ev.target.result;
+            }
+            reader.readAsDataURL(file);
+        });
+
+        async function runCompress() {
+            if(!imgCompress) return;
+            const btn = document.getElementById('btn-run-compress');
+            btn.disabled = true;
+            document.getElementById('prog-compress').classList.add('active');
+            const fill = document.getElementById('fill-compress');
+            const txt = document.getElementById('txt-compress');
+
+            fill.style.width = "20%";
+            txt.innerText = "Calculando...";
+            await new Promise(r => setTimeout(r, 50));
+
+            const quality = parseInt(document.getElementById('comp-quality').value) / 100;
+            const format = document.getElementById('comp-format').value;
+            const maxW = parseInt(document.getElementById('comp-resize').value);
+
+            let targetW = imgCompress.width;
+            let targetH = imgCompress.height;
+
+            if(maxW > 0 && targetW > maxW) {
+                const ratio = maxW / targetW;
+                targetW = maxW;
+                targetH = targetH * ratio;
+            }
+
+            const cvsBefore = document.getElementById('cvs-before-compress');
+            cvsBefore.width = targetW;
+            cvsBefore.height = targetH;
+            const ctxBefore = cvsBefore.getContext('2d');
+            ctxBefore.drawImage(imgCompress, 0, 0, targetW, targetH); 
+
+            fill.style.width = "60%";
+            txt.innerText = "Otimizando...";
+            await new Promise(r => setTimeout(r, 50));
+
+            const cvsAfter = document.getElementById('cvs-after-compress');
+            cvsAfter.width = targetW;
+            cvsAfter.height = targetH;
+            const ctxAfter = cvsAfter.getContext('2d');
+            ctxAfter.drawImage(imgCompress, 0, 0, targetW, targetH);
+
+            let mime = format;
+            let q = quality;
+            if(format === 'image/png') q = undefined; 
+
+            const dataUrl = cvsAfter.toDataURL(mime, q);
+            const head = 'data:' + mime + ';base64,';
+            const sizeBytes = Math.round((dataUrl.length - head.length) * 3 / 4);
+            const originalBytes = imgCompress.originalSize;
+
+            const imgRes = new Image();
+            imgRes.onload = () => { ctxAfter.drawImage(imgRes, 0, 0); }
+            imgRes.src = dataUrl;
+
+            fill.style.width = "100%";
+            txt.innerText = "Concluído!";
+
+            document.getElementById('comp-compress').classList.add('active');
+            document.getElementById('res-size-compress').innerText = formatBytes(sizeBytes);
+            const economy = originalBytes - sizeBytes;
+            const pcent = ((economy / originalBytes) * 100).toFixed(1);
+            const elSave = document.getElementById('res-save-compress');
+            
+            if(economy > 0) {
+                elSave.innerHTML = `<span class="improvement-badge positive">-${pcent}%</span> (${formatBytes(economy)})`;
+            } else {
+                elSave.innerHTML = `<span class="improvement-badge negative">+${Math.abs(pcent)}%</span> (Maior)`;
+            }
+
+            document.getElementById('btn-dl-compress').style.display = 'inline-flex';
+            document.getElementById('btn-reset-compress').style.display = 'inline-flex';
+            document.getElementById('btn-dl-compress').onclick = () => {
+                const a = document.createElement('a');
+                a.download = `comprimido.${mime.split('/')[1]}`;
+                a.href = dataUrl;
+                a.click();
+            };
+            btn.disabled = false;
+        }
+
+        /* --- REMOÇÃO ROBUSTA (STRONG FILL ALGORITHM) --- */
+        
+        document.getElementById('file-remove').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if(!file) return;
+            const reader = new FileReader();
+            reader.onload = (ev) => {
+                imgRemove = new Image();
+                imgRemove.onload = () => {
+                    initRemoveEditor();
+                    document.getElementById('area-remove').style.display = 'none';
+                    document.getElementById('editor-remove').style.display = 'block';
+                }
+                imgRemove.src = ev.target.result;
+            }
+            reader.readAsDataURL(file);
+        });
+
+        function initRemoveEditor() {
+            const canvasImg = document.getElementById('canvas-remove-img');
+            const canvasMask = document.getElementById('canvas-mask');
+            canvasImg.width = imgRemove.width;
+            canvasImg.height = imgRemove.height;
+            canvasMask.width = imgRemove.width;
+            canvasMask.height = imgRemove.height;
+            
+            ctxImgRemove = canvasImg.getContext('2d');
+            ctxMask = canvasMask.getContext('2d');
+            
+            ctxImgRemove.drawImage(imgRemove, 0, 0);
+            
+            ctxMask.lineCap = 'round';
+            ctxMask.lineJoin = 'round';
+            ctxMask.strokeStyle = 'rgba(255, 0, 0, 0.7)';
+            updateBrushSize(document.getElementById('brush-size').value);
+            
+            setupCanvasDrawing(canvasMask);
+        }
+
+        function updateBrushSize(val) {
+            document.getElementById('lbl-brush').innerText = val + 'px';
+            if(ctxMask) ctxMask.lineWidth = val;
+            const cursor = document.getElementById('brush-cursor');
+            cursor.style.width = val + 'px';
+            cursor.style.height = val + 'px';
+        }
+
+        function setupCanvasDrawing(canvas) {
+            const getPos = (e) => {
+                const rect = canvas.getBoundingClientRect();
+                const scaleX = canvas.width / rect.width;
+                const scaleY = canvas.height / rect.height;
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                return { x: (clientX - rect.left) * scaleX, y: (clientY - rect.top) * scaleY };
+            };
+
+            const startDraw = (e) => {
+                e.preventDefault();
+                isDrawing = true;
+                const pos = getPos(e);
+                ctxMask.beginPath();
+                ctxMask.moveTo(pos.x, pos.y);
+            };
+
+            const moveDraw = (e) => {
+                const cursor = document.getElementById('brush-cursor');
+                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+                cursor.style.left = clientX + 'px';
+                cursor.style.top = clientY + 'px';
+                cursor.style.display = 'block';
+
+                if (!isDrawing) return;
+                e.preventDefault();
+                const pos = getPos(e);
+                ctxMask.lineTo(pos.x, pos.y);
+                ctxMask.stroke();
+            };
+
+            const endDraw = () => {
+                if(isDrawing) { isDrawing = false; ctxMask.closePath(); }
+            };
+
+            canvas.addEventListener('mousedown', startDraw);
+            canvas.addEventListener('mousemove', moveDraw);
+            canvas.addEventListener('mouseup', endDraw);
+            canvas.addEventListener('mouseout', () => { 
+                endDraw(); 
+                document.getElementById('brush-cursor').style.display = 'none';
+            });
+            canvas.addEventListener('touchstart', startDraw);
+            canvas.addEventListener('touchmove', moveDraw);
+            canvas.addEventListener('touchend', endDraw);
+        }
+
+        function clearMask() {
+            ctxMask.clearRect(0, 0, ctxMask.canvas.width, ctxMask.canvas.height);
+        }
+
+        function resetRemoval() {
+            document.getElementById('editor-remove').style.display = 'none';
+            document.getElementById('area-remove').style.display = 'block';
+            document.getElementById('file-remove').value = "";
+            document.getElementById('btn-run-remove').style.display = 'inline-flex';
+            document.getElementById('btn-dl-remove').style.display = 'none';
+            document.getElementById('prog-remove').classList.remove('active');
+            imgRemove = null;
+        }
+
+        async function runRemoval() {
+            const btn = document.getElementById('btn-run-remove');
+            const fill = document.getElementById('fill-remove');
+            const txt = document.getElementById('txt-remove');
+            btn.style.display = 'none';
+            document.getElementById('prog-remove').classList.add('active');
+            
+            fill.style.width = "5%";
+            txt.innerText = "Mapeando pixels...";
+            await new Promise(r => setTimeout(r, 50));
+
+            const w = ctxImgRemove.canvas.width;
+            const h = ctxImgRemove.canvas.height;
+            const strength = parseInt(document.getElementById('remove-strength').value);
+            const smooth = parseInt(document.getElementById('remove-blur').value);
+            
+            const imgData = ctxImgRemove.getImageData(0, 0, w, h);
+            const maskData = ctxMask.getImageData(0, 0, w, h);
+            const data = imgData.data;
+            const mask = maskData.data;
+            
+            // 1. Identificar pixels da máscara
+            let maskPixels = [];
+            let validMap = new Uint8Array(w * h); // 1 = valid, 0 = mask
+            
+            for(let i=0, p=0; i<mask.length; i+=4, p++) {
+                if(mask[i+3] > 0 || mask[i] > 0) {
+                    maskPixels.push(p);
+                    validMap[p] = 0;
+                } else {
+                    validMap[p] = 1;
+                }
+            }
+
+            if(maskPixels.length === 0) {
+                alert("Pinte a área para remover primeiro!");
+                btn.style.display = 'inline-flex';
+                document.getElementById('prog-remove').classList.remove('active');
+                return;
+            }
+
+            fill.style.width = "20%";
+            txt.innerText = "Preenchendo camadas...";
+
+            // ALGORITMO ONION PEEL (Preenchimento Concêntrico)
+            // Esse algoritmo come a máscara pelas bordas para dentro.
+            let remaining = maskPixels.length;
+            let currentMaskPixels = [...maskPixels];
+            
+            while(remaining > 0) {
+                let nextMaskPixels = [];
+                let changes = new Map(); // Store updates to apply after loop
+
+                for (let i = 0; i < currentMaskPixels.length; i++) {
+                    const p = currentMaskPixels[i];
+                    const x = p % w;
+                    const y = Math.floor(p / w);
+                    
+                    let rSum=0, gSum=0, bSum=0, count=0;
+                    
+                    // Procura vizinhos válidos
+                    // Raio aumenta com a "Força"
+                    const rad = Math.ceil(strength / 2); 
+                    
+                    for(let dy = -rad; dy <= rad; dy++) {
+                        for(let dx = -rad; dx <= rad; dx++) {
+                            if(dx===0 && dy===0) continue;
+                            const nx = x + dx;
+                            const ny = y + dy;
+                            if(nx>=0 && nx<w && ny>=0 && ny<h) {
+                                const np = ny * w + nx;
+                                if(validMap[np] === 1) {
+                                    const nIdx = np * 4;
+                                    rSum += data[nIdx];
+                                    gSum += data[nIdx+1];
+                                    bSum += data[nIdx+2];
+                                    count++;
+                                }
+                            }
+                        }
+                    }
+
+                    if(count > 0) {
+                        changes.set(p, [rSum/count, gSum/count, bSum/count]);
+                    } else {
+                        nextMaskPixels.push(p); // Tenta na próxima passada
+                    }
+                }
+                
+                if(changes.size === 0 && nextMaskPixels.length > 0) {
+                    // Força bruta: Se sobrou ilhas isoladas, pega o vizinho mais próximo mesmo que seja máscara
+                    // Isso evita loops infinitos em áreas grandes
+                     for (let i = 0; i < nextMaskPixels.length; i++) {
+                        const p = nextMaskPixels[i];
+                        const idx = p * 4;
+                        // Preenche com ruído ou média global pra não travar
+                        changes.set(p, [
+                            data[idx] > 0 ? data[idx] : 128, 
+                            data[idx+1] > 0 ? data[idx+1] : 128, 
+                            data[idx+2] > 0 ? data[idx+2] : 128
+                        ]); 
+                     }
+                     nextMaskPixels = [];
+                }
+
+                // Aplica mudanças
+                for (let [p, rgb] of changes) {
+                    const idx = p * 4;
+                    data[idx] = rgb[0];
+                    data[idx+1] = rgb[1];
+                    data[idx+2] = rgb[2];
+                    validMap[p] = 1; // Agora é válido para os vizinhos internos
+                    remaining--;
+                }
+                
+                currentMaskPixels = nextMaskPixels;
+                
+                // Atualiza UI
+                if(maskPixels.length > 2000) {
+                    fill.style.width = (20 + (1 - remaining/maskPixels.length)*60) + "%";
+                    await new Promise(r => setTimeout(r, 0));
+                }
+            }
+
+            // SUAVIZAÇÃO FINAL (Blur apenas na área afetada)
+            if(smooth > 0) {
+                txt.innerText = "Suavizando bordas...";
+                const blurRad = smooth;
+                const origData = new Uint8ClampedArray(data);
+                
+                for(let i=0; i<maskPixels.length; i++) {
+                    const p = maskPixels[i];
+                    const x = p % w;
+                    const y = Math.floor(p / w);
+                    
+                    let rSum=0, gSum=0, bSum=0, count=0;
+                    
+                    for(let dy = -blurRad; dy <= blurRad; dy++) {
+                        for(let dx = -blurRad; dx <= blurRad; dx++) {
+                            const nx = x + dx;
+                            const ny = y + dy;
+                            if(nx>=0 && nx<w && ny>=0 && ny<h) {
+                                const np = (ny * w + nx) * 4;
+                                rSum += origData[np];
+                                gSum += origData[np+1];
+                                bSum += origData[np+2];
+                                count++;
+                            }
+                        }
+                    }
+                    const idx = p * 4;
+                    data[idx] = rSum/count;
+                    data[idx+1] = gSum/count;
+                    data[idx+2] = bSum/count;
+                }
+            }
+
+            // Atualiza imagem final
+            ctxImgRemove.putImageData(imgData, 0, 0);
+            
+            // Limpa apenas a máscara, mantendo a imagem alterada
+            clearMask();
+            
+            fill.style.width = "100%";
+            txt.innerText = "Concluído!";
+            
+            // Permite continuar
+            btn.style.display = 'inline-flex';
+            btn.innerText = "Remover Novamente";
+            document.getElementById('btn-dl-remove').style.display = 'inline-flex';
+        }
+
+        function dlRemoval() {
+            const link = document.createElement('a');
+            link.download = 'imagem_limpa.png';
+            link.href = document.getElementById('canvas-remove-img').toDataURL();
+            link.click();
+        }
+
+        /* --- UTILS --- */
+        function setupSlider(containerId, sliderId, afterId) {
+            const slider = document.getElementById(sliderId);
+            const after = document.getElementById(afterId);
+            const container = document.getElementById(containerId);
+            const move = (e) => {
+                const rect = container.getBoundingClientRect();
+                let x = (e.clientX || e.touches[0].clientX) - rect.left;
+                x = Math.max(0, Math.min(x, rect.width));
+                const percent = (x / rect.width) * 100;
+                slider.style.left = percent + "%";
+                after.style.clipPath = `inset(0 ${100 - percent}% 0 0)`;
+            }
+            container.addEventListener('mousemove', move);
+            container.addEventListener('touchmove', move);
+        }
+
+        function dlUpscale() {
+            const a = document.createElement('a');
+            a.download = 'upscaled_image.png';
+            a.href = document.getElementById('cvs-after-upscale').toDataURL('image/png');
+            a.click();
+        }
+
+        function dlCompress() { }
+        function resetUpscale() { window.location.reload(); } // Simplificado para garantir limpeza
+        function resetCompress() { window.location.reload(); }
+
+        setupSlider('container-comp-upscale', 'slider-upscale', 'cvs-after-upscale');
+        setupSlider('container-comp-compress', 'slider-compress', 'cvs-after-compress');
+
+        const loadFFmpeg = async () => {
+            if(ffmpeg) return ffmpeg;
+            const { FFmpeg } = FFmpegWASM;
+            const { toBlobURL } = FFmpegUtil;
+            ffmpeg = new FFmpeg();
+            const baseURL = 'https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd';
+            await ffmpeg.load({
+                coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, 'text/javascript'),
+                wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, 'application/wasm'),
+            });
+            return ffmpeg;
+        };
+
+        document.getElementById('file-vid-up').addEventListener('change', (e) => {
+            if(e.target.files[0]) {
+                vidUpscale = e.target.files[0];
+                document.getElementById('name-vid-up').innerText = vidUpscale.name;
+                document.getElementById('vid-up-info').classList.add('active');
+                document.getElementById('btn-run-vid-up').disabled = false;
+            }
+        });
+
+        document.getElementById('file-vid-comp').addEventListener('change', (e) => {
+            if(e.target.files[0]) {
+                vidCompress = e.target.files[0];
+                document.getElementById('name-vid-comp').innerText = vidCompress.name;
+                document.getElementById('vid-comp-info').classList.add('active');
+                document.getElementById('btn-run-vid-comp').disabled = false;
+            }
+        });
+
+        async function runVideoUpscale() {
+            const btn = document.getElementById('btn-run-vid-up');
+            const txt = document.getElementById('txt-vid-up');
+            const fill = document.getElementById('fill-vid-up');
+            btn.disabled = true;
+            document.getElementById('prog-vid-up').classList.add('active');
+            try {
+                fill.style.width = "10%";
+                const ffmpeg = await loadFFmpeg();
+                fill.style.width = "30%";
+                txt.innerText = "Carregando vídeo...";
+                await ffmpeg.writeFile('input.mp4', await fetchFile(vidUpscale));
+                const res = document.getElementById('vid-up-res').value;
+                txt.innerText = "Renderizando... (Isso pode demorar)";
+                ffmpeg.on('progress', ({ progress }) => {
+                    fill.style.width = Math.min(90, Math.max(30, progress * 100)) + "%";
+                });
+                await ffmpeg.exec(['-i', 'input.mp4', '-vf', `scale=${res}:flags=lanczos`, '-c:v', 'libx264', '-crf', '20', '-preset', 'ultrafast', 'output.mp4']);
+                const data = await ffmpeg.readFile('output.mp4');
+                const videoUrl = URL.createObjectURL(new Blob([data.buffer], { type: 'video/mp4' }));
+                document.getElementById('out-vid-up').src = videoUrl;
+                document.getElementById('lnk-vid-up').href = videoUrl;
+                document.getElementById('lnk-vid-up').download = "upscaled_video.mp4";
+                document.getElementById('vid-res-up').style.display = "block";
+                fill.style.width = "100%";
+                txt.innerText = "Concluído!";
+            } catch(e) { console.error(e); }
+            btn.disabled = false;
+        }
+
+        async function runVideoCompress() {
+            const btn = document.getElementById('btn-run-vid-comp');
+            const txt = document.getElementById('txt-vid-comp');
+            const fill = document.getElementById('fill-vid-comp');
+            btn.disabled = true;
+            document.getElementById('prog-vid-comp').classList.add('active');
+            try {
+                const ffmpeg = await loadFFmpeg();
+                await ffmpeg.writeFile('input.mp4', await fetchFile(vidCompress));
+                const crf = document.getElementById('vid-crf').value;
+                txt.innerText = "Comprimindo...";
+                ffmpeg.on('progress', ({ progress }) => {
+                    fill.style.width = (progress * 100) + "%";
+                });
+                await ffmpeg.exec(['-i', 'input.mp4', '-c:v', 'libx264', '-crf', crf, '-preset', 'ultrafast', 'output.mp4']);
+                const data = await ffmpeg.readFile('output.mp4');
+                const videoUrl = URL.createObjectURL(new Blob([data.buffer], { type: 'video/mp4' }));
+                document.getElementById('out-vid-comp').src = videoUrl;
+                document.getElementById('lnk-vid-comp').href = videoUrl;
+                document.getElementById('lnk-vid-comp').download = "compressed_video.mp4";
+                document.getElementById('vid-res-comp').style.display = "block";
+                fill.style.width = "100%";
+                txt.innerText = "Concluído!";
+            } catch(e) { console.error(e); }
+            btn.disabled = false;
+        }
+
+        const fetchFile = async (file) => {
+            const data = await file.arrayBuffer();
+            return new Uint8Array(data);
+        }
+    </script>
+</body>
+</html>
