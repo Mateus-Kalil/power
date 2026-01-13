@@ -1,0 +1,364 @@
+{
+  "bank": {
+    "name": "WolfBank",
+    "company": "WolfGuard"
+  },
+  "currency": "BRL",
+  "lastUpdated": "2026-01-12T23:00:02Z",
+  "plans": {
+    "pf": [
+      {
+        "id": "pf_essencial",
+        "name": "Essencial",
+        "monthly": 0.0,
+        "includes": [
+          "Pix ilimitado",
+          "Cartão de débito premium",
+          "Pagamentos e boletos",
+          "Extrato completo",
+          "Atendimento digital"
+        ],
+        "limits": {
+          "saques_mes": 2,
+          "ted_mes": 0
+        },
+        "fees": {
+          "saque_extra": 8.9,
+          "ted_extra": 12.9
+        }
+      },
+      {
+        "id": "pf_prime",
+        "name": "Prime",
+        "monthly": 39.9,
+        "includes": [
+          "Tudo do Essencial",
+          "Cartão de crédito premium",
+          "Saques 8/mês",
+          "TED 4/mês",
+          "Cartão virtual",
+          "Seguro de compras"
+        ],
+        "limits": {
+          "saques_mes": 8,
+          "ted_mes": 4
+        },
+        "fees": {
+          "saque_extra": 6.9,
+          "ted_extra": 9.9
+        }
+      },
+      {
+        "id": "pf_black",
+        "name": "Black",
+        "monthly": 129.9,
+        "includes": [
+          "Tudo do Prime",
+          "Concierge",
+          "Saques ilimitados",
+          "TED ilimitado",
+          "Sala VIP",
+          "Atendimento prioritário 24/7"
+        ],
+        "limits": {
+          "saques_mes": "ilimitado",
+          "ted_mes": "ilimitado"
+        },
+        "fees": {
+          "saque_extra": 0.0,
+          "ted_extra": 0.0
+        }
+      }
+    ],
+    "pj": [
+      {
+        "id": "pj_start",
+        "name": "Start",
+        "monthly": 49.9,
+        "includes": [
+          "Pix ilimitado",
+          "Emissão de boletos",
+          "Cobrança simplificada",
+          "Cartão corporativo (1)",
+          "Usuários: 2"
+        ],
+        "limits": {
+          "boletos_mes": 50,
+          "usuarios": 2
+        },
+        "fees": {
+          "boleto_extra": 1.29,
+          "usuario_extra": 19.9
+        }
+      },
+      {
+        "id": "pj_pro",
+        "name": "Pro",
+        "monthly": 149.9,
+        "includes": [
+          "Tudo do Start",
+          "Boleto com régua de cobrança",
+          "Cartões: 5",
+          "Usuários: 10",
+          "Integração API"
+        ],
+        "limits": {
+          "boletos_mes": 300,
+          "usuarios": 10
+        },
+        "fees": {
+          "boleto_extra": 0.99,
+          "usuario_extra": 14.9
+        }
+      },
+      {
+        "id": "pj_enterprise",
+        "name": "Enterprise",
+        "monthly": 499.9,
+        "includes": [
+          "Tudo do Pro",
+          "Gestão de limites avançada",
+          "Aprovações em camadas",
+          "Cartões sob demanda",
+          "SLA dedicado"
+        ],
+        "limits": {
+          "boletos_mes": "ilimitado",
+          "usuarios": "ilimitado"
+        },
+        "fees": {
+          "boleto_extra": 0.0,
+          "usuario_extra": 0.0
+        }
+      }
+    ],
+    "private": [
+      {
+        "id": "prv_signature",
+        "name": "Signature",
+        "monthly": 990.0,
+        "includes": [
+          "Gestão patrimonial",
+          "Assessoria dedicada",
+          "Câmbio preferencial (spread reduzido)",
+          "Relatórios premium",
+          "Linha direta 24/7"
+        ],
+        "limits": {
+          "atendimento": "dedicado"
+        },
+        "fees": {
+          "spread_cambio": 0.012
+        }
+      },
+      {
+        "id": "prv_legacy",
+        "name": "Legacy",
+        "monthly": 2490.0,
+        "includes": [
+          "Tudo do Signature",
+          "Estratégias multi-ativos",
+          "Concierge completo",
+          "Planejamento sucessório",
+          "Sala reservada"
+        ],
+        "limits": {
+          "atendimento": "ultra"
+        },
+        "fees": {
+          "spread_cambio": 0.009
+        }
+      }
+    ]
+  },
+  "cards": [
+    {
+      "id": "card_prime",
+      "segment": "PF",
+      "name": "WolfBank Prime",
+      "annualFee": 0.0,
+      "monthlyFee": 19.9,
+      "benefits": [
+        "Cartão virtual",
+        "Aproximação",
+        "Notificações premium",
+        "Limite dinâmico"
+      ],
+      "apr": "a partir de 2,49% a.m."
+    },
+    {
+      "id": "card_black",
+      "segment": "PF/Private",
+      "name": "WolfBank Black",
+      "annualFee": 0.0,
+      "monthlyFee": 49.9,
+      "benefits": [
+        "Concierge",
+        "Benefícios viagem",
+        "Seguro",
+        "Sala VIP"
+      ],
+      "apr": "a partir de 1,89% a.m."
+    },
+    {
+      "id": "card_corp",
+      "segment": "PJ",
+      "name": "WolfBank Corporate",
+      "annualFee": 0.0,
+      "monthlyFee": 29.9,
+      "benefits": [
+        "Gestão de gastos",
+        "Limites por centro de custo",
+        "Cartões virtuais",
+        "Aprovação em camadas"
+      ],
+      "apr": "a partir de 2,19% a.m."
+    }
+  ],
+  "fees": [
+    {
+      "category": "Pix",
+      "items": [
+        {
+          "name": "Envio Pix",
+          "pf": 0.0,
+          "pj": 0.0,
+          "private": 0.0,
+          "unit": "por transação"
+        },
+        {
+          "name": "Recebimento Pix",
+          "pf": 0.0,
+          "pj": 0.0,
+          "private": 0.0,
+          "unit": "por transação"
+        },
+        {
+          "name": "Devolução Pix",
+          "pf": 0.0,
+          "pj": 0.0,
+          "private": 0.0,
+          "unit": "por transação"
+        }
+      ]
+    },
+    {
+      "category": "Saques",
+      "items": [
+        {
+          "name": "Saque em rede conveniada",
+          "pf": "ver plano",
+          "pj": 9.9,
+          "private": "incluído",
+          "unit": "por saque"
+        },
+        {
+          "name": "Saque extra PF (fora do plano)",
+          "pf": 8.9,
+          "pj": 9.9,
+          "private": 0.0,
+          "unit": "por saque"
+        }
+      ]
+    },
+    {
+      "category": "Transferências",
+      "items": [
+        {
+          "name": "TED",
+          "pf": 12.9,
+          "pj": 14.9,
+          "private": 0.0,
+          "unit": "por transferência"
+        },
+        {
+          "name": "Agendamento",
+          "pf": 0.0,
+          "pj": 0.0,
+          "private": 0.0,
+          "unit": "por agendamento"
+        }
+      ]
+    },
+    {
+      "category": "Boletos e Cobrança",
+      "items": [
+        {
+          "name": "Emissão de boleto PJ",
+          "pf": "—",
+          "pj": "ver plano",
+          "private": "—",
+          "unit": "por boleto"
+        },
+        {
+          "name": "Baixa/Cancelamento de boleto",
+          "pf": "—",
+          "pj": 1.49,
+          "private": "—",
+          "unit": "por boleto"
+        }
+      ]
+    },
+    {
+      "category": "Cartões",
+      "items": [
+        {
+          "name": "2ª via do cartão físico",
+          "pf": 19.9,
+          "pj": 19.9,
+          "private": 0.0,
+          "unit": "por ocorrência"
+        },
+        {
+          "name": "Cartão virtual",
+          "pf": 0.0,
+          "pj": 0.0,
+          "private": 0.0,
+          "unit": "—"
+        }
+      ]
+    },
+    {
+      "category": "Serviços",
+      "items": [
+        {
+          "name": "Extrato impresso",
+          "pf": 6.9,
+          "pj": 6.9,
+          "private": 0.0,
+          "unit": "por emissão"
+        },
+        {
+          "name": "Declarações",
+          "pf": 9.9,
+          "pj": 9.9,
+          "private": 0.0,
+          "unit": "por emissão"
+        }
+      ]
+    }
+  ],
+  "credit": {
+    "personalLoan": {
+      "label": "Crédito pessoal",
+      "fromMonthlyRate": 0.0199,
+      "maxMonths": 48
+    },
+    "pjWorkingCapital": {
+      "label": "Capital de giro",
+      "fromMonthlyRate": 0.0219,
+      "maxMonths": 36
+    }
+  },
+  "fx": {
+    "spread": {
+      "pf": 0.019,
+      "pj": 0.017,
+      "private": 0.012
+    },
+    "iofNote": "IOF pode incidir conforme legislação vigente."
+  },
+  "legal": {
+    "disclaimer": "WolfBank © 2026. Instituição financeira autorizada pelo Banco Central do Brasil. Tarifas sujeitas a alteração mediante comunicação prévia."
+  }
+}
