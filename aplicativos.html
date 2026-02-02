@@ -203,6 +203,48 @@
             color: #d8d8e8;
         }
 
+        .app-card.featured {
+            background: rgba(255, 215, 0, 0.15);
+            border: 2px solid #ffd700;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.4);
+            transform: scale(1.02);
+        }
+
+        .app-card.featured::before {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            opacity: 0.15;
+        }
+
+        .app-card.featured:hover {
+            transform: scale(1.05) translateY(-5px);
+            box-shadow: 0 0 40px rgba(255, 215, 0, 0.6);
+        }
+
+        .app-card.featured .app-icon {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .app-card.featured .app-badge {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            color: #040316;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .app-card.featured .app-title {
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
         .btn-back {
             display: inline-flex;
             align-items: center;
@@ -274,6 +316,15 @@
         </div>
 
         <div class="apps-grid">
+            <a href="https://wolfchat.site" class="app-card featured active" style="text-decoration: none; color: inherit;">
+                <div class="app-icon">
+                    <i class="fa-solid fa-comment-dots"></i>
+                </div>
+                <h3 class="app-title">WolfChat</h3>
+                <p class="app-description">Chat anônimo e seguro para suas conversas</p>
+                <span class="app-badge">Destaque</span>
+            </a>
+
             <a href="https://wolfguard.com.br/loteria" class="app-card active" style="text-decoration: none; color: inherit;">
                 <div class="app-icon">
                     <i class="fa-solid fa-clover"></i>
@@ -352,6 +403,15 @@
                 </div>
                 <h3 class="app-title">Texto</h3>
                 <p class="app-description">Editor de texto simplificado</p>
+                <span class="app-badge">Disponível</span>
+            </a>
+
+            <a href="https://wolfguard.com.br/pdf" class="app-card active" style="text-decoration: none; color: inherit;">
+                <div class="app-icon">
+                    <i class="fa-solid fa-file-pdf"></i>
+                </div>
+                <h3 class="app-title">Editor PDF</h3>
+                <p class="app-description">Edite e manipule arquivos PDF</p>
                 <span class="app-badge">Disponível</span>
             </a>
 
