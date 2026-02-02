@@ -6,7 +6,7 @@
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta http-equiv="X-Frame-Options" content="DENY">
     <meta http-equiv="X-XSS-Protection" content="1; mode=block">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://cdnjs.cloudflare.com https://translate.terraprint.co https://viacep.com.br https://ipapi.co https://api.allorigins.win 'unsafe-inline';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https://cdnjs.cloudflare.com https://translate.terraprint.co https://viacep.com.br http://ip-api.com https://api.allorigins.win 'unsafe-inline' data:;">
     <meta http-equiv="Referrer-Policy" content="no-referrer">
     <meta http-equiv="Strict-Transport-Security" content="max-age=31536000; includeSubDomains">
     <title>WolfGuard AI</title>
@@ -34,7 +34,7 @@
         body {
             background-color: var(--bg);
             color: var(--text);
-            overflow-x: hidden;
+            overflow: hidden;
         }
         
         #canvas-container {
@@ -48,7 +48,7 @@
         
         .container {
             display: flex;
-            min-height: 100vh;
+            height: 100vh;
         }
         
         .sidebar {
@@ -115,6 +115,7 @@
             flex-direction: column;
             padding: 20px;
             max-width: calc(100% - 300px);
+            height: 100vh;
         }
         
         .chat-container {
@@ -146,29 +147,34 @@
         }
         
         .input-container {
-            position: relative;
+            display: flex;
+            align-items: center;
             padding: 10px;
             background-color: var(--card);
             border-radius: 15px;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
         }
-        
+
         .input-container textarea {
-            width: 100%;
-            padding: 15px;
+            flex: 1;
+            padding: 10px;
             border: none;
-            border-radius: 10px;
             background-color: transparent;
             color: var(--text);
             resize: none;
             outline: none;
             font-size: 16px;
+            height: 40px; 
+            line-height: 20px;
+            overflow-y: auto;
         }
-        
+
         .input-buttons {
             display: flex;
-            justify-content: space-between;
-            padding: 10px;
+            align-items: center;
+            gap: 10px;
+            margin-left: 10px;
         }
         
         .tools {
@@ -183,6 +189,7 @@
             font-size: 20px;
             cursor: pointer;
             transition: all 0.3s ease;
+            padding: 5px;
         }
         
         .tools button:hover {
@@ -209,6 +216,8 @@
             display: none;
             flex: 1;
             flex-direction: column;
+            height: 100%;
+            overflow: hidden;
         }
         
         .tab-container.active {
@@ -221,6 +230,7 @@
             padding: 15px;
             margin-bottom: 20px;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            flex-shrink: 0;
         }
         
         .search-box input {
@@ -295,7 +305,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 200px;
+            height: 100%;
         }
         
         .spinner {
@@ -305,6 +315,26 @@
             border-radius: 50%;
             border-top-color: var(--primary);
             animation: spin 1s ease-in-out infinite;
+        }
+
+        #fotos-ai-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        #fotos-ai-results img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 8px;
+            animation: fadeIn 0.5s;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        #fotos-ai-results img:hover {
+            transform: scale(1.05);
         }
         
         @keyframes spin {
@@ -552,6 +582,10 @@
                     <i class="fas fa-comment-alt"></i>
                     Chat AI
                 </div>
+                <div class="menu-item" data-tab="fotos-ai">
+                    <i class="fas fa-images"></i>
+                    Fotos AI
+                </div>
                 <div class="menu-item" data-tab="ip">
                     <i class="fas fa-network-wired"></i>
                     Análise de IP
@@ -585,7 +619,7 @@
                 </div>
                 
                 <div class="input-container">
-                    <textarea placeholder="Digite sua mensagem aqui..." rows="3" id="chat-input"></textarea>
+                    <textarea placeholder="Digite sua mensagem aqui..." rows="1" id="chat-input"></textarea>
                     <div class="input-buttons">
                         <div class="tools">
                             <button id="mic-btn"><i class="fas fa-microphone"></i></button>
@@ -594,6 +628,15 @@
                         </div>
                         <button class="send-btn" id="send-btn">Enviar</button>
                     </div>
+                </div>
+            </div>
+
+            <div class="tab-container" id="fotos-ai-tab">
+                <div class="search-box">
+                    <input type="text" placeholder="Digite um termo para buscar fotos (ex: batman, paisagem)..." id="fotos-ai-input">
+                    <button id="search-fotos-ai">Pesquisar Imagens</button>
+                </div>
+                <div class="result-container" id="fotos-ai-results">
                 </div>
             </div>
             
@@ -1344,21 +1387,12 @@
         }
 
         async function getIPInfo(ip) {
-            try {
-                const response = await fetch(`https://ipapi.co/${ip}/json/`);
-                return await response.json();
-            } catch (error) {
-                return {
-                    ip: ip,
-                    city: 'São Paulo',
-                    region: 'São Paulo',
-                    country_name: 'Brasil',
-                    org: 'Vivo Fibra',
-                    latitude: -23.5505,
-                    longitude: -46.6333,
-                    timezone: 'America/Sao_Paulo'
-                };
+            const response = await fetch(`http://ip-api.com/json/${ip}?fields=status,message,country,city,lat,lon,timezone,isp,query`);
+            const data = await response.json();
+            if (data.status !== 'success') {
+                throw new Error(data.message || 'Falha ao buscar informações do IP.');
             }
+            return data;
         }
 
         async function getCEPInfo(cep) {
@@ -1374,6 +1408,36 @@
                     uf: 'SP',
                     ibge: '3550308'
                 };
+            }
+        }
+        
+        async function getAIImages(query) {
+            try {
+                const url = `https://api.allorigins.win/get?url=${encodeURIComponent('https://duckduckgo.com/html/?q=' + encodeURIComponent(query) + '&iax=images&ia=images')}`;
+                const response = await fetch(url);
+                if (!response.ok) throw new Error('Falha na busca de imagens.');
+                
+                const data = await response.json();
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(data.contents, 'text/html');
+                
+                const imageElements = doc.querySelectorAll('.tile--img__img');
+                const imageUrls = [];
+                
+                imageElements.forEach(img => {
+                    const src = img.getAttribute('data-src');
+                    if (src) {
+                        const fullUrl = 'https:' + src.replace('//', '');
+                        imageUrls.push(fullUrl);
+                    }
+                });
+
+                if (imageUrls.length === 0) throw new Error('Nenhuma imagem encontrada.');
+                
+                return imageUrls.slice(0, 20);
+            } catch (error) {
+                console.error("Erro ao buscar imagens:", error);
+                return null;
             }
         }
 
@@ -1566,6 +1630,33 @@
                 alert('Função de imagem em desenvolvimento.');
             });
 
+            document.getElementById('search-fotos-ai').addEventListener('click', async function() {
+                const query = document.getElementById('fotos-ai-input').value.trim();
+                if (!query) return;
+
+                const resultsContainer = document.getElementById('fotos-ai-results');
+                resultsContainer.innerHTML = `
+                    <div class="loading" style="grid-column: 1 / -1;">
+                        <div class="spinner"></div>
+                    </div>
+                `;
+                
+                const imageUrls = await getAIImages(query);
+                
+                resultsContainer.innerHTML = '';
+                
+                if (imageUrls && imageUrls.length > 0) {
+                    imageUrls.forEach(url => {
+                        const img = document.createElement('img');
+                        img.src = url;
+                        img.alt = query;
+                        resultsContainer.appendChild(img);
+                    });
+                } else {
+                    resultsContainer.innerHTML = `<p style="grid-column: 1 / -1; text-align: center;">Não foi possível encontrar imagens para "${query}". Tente outro termo.</p>`;
+                }
+            });
+
             document.getElementById('analyze-ip').addEventListener('click', async function() {
                 const ipInput = document.getElementById('ip-input').value.trim();
                 if (!ipInput) return;
@@ -1584,31 +1675,31 @@
                     const resultCard = document.createElement('div');
                     resultCard.className = 'result-card';
                     resultCard.innerHTML = `
-                        <div class="result-title">Informações do IP: ${ipInput}</div>
+                        <div class="result-title">Informações do IP: ${ipInfo.query}</div>
                         <div class="result-data">
                             <div class="data-item">
                                 <span class="data-label">País:</span>
-                                <span class="data-value">${ipInfo.country_name || 'Brasil'}</span>
+                                <span class="data-value">${ipInfo.country || 'N/A'}</span>
                             </div>
                             <div class="data-item">
                                 <span class="data-label">Cidade:</span>
-                                <span class="data-value">${ipInfo.city || 'São Paulo'}</span>
+                                <span class="data-value">${ipInfo.city || 'N/A'}</span>
                             </div>
                             <div class="data-item">
-                                <span class="data-label">ISP:</span>
-                                <span class="data-value">${ipInfo.org || 'Vivo Fibra'}</span>
+                                <span class="data-label">ISP (Provedor):</span>
+                                <span class="data-value">${ipInfo.isp || 'N/A'}</span>
                             </div>
                             <div class="data-item">
                                 <span class="data-label">Latitude:</span>
-                                <span class="data-value">${ipInfo.latitude || '-23.5505'}</span>
+                                <span class="data-value">${ipInfo.lat || 'N/A'}</span>
                             </div>
                             <div class="data-item">
                                 <span class="data-label">Longitude:</span>
-                                <span class="data-value">${ipInfo.longitude || '-46.6333'}</span>
+                                <span class="data-value">${ipInfo.lon || 'N/A'}</span>
                             </div>
                             <div class="data-item">
-                                <span class="data-label">Timezone:</span>
-                                <span class="data-value">${ipInfo.timezone || 'America/Sao_Paulo'}</span>
+                                <span class="data-label">Fuso Horário:</span>
+                                <span class="data-value">${ipInfo.timezone || 'N/A'}</span>
                             </div>
                         </div>
                     `;
@@ -1622,7 +1713,7 @@
                     errorCard.innerHTML = `
                         <div class="result-title">Erro na análise</div>
                         <p>Não foi possível analisar o IP: ${ipInput}</p>
-                        <p>Por favor, verifique se o IP está correto e tente novamente.</p>
+                        <p>${error.message}</p>
                     `;
                     
                     ipResults.appendChild(errorCard);
